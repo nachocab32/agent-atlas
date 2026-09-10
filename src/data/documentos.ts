@@ -2,24 +2,14 @@
 // (ver contenido-apis-docs-extraido.md, secciones "Docs — Documentación" y
 // "Toma de Control — estructura interna del documento").
 //
-// Solo 3 de las 8 páginas de Toma de Control tienen contenido real extraído
-// (Documentos requeridos, Producto en construcción, Manual de referencia). Las otras
-// 5 existen en el índice pero su `cuerpo` queda vacío a propósito — no se inventó
-// contenido para ellas. CyberArk y el Runbook de Secret Scanning no tienen páginas
-// extraídas: `paginas` queda vacío para ambos.
+// CyberArk y el Runbook de Secret Scanning no tienen páginas extraídas:
+// `paginas` queda vacío para ambos.
 //
 // Los conteos de los filtros de Guías (Categoría, Madurez) no se hardcodean: se
 // derivan de `categorias`/`madurez` en features/guias/use-guias-filtros.ts, tal como
-// vienen del portal real — incluida la inconsistencia real de que las categorías
-// suman 4 sobre 3 documentos (Toma de Control tiene dos categorías).
+// vienen del portal real.
 import type { DocumentoGuia } from '@/types/documento'
-
-const detalleTomaDeControl = {
-  version: '2.0',
-  actualizado: 'Junio 2026',
-  owner: 'Continuidad Operativa / SRE',
-  tags: ['documentation', 'governance', 'operaciones'],
-}
+import { tomaDeControlPropuesta } from './toma-de-control-propuesta'
 
 const detalleSecretScanning = {
   version: '2026.1',
@@ -36,6 +26,7 @@ const detalleCyberArk = {
 }
 
 export const documentosGuia: DocumentoGuia[] = [
+  tomaDeControlPropuesta,
   {
     id: 'cyberark',
     titulo: 'Gestión de secretos con CyberArk',
@@ -348,6 +339,8 @@ export const documentosGuia: DocumentoGuia[] = [
       },
     ],
   },
+  /* Documento anterior de TDC retirado del prototipo: la propuesta migrada
+     reemplaza su ruta, índice y tarjeta en Guías.
   {
     id: 'toma-de-control',
     titulo: 'Toma de Control',
@@ -538,7 +531,7 @@ export const documentosGuia: DocumentoGuia[] = [
         ],
       },
     ],
-  },
+  }, */
 ]
 
 export const categoriaGuiaOpciones = ['Gobierno', 'Seguridad', 'Operaciones'] as const

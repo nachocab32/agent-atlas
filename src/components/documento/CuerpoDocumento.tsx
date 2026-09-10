@@ -1,4 +1,5 @@
 import { AlertTriangle, CheckCircle2, Info } from 'lucide-react'
+import { Link } from 'react-router'
 import { cn } from '@/shared/lib/utils'
 import type { BloqueContenido } from '@/types/documento'
 
@@ -23,7 +24,7 @@ export function CuerpoDocumento({ bloques }: CuerpoDocumentoProps) {
         switch (bloque.tipo) {
           case 'parrafo':
             return (
-              <p key={indice} className="leading-relaxed text-foreground">
+              <p key={indice} className="max-w-3xl leading-relaxed text-foreground">
                 {bloque.texto}
               </p>
             )
@@ -43,7 +44,7 @@ export function CuerpoDocumento({ bloques }: CuerpoDocumentoProps) {
                     <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-[var(--primary-dim)] text-xs font-semibold text-accent">
                       {pasoIndice + 1}
                     </span>
-                    <p className="pt-0.5 text-sm leading-relaxed text-foreground">
+                    <p className="max-w-3xl pt-0.5 text-sm leading-relaxed text-foreground">
                       {paso.titulo && <span className="font-semibold">{paso.titulo}: </span>}
                       {paso.texto}
                     </p>
@@ -76,12 +77,22 @@ export function CuerpoDocumento({ bloques }: CuerpoDocumentoProps) {
           case 'grilla-tarjetas':
             return (
               <div key={indice} className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                {bloque.tarjetas.map((tarjeta) => (
-                  <div key={tarjeta.titulo} className="rounded-xl border border-border bg-card p-4">
-                    <p className="font-medium text-foreground">{tarjeta.titulo}</p>
-                    <p className="mt-1 text-sm text-muted-foreground">{tarjeta.descripcion}</p>
-                  </div>
-                ))}
+                {bloque.tarjetas.map((tarjeta) => {
+                  const contenido = <><p className="font-medium text-foreground">{tarjeta.titulo}</p><p className="mt-1 text-sm text-muted-foreground">{tarjeta.descripcion}</p></>
+                  return tarjeta.href ? (
+                    <Link
+                      key={tarjeta.titulo}
+                      to={tarjeta.href}
+                      className="rounded-xl border border-border bg-card p-4 transition-colors hover:border-accent/40 hover:bg-accent/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    >
+                      {contenido}
+                    </Link>
+                  ) : (
+                    <div key={tarjeta.titulo} className="rounded-xl border border-border bg-card p-4">
+                      {contenido}
+                    </div>
+                  )
+                })}
               </div>
             )
 

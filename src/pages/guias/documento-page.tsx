@@ -4,7 +4,9 @@ import { CuerpoDocumento } from '@/components/documento/CuerpoDocumento'
 import { EstadoVacioDocumento } from '@/components/documento/EstadoVacioDocumento'
 import { FilaDistintivos } from '@/components/documento/FilaDistintivos'
 import { IndiceDocumento } from '@/components/documento/IndiceDocumento'
+import { IndiceTomaDeControl } from '@/components/documento/IndiceTomaDeControl'
 import { PiePaginaDocumento } from '@/components/documento/PiePaginaDocumento'
+import { TomaDeControlPortada } from '@/components/documento/TomaDeControlPortada'
 import { WidgetFeedback } from '@/components/documento/WidgetFeedback'
 import { useDocumentoNavegacion } from '@/features/documento/use-documento-navegacion'
 
@@ -28,12 +30,27 @@ export function DocumentoPage() {
 
   const detalle = documento.detalle
   const breadcrumb = ['Guías', documento.categorias[0], documento.titulo, ...(pagina ? [pagina.titulo] : [])]
+  const esTomaDeControl = documento.id === 'toma-de-control-propuesta'
+  const esPortadaTdc = esTomaDeControl && pagina?.id === 'inicio'
 
   return (
-    <div className="flex flex-1 overflow-y-auto px-6 py-8">
-      <div className="mx-auto grid w-full max-w-5xl grid-cols-[minmax(0,1fr)_14rem] gap-8 max-md:grid-cols-1">
-        <main className="min-w-0 max-w-3xl">
-          <div className="flex flex-col gap-6">
+    <div className="flex flex-1 overflow-y-auto px-8 py-10 max-md:px-4 max-md:py-6 2xl:px-12">
+      <div className="grid w-full grid-cols-[15rem_minmax(0,1fr)] gap-10 max-md:grid-cols-1 max-md:gap-6">
+        <aside className="sticky top-4 self-start border-r border-border pr-6 max-md:static max-md:border-r-0 max-md:border-b max-md:pb-6 max-md:pr-0">
+          {esTomaDeControl ? <IndiceTomaDeControl
+            paginas={paginas}
+            paginaActivaId={pagina?.id}
+            onSeleccionarPagina={irAPagina}
+          /> : <IndiceDocumento
+            titulo={documento.titulo}
+            paginas={paginas}
+            paginaActivaId={pagina?.id}
+            onSeleccionarPagina={irAPagina}
+          />}
+        </aside>
+
+        <main className="min-w-0 max-w-none">
+          {esPortadaTdc ? <TomaDeControlPortada /> : <div className="flex flex-col gap-6">
         <BreadcrumbDocumento segmentos={breadcrumb} />
 
         <div>
@@ -48,7 +65,7 @@ export function DocumentoPage() {
             : `Owner: ${documento.owner}`}
         </p>
 
-        {pagina?.bajada && <p className="text-muted-foreground">{pagina.bajada}</p>}
+        {pagina?.bajada && <p className="max-w-3xl text-muted-foreground">{pagina.bajada}</p>}
 
         {pagina && pagina.cuerpo.length > 0 ? (
           <CuerpoDocumento bloques={pagina.cuerpo} />
@@ -65,17 +82,8 @@ export function DocumentoPage() {
         {pagina && <PiePaginaDocumento anterior={anterior} siguiente={siguiente} onSeleccionarPagina={irAPagina} />}
 
             <WidgetFeedback />
-          </div>
+          </div>}
         </main>
-
-        <aside className="sticky top-4 self-start max-md:static max-md:order-first">
-          <IndiceDocumento
-            titulo={documento.titulo}
-            paginas={paginas}
-            paginaActivaId={pagina?.id}
-            onSeleccionarPagina={irAPagina}
-          />
-        </aside>
       </div>
     </div>
   )

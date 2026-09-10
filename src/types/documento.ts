@@ -6,7 +6,7 @@ export type BloqueContenido =
   | { tipo: 'pasos'; pasos: { titulo?: string; texto: string }[] }
   | { tipo: 'codigo'; lenguaje?: string; codigo: string }
   | { tipo: 'enlaces'; enlaces: { titulo: string; descripcion: string; href?: string }[] }
-  | { tipo: 'grilla-tarjetas'; tarjetas: { titulo: string; descripcion: string }[] }
+  | { tipo: 'grilla-tarjetas'; tarjetas: { titulo: string; descripcion: string; href?: string }[] }
   | { tipo: 'tabla'; encabezados: string[]; filas: string[][] }
   | { tipo: 'destacado'; variante: 'informativo' | 'advertencia' | 'regla'; titulo?: string; texto: string }
 

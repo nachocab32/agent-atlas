@@ -11,9 +11,9 @@ interface FilaDistintivosProps {
 // se muestra igual como distintivo, con un borde punteado para no confundirlo
 // visualmente con Producción o Experimental.
 const claseMadurez: Record<MadurezDocumento, string> = {
-  production: 'border-transparent bg-green-100 text-accent',
-  experimental: 'border-border text-muted-foreground',
-  beta: 'border-dashed border-border text-muted-foreground',
+  production: 'border-accent/30 bg-card text-accent',
+  experimental: 'border-border bg-card text-muted-foreground',
+  beta: 'border-dashed border-border bg-card text-muted-foreground',
 }
 
 export function FilaDistintivos({ madurez, tags }: FilaDistintivosProps) {
@@ -31,7 +31,7 @@ export function FilaDistintivos({ madurez, tags }: FilaDistintivosProps) {
       {tags.map((tag) => (
         <span
           key={tag}
-          className="rounded-full border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground"
+          className="rounded-full border border-border bg-card px-2.5 py-1 text-xs font-medium text-muted-foreground"
         >
           {tag}
         </span>
