@@ -1,0 +1,105 @@
+// Contenido extraído del portal real de Atlas (localhost:3000) el 8 de septiembre de 2026.
+// "API de gestion de colabroadores con AD" conserva las dos erratas del portal real
+// ("gestion" sin tilde, "colabroadores") — corregirlas alteraría el contenido de la fuente.
+import type { Activo } from '@/types/catalogo'
+import { crearApi } from './catalogo-apis-helpers'
+
+export const activosApisProduction: Activo[] = [
+  crearApi('stock-online-easy-api', 'API de Consulta de Stock Easy', 'inventory-management', 'mdh', 'production', [
+    'openapi',
+    'rest',
+    'mdh',
+    'cl',
+    'ventas',
+    'productos',
+    'stockonline',
+  ]),
+  crearApi(
+    'stockonlinedelta-easy-api',
+    'API de Consulta de Stockonlinedelta Easy',
+    'inventory-management',
+    'mdh',
+    'production',
+    ['openapi', 'rest', 'mdh', 'cl', 'ventas', 'productos', 'stockonlinedelta'],
+  ),
+  crearApi(
+    'colaboradores-ad-api',
+    'API de gestion de colabroadores con AD',
+    'information-security',
+    'mc',
+    'production',
+    ['openapi', 'rest', 'mc', 'cl', 'activedirectory'],
+  ),
+  crearApi(
+    'clientes-svoc-api',
+    'API de Obtener Clientes - SVOC',
+    'customer-relations-management',
+    'crm',
+    'production',
+    ['openapi', 'rest', 'crm', 'cl', 'clientes'],
+  ),
+  crearApi(
+    'pedidos-actualizar-api',
+    'API para actualizar información de los pedidos',
+    'order-management',
+    'txd',
+    'production',
+    ['openapi', 'rest', 'txd', 'cl', 'ordenes', 'ordenescliente'],
+  ),
+  crearApi('precios-api', 'API para consultar información de precios', 'pricing-management', 'sm', 'production', [
+    'openapi',
+    'rest',
+    'sm',
+    'cl',
+    'articulos',
+    'precios',
+  ]),
+  crearApi(
+    'clientes-tiendas-promociones-api',
+    'API para consultar y actualizar información de clientes',
+    'promotions-management',
+    'sm',
+    'production',
+    ['openapi', 'rest', 'sm', 'cl', 'tiendas', 'promociones', 'clientes'],
+  ),
+  crearApi(
+    'pedidos-electro-cd-api',
+    'API para generar pedidos de electro con despacho desde CD',
+    'order-management',
+    'sm',
+    'production',
+    ['openapi', 'rest', 'sm', 'ar', 'ventas', 'tiendas', 'presupuestos'],
+  ),
+  crearApi(
+    'solicitudes-servicio-siebel-api',
+    'API para la creación de Solicitudes de Servicio (SR) en Siebel',
+    'customer-management',
+    'mc',
+    'production',
+    ['openapi', 'rest', 'mdh', 'cl', 'siebel', 'solicitudes-servicio'],
+  ),
+  crearApi(
+    'eventos-despacho-logistica-api',
+    'API para la recepción de eventos de despacho provenientes de plataformas logísticas de última milla',
+    'order-management',
+    'txd',
+    'production',
+    ['openapi', 'rest', 'mdh', 'cl', 'logistica', 'productos', 'pedidos'],
+  ),
+  crearApi(
+    'ventas-transacciones-api',
+    'API para registrar transacciones de venta',
+    'sales-management',
+    'txd',
+    'production',
+    ['openapi', 'rest', 'txd', 'cl', 'bo', 'transacciones', 'venta'],
+  ),
+  crearApi(
+    'notificaciones-pedidos-api',
+    'API utilizada para registrar notificaciones del procesamiento de pedidos',
+    'order-management',
+    'sm',
+    'production',
+    ['openapi', 'rest', 'sm', 'pe', 'ventas', 'ordenes', 'pedidos', 'notificaciones'],
+  ),
+]

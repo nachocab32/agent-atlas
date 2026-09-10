@@ -1,0 +1,78 @@
+/* Atlas light theme. Values are mapped from input/design-tokens.md. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap');
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@theme {
+  --color-green-950: #0b5340; --color-green-900: #0d5e49; --color-green-700: #12805f;
+  --color-green-600: #0f6b53; --color-green-100: #e3f3ee; --color-green-50: #f0f9f6;
+  --color-neutral-950: #0a0f1e; --color-neutral-700: #3a4756; --color-neutral-500: #5a6b7c;
+  --color-neutral-300: #d7dce3; --color-neutral-200: #dde1e8; --color-neutral-100: #eef0f4;
+  --color-neutral-50: #f4f6fb; --color-white: #fff;
+  --color-violet-100: #ede7fb; --color-violet-600: #6d4bd8;
+  --color-teal-100: #e3f0ec; --color-teal-600: #0b7256;
+  --color-amber-100: #f6ede0; --color-amber-600: #7a5410;
+  --color-rose-100: #fbe7ea; --color-rose-600: #c81e47;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-heading: 'Space Grotesk', var(--font-sans);
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* Standard shadcn semantic contract, expressed only with Atlas tokens. */
+:root {
+  --canvas: #f8f8f8; --bg-surface: #fff; --bg-surface-hover: rgba(15, 23, 42, 0.05);
+  --text-main: #0a0f1e; --text-muted: #5a6b7c; --atlas-primary: #0f6b53;
+  --primary-dim: rgba(18, 132, 99, 0.12); --atlas-border: rgba(15, 23, 42, 0.12);
+  --background: var(--canvas); --foreground: var(--text-main);
+  --card: var(--bg-surface); --card-foreground: var(--text-main);
+  --popover: var(--bg-surface); --popover-foreground: var(--text-main);
+  --primary: var(--atlas-primary); --primary-foreground: #fff;
+  --secondary: var(--bg-surface-hover); --secondary-foreground: var(--text-main);
+  --muted: var(--bg-surface-hover); --muted-foreground: var(--text-muted);
+  /* Atlas used `accent` as its green action token before shadcn was introduced.
+     Keep that compatibility for existing feature components; new primitives use
+     `secondary`/`muted` for quiet hover surfaces. */
+  --accent: var(--atlas-primary); --accent-foreground: #fff;
+  --destructive: #c81e47; --destructive-foreground: #fff;
+  --border: var(--atlas-border); --input: var(--atlas-border); --ring: var(--atlas-primary);
+  --radius: 0.75rem;
+  --sidebar: var(--bg-surface); --sidebar-foreground: var(--text-main);
+  --sidebar-primary: var(--atlas-primary); --sidebar-primary-foreground: #fff;
+  --sidebar-accent: var(--primary-dim); --sidebar-accent-foreground: var(--atlas-primary);
+  --sidebar-border: var(--atlas-border); --sidebar-ring: var(--atlas-primary); --sidebar-muted: var(--text-muted);
+  --chart-1: #0f6b53; --chart-2: #0b7256; --chart-3: #6d4bd8; --chart-4: #7a5410; --chart-5: #c81e47;
+  --space-0: 0; --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem; --space-4: 1rem;
+  --space-5: 1.25rem; --space-6: 1.5rem; --space-8: 2rem; --space-10: 2.5rem; --space-12: 3rem; --space-16: 4rem;
+  --elevation-1: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.16); --elevation-2: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.2);
+  --focus-ring-width: 0.1875rem; --focus-ring-offset: 0.125rem;
+}
+
+@theme inline {
+  --color-canvas: var(--canvas); --color-background: var(--background); --color-foreground: var(--foreground);
+  --color-card: var(--card); --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover); --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary); --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary); --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted); --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent); --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive); --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border); --color-input: var(--input); --color-ring: var(--ring);
+  --color-sidebar: var(--sidebar); --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary); --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent); --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border); --color-sidebar-ring: var(--sidebar-ring);
+  --color-chart-1: var(--chart-1); --color-chart-2: var(--chart-2); --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4); --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) * 0.6); --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius); --radius-xl: calc(var(--radius) * 1.4);
+}
+
+@layer base {
+  * { @apply border-border outline-ring/50; }
+  html { font-family: var(--font-sans); }
+  body { @apply bg-background text-foreground; }
+  h1, h2, h3, h4 { font-family: var(--font-heading); }
+  ::selection { background: var(--primary-dim); color: var(--text-main); }
+  :focus-visible { outline-width: var(--focus-ring-width); outline-offset: var(--focus-ring-offset); }
+}

@@ -1,0 +1,20 @@
+<svg width="110" height="100" viewBox="0 0 110 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="paint0_linear_1_19" x1="18" y1="92" x2="82" y2="8" gradientUnits="userSpaceOnUse">
+<stop stop-color="#0666D8"/>
+<stop offset="0.55" stop-color="#0A84FF"/>
+<stop offset="1" stop-color="#10D7C4"/>
+</linearGradient>
+<linearGradient id="paint1_linear_1_19" x1="14" y1="92" x2="48" y2="8" gradientUnits="userSpaceOnUse">
+<stop stop-color="#008A7B"/>
+<stop offset="1" stop-color="#10D7C4"/>
+</linearGradient>
+<clipPath id="atlasRoundClipV3">
+<path d="M 13.33 84.66 L 42.50 11.50 C 44.5 6.5 48.5 5.05 53.50 5.05 L 66.90 5.01 Q 70.50 5.00 71.76 8.37 L 100.24 84.68 Q 101.50 88.05 97.90 88.05 L 80.60 88.05 Q 77.00 88.05 75.93 84.61 L 58.83 29.67 Q 58.00 27.00 56.86 29.56 L 42.64 61.49 Q 41.50 64.05 40.38 66.61 L 32.45 84.70 Q 31.00 88.00 27.40 88.00 L 15.60 88.00 Q 12.00 88.00 13.33 84.66 Z"/>
+</clipPath>
+</defs>
+<g clip-path="url(#atlasRoundClipV3)">
+<path d="M12 88L42.5 11.5C44.5 6.5 48.5 5.04996 53.5 5.04996L70.5 5L101.499 88.05H77L58 27L41.5 64.05L31 88L12 88Z" fill="url(#paint0_linear_1_19)"/>
+<path d="M42 12C44 7 48 5 53 5H67L58 27L31 88H12L42 12Z" fill="url(#paint1_linear_1_19)"/>
+</g>
+</svg>
