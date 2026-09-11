@@ -62,7 +62,7 @@ export const filtroTipoOpciones: { valor: 'todos' | TipoActivo; label: string }[
 
 export const accionPrimariaPorTipo: Record<TipoActivo, { etiqueta: string; comportamiento: 'chat' | 'contenido' }> = {
   arquetipo: { etiqueta: 'Hablar de esto', comportamiento: 'chat' },
-  skill: { etiqueta: 'Usar', comportamiento: 'chat' },
+  skill: { etiqueta: 'Ver requisitos', comportamiento: 'contenido' },
   agente: { etiqueta: 'Usar', comportamiento: 'chat' },
   'mcp-server': { etiqueta: 'Ver cómo conectarlo', comportamiento: 'chat' },
   api: { etiqueta: 'Ver contrato', comportamiento: 'contenido' },

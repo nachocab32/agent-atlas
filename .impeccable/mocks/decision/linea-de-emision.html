@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>Atlas — La Línea de Emisión</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --charcoal:#201F1D; --charcoal-2:#2A2A28; --bone:#E7E2D5; --bone-dim:#A9A398;
+    --sodium:#E8B93A; --line:rgba(231,226,213,0.14);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--charcoal);color:var(--bone);font-family:'IBM Plex Mono',monospace;}
+  header{padding:48px 64px 26px;border-bottom:1px solid var(--line)}
+  .kicker{font:500 11px/1 'IBM Plex Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:var(--sodium)}
+  h1{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:36px;margin:10px 0 8px;letter-spacing:-.01em}
+  .sub{font-size:13.5px;color:var(--bone-dim);max-width:600px;line-height:1.6}
+  nav.filters{display:flex;gap:0;margin-top:26px}
+  nav.filters span{font:500 11px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--bone-dim);
+    padding:8px 18px;border-bottom:1px solid var(--line)}
+  nav.filters span.on{color:var(--sodium);border-bottom:2px solid var(--sodium)}
+  main{padding:50px 64px 90px;position:relative}
+  .rail{position:absolute;left:118px;top:50px;bottom:90px;width:1px;background:var(--bone-dim);opacity:.35}
+  .rows{display:flex;flex-direction:column}
+  .row{display:grid;grid-template-columns:96px 1px 1fr;align-items:start;padding:22px 0;border-bottom:1px solid var(--line)}
+  .row:last-child{border-bottom:none}
+  .tick{font:400 11px/1 'IBM Plex Mono',monospace;color:var(--bone-dim);padding-top:2px;text-align:right;padding-right:16px}
+  .stem{width:1px;align-self:stretch;background:var(--bone-dim);opacity:.6;position:relative}
+  .stem::before{content:'';position:absolute;left:-3px;top:6px;width:7px;height:1px;background:var(--bone-dim)}
+  .stem.live{background:var(--sodium);opacity:1;width:2px}
+  .stem.live::before{background:var(--sodium);width:9px;left:-4px;height:2px}
+  .content{padding-left:22px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:start}
+  .familia{font:500 10px/1 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--bone-dim)}
+  h3{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:18px;margin:6px 0 8px;color:var(--bone)}
+  p.desc{font-size:12.5px;line-height:1.6;color:var(--bone-dim);margin:0;max-width:520px}
+  .state{text-align:right;white-space:nowrap}
+  .state .label{font:500 10px/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--bone-dim)}
+  .state .mark{display:block;margin-top:8px;height:2px;background:var(--bone-dim);opacity:.5}
+  .state.live .label{color:var(--sodium)}
+  .state.live .mark{height:3px;background:var(--sodium);opacity:1;box-shadow:0 0 0 3px rgba(232,185,58,.15)}
+  .state.dashed .mark{background:transparent;border-top:2px dashed var(--bone-dim);height:0}
+  .footer-note{margin-top:44px;font-size:11.5px;line-height:1.6;color:var(--bone-dim);max-width:560px;padding-left:118px}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">Comp de dirección · no producción</div>
+  <h1>Aceleradores</h1>
+  <p class="sub">Un riel calibrado. El estado no vive en el color: vive en el trazo — su grosor, su guion, su doblez.</p>
+  <nav class="filters">
+    <span class="on">Todos</span><span>Arquetipo</span><span>Skill</span><span>Agente</span><span>MCP server</span><span>API</span>
+  </nav>
+</header>
+<main>
+  <div class="rail"></div>
+  <div class="rows">
+
+    <div class="row">
+      <div class="tick">01 · ARQ</div>
+      <div class="stem live"></div>
+      <div class="content">
+        <div>
+          <div class="familia">Architecture Team</div>
+          <h3>Data Pipeline — Infrastructure as Code</h3>
+          <p class="desc">Terraform con IAM, Step Functions, AppConfig, Secrets Manager, EventBridge, S3, SNS, KMS y Lambda Layer.</p>
+        </div>
+        <div class="state live"><span class="label">Activo</span><span class="mark"></span></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="tick">02 · SKL</div>
+      <div class="stem"></div>
+      <div class="content">
+        <div>
+          <div class="familia">Cencosud Design &amp; UX · v2.2</div>
+          <h3>deck-gen</h3>
+          <p class="desc">Genera presentaciones, decks y diapositivas on-brand a partir de contenido, en themes intercambiables.</p>
+        </div>
+        <div class="state"><span class="label">Estable</span><span class="mark"></span></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="tick">03 · SKL</div>
+      <div class="stem"></div>
+      <div class="content">
+        <div>
+          <div class="familia">Cencosud Design &amp; UX · v1.0</div>
+          <h3>ITDS Board Composer</h3>
+          <p class="desc">Construye boards en Penpot desde lenguaje natural con componentes y tokens reales del IT DS.</p>
+        </div>
+        <div class="state dashed"><span class="label">Requiere MCP</span><span class="mark"></span></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="tick">04 · AGT</div>
+      <div class="stem"></div>
+      <div class="content">
+        <div>
+          <div class="familia">CoE Utils · v1.0</div>
+          <h3>Cenco Writer</h3>
+          <p class="desc">Convierte requerimientos en Historias de Usuario, Issues y Tareas listas para Jira.</p>
+        </div>
+        <div class="state"><span class="label">Estable</span><span class="mark"></span></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="tick">05 · MCP</div>
+      <div class="stem live"></div>
+      <div class="content">
+        <div>
+          <div class="familia">COE DevEx · 3 tools</div>
+          <h3>MCP AI-Workflow</h3>
+          <p class="desc">Conecta tu IDE a este servidor para leer y actualizar work items de Jira contra los criterios de aceptación.</p>
+        </div>
+        <div class="state live"><span class="label">Activo</span><span class="mark"></span></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="tick">06 · API</div>
+      <div class="stem"></div>
+      <div class="content">
+        <div>
+          <div class="familia">Equipo MC · production</div>
+          <h3>API de gestión de colaboradores con AD</h3>
+          <p class="desc">Gestión de colaboradores integrada con Active Directory. Contrato OpenAPI disponible.</p>
+        </div>
+        <div class="state"><span class="label">Estable</span><span class="mark"></span></div>
+      </div>
+    </div>
+
+  </div>
+  <p class="footer-note">Dirección: LA LÍNEA DE EMISIÓN — un solo riel calibrado gobierna todo; el amarillo sodio es la única tinta viva, reservada al estado activo.</p>
+</main>
+</body>
+</html>

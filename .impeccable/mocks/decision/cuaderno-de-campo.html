@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>Atlas — El Cuaderno de Campo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bone:#F2EBDD; --bone-dim:#E9E0CC; --ink:#211C16; --ink-soft:#4B443A;
+    --cochineal:#9C2B2B; --ochre:#B8863B; --graphite:#6B6558;
+    --line:rgba(33,28,22,0.22);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bone);color:var(--ink);font-family:'IBM Plex Sans',sans-serif;
+    background-image:
+      repeating-linear-gradient(180deg, rgba(33,28,22,0.025) 0 1px, transparent 1px 32px);
+  }
+  header{padding:56px 64px 28px;border-bottom:2px solid var(--ink)}
+  .kicker{font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--cochineal)}
+  h1{font-family:'Newsreader',serif;font-weight:500;font-size:44px;margin:10px 0 6px;letter-spacing:-.01em}
+  .sub{font-size:15px;color:var(--ink-soft);max-width:640px;line-height:1.5}
+  nav.filters{display:flex;gap:2px;margin-top:28px;flex-wrap:wrap}
+  nav.filters span{font:500 12px/1 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;
+    padding:9px 16px;border:1px solid var(--ink);border-right:none;color:var(--ink-soft)}
+  nav.filters span:last-child{border-right:1px solid var(--ink)}
+  nav.filters span.on{background:var(--ink);color:var(--bone)}
+  main{padding:40px 64px 80px}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--ink);border-left:1px solid var(--ink)}
+  .card{border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:26px 24px;position:relative;background:var(--bone);transition:background .15s}
+  .card:hover{background:var(--bone-dim)}
+  .plate{position:absolute;top:20px;right:22px;font:400 11px/1 'IBM Plex Mono',monospace;color:var(--graphite)}
+  .icon{width:30px;height:30px;margin-bottom:16px}
+  .icon svg{width:100%;height:100%;stroke:var(--ink);fill:none;stroke-width:1.1}
+  .familia{font:500 10px/1 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--graphite);margin-bottom:10px}
+  h3{font-family:'Newsreader',serif;font-weight:600;font-size:21px;margin:0 0 10px;letter-spacing:-.005em}
+  p.desc{font-size:13.5px;line-height:1.55;color:var(--ink-soft);margin:0 0 18px;min-height:62px}
+  .meta{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding-top:14px}
+  .responsable{font:400 12px/1 'IBM Plex Mono',monospace;color:var(--ink-soft)}
+  .stamp{display:inline-flex;align-items:center;gap:6px;font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;
+    border:1.5px solid var(--cochineal);color:var(--cochineal);padding:5px 9px;border-radius:2px;transform:rotate(-2deg)}
+  .stamp.ochre{border-color:var(--ochre);color:var(--ochre);transform:rotate(1.5deg)}
+  .stamp.pencil{border:1.5px dashed var(--graphite);color:var(--graphite);transform:rotate(-1deg)}
+  .footer-note{margin-top:36px;font:400 12px/1.6 'IBM Plex Mono',monospace;color:var(--graphite);max-width:520px}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">Comp de dirección · no producción</div>
+  <h1>Aceleradores</h1>
+  <p class="sub">Especímenes de ingeniería y diseño ya resueltos, clasificados por familia y etapa del ciclo CencoFlow. Cada plancha documenta un ejemplar listo para reutilizar.</p>
+  <nav class="filters">
+    <span class="on">Todos</span><span>Arquetipo</span><span>Skill</span><span>Agente</span><span>MCP server</span><span>API</span>
+  </nav>
+</header>
+<main>
+  <div class="grid">
+
+    <div class="card">
+      <div class="plate">PL. 01</div>
+      <div class="icon"><svg viewBox="0 0 24 24"><path d="M4 4h7l2 2h7v14H4z"/><path d="M4 4v16"/></svg></div>
+      <div class="familia">Arquetipo · Architecture Team</div>
+      <h3>Data Pipeline — Infrastructure as Code</h3>
+      <p class="desc">Genera un proyecto Terraform con infraestructura complementaria para un pipeline de datos: IAM, Step Functions, AppConfig, Secrets Manager, EventBridge, S3, SNS, KMS y Lambda Layer.</p>
+      <div class="meta">
+        <span class="responsable">Architecture Team</span>
+        <span class="stamp">Cumplido</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="plate">PL. 02</div>
+      <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 2l2.2 6.8H21l-5.6 4.1 2.2 6.8-5.6-4.1-5.6 4.1 2.2-6.8L3 8.8h6.8z"/></svg></div>
+      <div class="familia">Skill · Cencosud Design &amp; UX</div>
+      <h3>deck-gen</h3>
+      <p class="desc">Genera presentaciones, decks, slides y diapositivas on-brand a partir del contenido del usuario. Cubre reportes, pitches, cursos y propuestas en themes intercambiables.</p>
+      <div class="meta">
+        <span class="responsable">v2.2</span>
+        <span class="stamp">Cumplido</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="plate">PL. 03</div>
+      <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 2l2.2 6.8H21l-5.6 4.1 2.2 6.8-5.6-4.1-5.6 4.1 2.2-6.8L3 8.8h6.8z"/></svg></div>
+      <div class="familia">Skill · Cencosud Design &amp; UX</div>
+      <h3>ITDS Board Composer</h3>
+      <p class="desc">Construye boards completos en Penpot desde lenguaje natural, usando exclusivamente componentes y tokens reales del IT DS de Cencosud.</p>
+      <div class="meta">
+        <span class="responsable">v1.0</span>
+        <span class="stamp ochre">Requiere MCP</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="plate">PL. 04</div>
+      <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg></div>
+      <div class="familia">Agente · CoE Utils</div>
+      <h3>Cenco Writer</h3>
+      <p class="desc">Convierte requerimientos en lenguaje natural en Historias de Usuario, Issues y Tareas listas para Jira.</p>
+      <div class="meta">
+        <span class="responsable">v1.0</span>
+        <span class="stamp pencil">Sin verificar</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="plate">PL. 05</div>
+      <div class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="6" rx="1"/><rect x="3" y="14" width="18" height="6" rx="1"/><circle cx="7" cy="7" r=".6" fill="var(--ink)"/><circle cx="7" cy="17" r=".6" fill="var(--ink)"/></svg></div>
+      <div class="familia">MCP server · COE DevEx</div>
+      <h3>MCP AI-Workflow</h3>
+      <p class="desc">Conecta tu IDE compatible (Windsurf, Cursor) a este servidor para leer y actualizar work items de Jira y validar tareas contra los criterios de aceptación.</p>
+      <div class="meta">
+        <span class="responsable">3 tools</span>
+        <span class="stamp">Cumplido</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="plate">PL. 06</div>
+      <div class="icon"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg></div>
+      <div class="familia">API · Equipo MC</div>
+      <h3>API de gestión de colaboradores con AD</h3>
+      <p class="desc">Gestión de colaboradores integrada con Active Directory. Contrato OpenAPI disponible, en producción.</p>
+      <div class="meta">
+        <span class="responsable">production</span>
+        <span class="stamp">Cumplido</span>
+      </div>
+    </div>
+
+  </div>
+  <p class="footer-note">Dirección: EL CUADERNO DE CAMPO — cada acelerador clasificado como espécimen, un único rojo cochinilla reservado para lo confirmado; lo no verificado se marca en lápiz, nunca en rojo ni en verde.</p>
+</main>
+</body>
+</html>

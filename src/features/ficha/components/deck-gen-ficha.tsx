@@ -57,7 +57,7 @@ export function DeckGenFicha({ activo }: { activo: Activo }) {
 
   return (
     <div className="mx-auto flex max-w-5xl flex-col gap-6">
-      <EncabezadoFicha activo={activo} tipoLabel={tipoActivoLabel[activo.tipo]} accionPrimaria={<Button onClick={() => abrirChat()}>Usar</Button>} />
+      <EncabezadoFicha activo={activo} tipoLabel={tipoActivoLabel[activo.tipo]} accionPrimaria={<Button onClick={() => setTab('instalar')}>Ver instalación</Button>} />
       <div className="grid grid-cols-[minmax(0,1fr)_14rem] gap-8 max-md:grid-cols-1">
         <Tabs value={tab} onValueChange={setTab}>
           <TabsList className="max-sm:w-full max-sm:overflow-x-auto">

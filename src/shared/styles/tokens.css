@@ -1,5 +1,7 @@
-/* Atlas light theme. Values are mapped from input/design-tokens.md. */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap');
+/* Atlas light theme — "Estilo Perplexity": sobrio, casi monocromo, bordes finos
+   en vez de sombras, sidebar y contenido en dos tonos de blanco cálido, un
+   único acento vivo (verde Atlas). Ver DESIGN.md. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
@@ -7,23 +9,23 @@
 @theme {
   --color-green-950: #0b5340; --color-green-900: #0d5e49; --color-green-700: #12805f;
   --color-green-600: #0f6b53; --color-green-100: #e3f3ee; --color-green-50: #f0f9f6;
-  --color-neutral-950: #0a0f1e; --color-neutral-700: #3a4756; --color-neutral-500: #5a6b7c;
-  --color-neutral-300: #d7dce3; --color-neutral-200: #dde1e8; --color-neutral-100: #eef0f4;
-  --color-neutral-50: #f4f6fb; --color-white: #fff;
+  --color-neutral-950: #1c1b1a; --color-neutral-700: #4a4640; --color-neutral-500: #6b6863;
+  --color-neutral-300: #d8d5ce; --color-neutral-200: #e8e6e1; --color-neutral-100: #f0eee9;
+  --color-neutral-50: #fdfcfa; --color-white: #fff;
   --color-violet-100: #ede7fb; --color-violet-600: #6d4bd8;
   --color-teal-100: #e3f0ec; --color-teal-600: #0b7256;
   --color-amber-100: #f6ede0; --color-amber-600: #7a5410;
   --color-rose-100: #fbe7ea; --color-rose-600: #c81e47;
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-heading: 'Space Grotesk', var(--font-sans);
+  --font-heading: var(--font-sans);
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 }
 
 /* Standard shadcn semantic contract, expressed only with Atlas tokens. */
 :root {
-  --canvas: #f8f8f8; --bg-surface: #fff; --bg-surface-hover: rgba(15, 23, 42, 0.05);
-  --text-main: #0a0f1e; --text-muted: #5a6b7c; --atlas-primary: #0f6b53;
-  --primary-dim: rgba(18, 132, 99, 0.12); --atlas-border: rgba(15, 23, 42, 0.12);
+  --canvas: #fdfcfa; --bg-surface: #fff; --bg-surface-hover: rgba(26, 23, 18, 0.055);
+  --text-main: #1c1b1a; --text-muted: #6b6863; --atlas-primary: #0f6b53;
+  --primary-dim: rgba(18, 132, 99, 0.12); --atlas-border: rgba(26, 23, 18, 0.12);
   --background: var(--canvas); --foreground: var(--text-main);
   --card: var(--bg-surface); --card-foreground: var(--text-main);
   --popover: var(--bg-surface); --popover-foreground: var(--text-main);
@@ -37,14 +39,18 @@
   --destructive: #c81e47; --destructive-foreground: #fff;
   --border: var(--atlas-border); --input: var(--atlas-border); --ring: var(--atlas-primary);
   --radius: 0.75rem;
-  --sidebar: var(--bg-surface); --sidebar-foreground: var(--text-main);
+  /* El sidebar es un segundo tono, más apagado que el canvas — nunca el mismo
+     blanco que el contenido. Esa costura es la marca del registro elegido. */
+  --sidebar: #f3f1ec; --sidebar-foreground: var(--text-main);
   --sidebar-primary: var(--atlas-primary); --sidebar-primary-foreground: #fff;
-  --sidebar-accent: var(--primary-dim); --sidebar-accent-foreground: var(--atlas-primary);
+  --sidebar-accent: rgba(26, 23, 18, 0.06); --sidebar-accent-foreground: var(--text-main);
   --sidebar-border: var(--atlas-border); --sidebar-ring: var(--atlas-primary); --sidebar-muted: var(--text-muted);
   --chart-1: #0f6b53; --chart-2: #0b7256; --chart-3: #6d4bd8; --chart-4: #7a5410; --chart-5: #c81e47;
   --space-0: 0; --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem; --space-4: 1rem;
   --space-5: 1.25rem; --space-6: 1.5rem; --space-8: 2rem; --space-10: 2.5rem; --space-12: 3rem; --space-16: 4rem;
-  --elevation-1: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.16); --elevation-2: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.2);
+  /* Elevación casi imperceptible a propósito: este registro separa superficies
+     con bordes de 1px, no con sombra. Ver DESIGN.md. */
+  --elevation-1: 0 1px 2px rgba(26, 23, 18, 0.05); --elevation-2: 0 1px 2px rgba(26, 23, 18, 0.04), 0 8px 20px -8px rgba(26, 23, 18, 0.08);
   --focus-ring-width: 0.1875rem; --focus-ring-offset: 0.125rem;
 }
 

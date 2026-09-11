@@ -27,7 +27,7 @@ export function EncabezadoFicha({ activo, tipoLabel, accionPrimaria }: Encabezad
 
       <div className="mt-3 flex items-start justify-between gap-4">
         <div className="flex items-start gap-3">
-          <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent/5 text-accent">
+          <span className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-border bg-card text-foreground">
             <Icono className="size-5" />
           </span>
           <div>

@@ -17,15 +17,15 @@ export function EtapaCelda({ etapa, conteo, seleccionada, onSeleccionar }: Etapa
       type="button"
       onClick={onSeleccionar}
       className={cn(
-        'flex flex-col items-start gap-2 rounded-xl border border-border bg-card p-3 text-left transition-colors hover:border-primary/25 hover:bg-primary/5',
-        seleccionada && 'border-primary/30 bg-accent',
+        'flex flex-col items-start gap-2 rounded-xl border border-border bg-card p-3 text-left transition-colors hover:border-foreground/20 hover:bg-muted',
+        seleccionada && 'border-foreground bg-muted',
       )}
     >
-      <Icono className={cn('size-4', seleccionada ? 'text-accent-foreground' : 'text-muted-foreground')} />
-      <p className={cn('text-sm font-medium', seleccionada ? 'text-accent-foreground' : 'text-foreground')}>
+      <Icono className="size-4 text-foreground" />
+      <p className="text-sm font-medium text-foreground">
         {etapa.nombre}
       </p>
-      <p className={cn('text-xs', seleccionada ? 'text-primary-foreground/80' : 'text-muted-foreground')}>{conteo} activos</p>
+      <p className="text-xs text-muted-foreground">{conteo} activos</p>
     </button>
   )
 }

@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>Atlas — Estándar sobrio y elegante</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --canvas:#F7F7F9; --card:#FFFFFF; --border:rgba(15,23,42,.08); --border-soft:rgba(15,23,42,.05);
+    --ink:#0A0F1E; --muted:#5A6B7C; --muted-dim:#8B95A3;
+    --primary:#0F6B53; --primary-soft:#E3F3EE;
+    --rose:#C81E47; --rose-soft:#FBE7EA;
+    --teal:#0B7256; --teal-soft:#E3F0EC;
+    --violet:#6D4BD8; --violet-soft:#EDE7FB;
+    --amber:#7A5410; --amber-soft:#F6EDE0;
+    --shadow: 0 1px 2px rgba(15,23,42,.04), 0 16px 32px -12px rgba(15,23,42,.10);
+    --shadow-sm: 0 1px 2px rgba(15,23,42,.04);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--canvas);color:var(--ink);font-family:'Inter',sans-serif;
+    background-image: linear-gradient(180deg, rgba(15,107,83,0.06), transparent 140px);
+  }
+  .shell{display:flex;min-height:100vh}
+
+  /* Sidebar */
+  aside{width:236px;flex-shrink:0;background:var(--card);border-right:1px solid var(--border-soft);padding:20px 16px;display:flex;flex-direction:column}
+  .brand{display:flex;align-items:center;gap:9px;padding:6px 8px 22px}
+  .brand .mark{width:22px;height:22px;border-radius:6px;background:var(--primary);display:flex;align-items:center;justify-content:center}
+  .brand .mark svg{width:13px;height:13px;fill:#fff}
+  .brand b{font-size:14.5px;font-weight:700;letter-spacing:-.01em}
+  .brand span{font-size:10px;color:var(--muted-dim);display:block;margin-top:-2px;letter-spacing:.02em}
+  nav.main{display:flex;flex-direction:column;gap:1px;margin-bottom:22px}
+  nav.main a{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:9px;font-size:13.5px;font-weight:500;color:var(--muted);text-decoration:none}
+  nav.main a svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.6}
+  nav.main a.active{background:var(--primary-soft);color:var(--primary);font-weight:600}
+  .section-label{font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-dim);padding:14px 10px 8px}
+  .chat-item{display:flex;flex-direction:column;gap:1px;padding:7px 10px;border-radius:9px;font-size:12.5px}
+  .chat-item b{font-weight:500;color:var(--ink);font-size:12.5px}
+  .chat-item span{color:var(--muted-dim);font-size:11px}
+
+  /* Main */
+  main{flex:1;padding:44px 56px 90px;max-width:1180px}
+  header{margin-bottom:30px}
+  .kicker{font:600 11px/1 'Inter';letter-spacing:.08em;text-transform:uppercase;color:var(--primary);margin-bottom:10px}
+  h1{font-size:32px;font-weight:700;letter-spacing:-.02em;margin:0 0 8px}
+  .sub{font-size:14.5px;color:var(--muted);max-width:560px;line-height:1.6;margin:0}
+  nav.filters{display:flex;gap:8px;margin-top:24px;flex-wrap:wrap}
+  nav.filters span{font-size:13px;font-weight:500;color:var(--muted);padding:7px 14px;border-radius:999px;border:1px solid transparent}
+  nav.filters span.on{background:var(--ink);color:#fff}
+  nav.filters span:not(.on){border-color:var(--border)}
+
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}
+  .card{background:var(--card);border:1px solid var(--border-soft);border-radius:18px;padding:22px;box-shadow:var(--shadow-sm);transition:box-shadow .18s, transform .18s}
+  .card:hover{box-shadow:var(--shadow);transform:translateY(-1px)}
+  .card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px}
+  .chip{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .chip svg{width:17px;height:17px;stroke-width:1.7;fill:none}
+  .chip.arq{background:var(--primary-soft)} .chip.arq svg{stroke:var(--primary)}
+  .chip.skl{background:var(--violet-soft)} .chip.skl svg{stroke:var(--violet)}
+  .chip.agt{background:var(--amber-soft)} .chip.agt svg{stroke:var(--amber)}
+  .chip.mcp{background:var(--teal-soft)} .chip.mcp svg{stroke:var(--teal)}
+  .chip.api{background:var(--rose-soft)} .chip.api svg{stroke:var(--rose)}
+  .tipo{font-size:11px;font-weight:600;letter-spacing:.02em;color:var(--muted-dim)}
+  h3{font-size:16px;font-weight:600;margin:0 0 8px;letter-spacing:-.005em}
+  p.desc{font-size:13px;line-height:1.55;color:var(--muted);margin:0 0 18px;min-height:58px}
+  .meta{display:flex;align-items:center;justify-content:space-between;padding-top:14px;border-top:1px solid var(--border-soft)}
+  .responsable{font-size:12px;color:var(--muted-dim);font-weight:500}
+  .badge{font-size:11px;font-weight:600;padding:4px 9px;border-radius:999px}
+  .badge.ok{background:var(--primary-soft);color:var(--primary)}
+  .badge.warn{background:var(--amber-soft);color:var(--amber)}
+  .badge.pending{background:#F1F1F4;color:var(--muted)}
+
+  .footer-note{margin-top:36px;font-size:12.5px;line-height:1.6;color:var(--muted-dim);max-width:560px}
+</style>
+</head>
+<body>
+<div class="shell">
+  <aside>
+    <div class="brand">
+      <span class="mark"><svg viewBox="0 0 24 24"><path d="M12 2L2 20h20z"/></svg></span>
+      <div><b>ATLAS</b><span>Digital Product Accelerator</span></div>
+    </div>
+    <nav class="main">
+      <a href="#"><svg viewBox="0 0 24 24"><path d="M4 12l8-7 8 7M6 10v10h12V10"/></svg>CencoFlow</a>
+      <a href="#" class="active"><svg viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg>Aceleradores</a>
+      <a href="#"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 4v16"/></svg>Guías</a>
+      <a href="#"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7"/><rect x="13" y="4" width="7" height="7"/><rect x="4" y="13" width="7" height="7"/><rect x="13" y="13" width="7" height="7"/></svg>Plataforma</a>
+    </nav>
+    <div class="section-label">Chats recientes</div>
+    <div class="chat-item"><b>Observabilidad en mi app</b><span>Ayer</span></div>
+    <div class="chat-item"><b>Trazas lentas en pago</b><span>Ayer</span></div>
+    <div class="chat-item"><b>Alertas de alta latencia</b><span>2 días</span></div>
+  </aside>
+
+  <main>
+    <header>
+      <div class="kicker">Comp de dirección · no producción</div>
+      <h1>Aceleradores</h1>
+      <p class="sub">Activos listos para usar en tu producto: arquetipos, skills, agentes, servidores MCP y APIs.</p>
+      <nav class="filters">
+        <span class="on">Todos</span><span>Arquetipo</span><span>Skill</span><span>Agente</span><span>MCP server</span><span>API</span>
+      </nav>
+    </header>
+
+    <div class="grid">
+
+      <div class="card">
+        <div class="card-top">
+          <span class="chip arq"><svg viewBox="0 0 24 24"><path d="M4 4h7l2 2h7v14H4z"/></svg></span>
+          <span class="tipo">ARQUETIPO</span>
+        </div>
+        <h3>Data Pipeline — Infrastructure as Code</h3>
+        <p class="desc">Genera un proyecto Terraform con infraestructura complementaria para un pipeline de datos: IAM, Step Functions, AppConfig, Secrets Manager, EventBridge, S3, SNS, KMS y Lambda Layer.</p>
+        <div class="meta"><span class="responsable">Architecture Team</span><span class="badge ok">Cumplido</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <span class="chip skl"><svg viewBox="0 0 24 24"><path d="M12 2l2.2 6.8H21l-5.6 4.1 2.2 6.8-5.6-4.1-5.6 4.1 2.2-6.8L3 8.8h6.8z"/></svg></span>
+          <span class="tipo">SKILL</span>
+        </div>
+        <h3>deck-gen</h3>
+        <p class="desc">Genera presentaciones, decks, slides y diapositivas on-brand a partir del contenido del usuario, en identidades visuales intercambiables.</p>
+        <div class="meta"><span class="responsable">Cencosud Design &amp; UX · v2.2</span><span class="badge ok">Cumplido</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <span class="chip skl"><svg viewBox="0 0 24 24"><path d="M12 2l2.2 6.8H21l-5.6 4.1 2.2 6.8-5.6-4.1-5.6 4.1 2.2-6.8L3 8.8h6.8z"/></svg></span>
+          <span class="tipo">SKILL</span>
+        </div>
+        <h3>ITDS Board Composer</h3>
+        <p class="desc">Construye boards completos en Penpot desde lenguaje natural, usando exclusivamente componentes y tokens reales del IT DS de Cencosud.</p>
+        <div class="meta"><span class="responsable">Cencosud Design &amp; UX · v1.0</span><span class="badge warn">Requiere MCP</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <span class="chip agt"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg></span>
+          <span class="tipo">AGENTE</span>
+        </div>
+        <h3>Cenco Writer</h3>
+        <p class="desc">Convierte requerimientos en lenguaje natural en Historias de Usuario, Issues y Tareas listas para Jira.</p>
+        <div class="meta"><span class="responsable">CoE Utils · v1.0</span><span class="badge pending">Sin verificar</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <span class="chip mcp"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="6" rx="1.5"/><rect x="3" y="14" width="18" height="6" rx="1.5"/></svg></span>
+          <span class="tipo">MCP SERVER</span>
+        </div>
+        <h3>MCP AI-Workflow</h3>
+        <p class="desc">Conecta tu IDE compatible (Windsurf, Cursor) a este servidor para leer y actualizar work items de Jira y validar tareas contra los criterios de aceptación.</p>
+        <div class="meta"><span class="responsable">COE DevEx · 3 tools</span><span class="badge ok">Cumplido</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <span class="chip api"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg></span>
+          <span class="tipo">API</span>
+        </div>
+        <h3>API de gestión de colaboradores con AD</h3>
+        <p class="desc">Gestión de colaboradores integrada con Active Directory. Contrato OpenAPI disponible, en producción.</p>
+        <div class="meta"><span class="responsable">Equipo MC · production</span><span class="badge ok">Cumplido</span></div>
+      </div>
+
+    </div>
+
+    <p class="footer-note">Dirección: ESTÁNDAR SOBRIO — la misma paleta y tipografía que ya tiene Atlas (Inter, verde corporativo, categóricos teal/violeta/ámbar), ejecutada con la pulcritud de un SaaS de analítica moderno: sombras casi imperceptibles, radios generosos, blancos de verdad y un único acento vivo.</p>
+  </main>
+</div>
+</body>
+</html>

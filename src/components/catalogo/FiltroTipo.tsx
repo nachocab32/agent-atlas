@@ -16,8 +16,8 @@ export function FiltroTipo({ opciones, valorSeleccionado, onSeleccionar }: Filtr
           type="button"
           onClick={() => onSeleccionar(opcion.valor)}
           className={cn(
-            'rounded-full border border-border bg-card px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:border-primary/25 hover:bg-muted',
-            opcion.valor === valorSeleccionado && 'border-primary/30 bg-accent text-accent-foreground',
+            'rounded-full border border-border bg-card px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:border-foreground/20 hover:bg-muted',
+            opcion.valor === valorSeleccionado && 'border-foreground bg-foreground text-background',
           )}
         >
           {opcion.label}
