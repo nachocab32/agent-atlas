@@ -3,14 +3,15 @@
 //
 // equiposUsando, fechaIncorporacion y aplicaAlStack son 0 / false para los activos
 // sin dato real ni mock previo equivalente. No se fabricó ninguna métrica.
-// Ver contenido-real-atlas-extraido.md para el detalle de qué campo viene de qué fuente.
-//
-// version: el documento fuente no trae número de versión para ningún skill salvo deck-gen (2.2).
-// Se usa '1.0' como placeholder para los demás — no es un dato real, es un valor neutro.
 //
 // enCencoFlow queda vacío en los 7: el portal real no organiza Skills por etapa de CencoFlow.
-// pruebalo, contenido y requisitos quedan vacíos donde el documento fuente no trae ese detalle
-// para el skill (solo deck-gen tiene las cuatro secciones completas en la fuente).
+// contenido queda con una sola línea (resumen) para las 6 skills de esta tanda — el detalle
+// real (fricción, activación, archivos, video, mantenedor, relaciones) vive en
+// src/data/ficha-skill.ts, cargado por la plantilla FichaSkillGuia.
+//
+// Contenido real del portal Atlas (localhost:3000), extraído el 10 de septiembre de 2026.
+// Fichas de Skills, Agente Cenco Writer y MCP Servers. No modificar sin verificar contra
+// la fuente. Arquetipos queda fuera: sin fuente real disponible.
 import type { Activo } from '@/types/catalogo'
 
 const responsableDesignUx = { nombre: 'Cencosud Design & UX', area: 'Design & UX', iniciales: 'DU' }
@@ -78,17 +79,23 @@ export const activosSkills: Activo[] = [
     id: 'itds-board-composer',
     nombre: 'ITDS Board Composer',
     tipo: 'skill',
-    version: '1.0',
+    version: '1.5',
     descripcion: 'Construye boards completos en Penpot a partir de una descripción en lenguaje natural con el IT DS.',
     descripcionLarga:
-      'Construye boards completos en Penpot a partir de una descripción en lenguaje natural con el IT DS.',
+      'Construye boards completos en Penpot a partir de una descripción en lenguaje natural, usando exclusivamente los componentes y tokens reales del IT DS de Cencosud.',
     categorias: ['Diseño & UX', 'tool', 'core', 'claude', 'penpot'],
     equiposUsando: 0,
     aplicaAlStack: false,
     fechaIncorporacion: '2026-09-08',
     fechaActualizacion: '2026-09-08',
     responsable: responsableDesignUx,
-    pruebalo: [],
+    pruebalo: [
+      {
+        id: 'p1',
+        texto:
+          "Diseña un login mobile con el IT DS. Debe tener: campo de email, campo de contraseña, checkbox de 'Recordarme' y dos botones en el footer: 'Ingresar' (primario) y 'Crear cuenta' (secundario).",
+      },
+    ],
     contenido: ['Construye boards completos en Penpot a partir de una descripción en lenguaje natural con el IT DS.'],
     enCencoFlow: [],
     requisitos: [],
@@ -100,8 +107,8 @@ export const activosSkills: Activo[] = [
     version: '1.0',
     descripcion: 'Genera pantallas y flujos en React + CSS variables con el IT DS, inspeccionando Penpot vía MCP.',
     descripcionLarga:
-      'Genera pantallas y flujos en React + CSS variables con el IT DS, inspeccionando Penpot vía MCP.',
-    categorias: ['Diseño & UX', 'tool', 'core', 'claude', 'penpot'],
+      'Construye pantallas web y flujos interactivos en React + CSS variables usando exclusivamente los componentes del IT DS (459 componentes, 65 páginas), inspeccionando Penpot vía MCP. Sin HEX hardcodeados, sin librerías externas, sin componentes inventados.',
+    categorias: ['Diseño & UX', 'tool', 'production', 'claude', 'penpot'],
     equiposUsando: 0,
     aplicaAlStack: false,
     fechaIncorporacion: '2026-09-08',
@@ -116,9 +123,10 @@ export const activosSkills: Activo[] = [
     id: 'ux-heuristics-review',
     nombre: 'UX Heuristics Review',
     tipo: 'skill',
-    version: '1.0',
+    version: '2.0',
     descripcion: 'Evalúa interfaces con las 10 Heurísticas de Nielsen y genera un informe exportable.',
-    descripcionLarga: 'Evalúa interfaces con las 10 Heurísticas de Nielsen y genera un informe exportable.',
+    descripcionLarga:
+      'Evalúa una interfaz digital con las 10 heurísticas de Nielsen y entrega un informe profesional exportable a PDF, PowerPoint o Google Slides.',
     categorias: ['Diseño & UX', 'tool', 'core', 'claude'],
     equiposUsando: 0,
     aplicaAlStack: false,
@@ -134,9 +142,10 @@ export const activosSkills: Activo[] = [
     id: 'ea-principles-align-expert',
     nombre: 'EA Principles Align Expert',
     tipo: 'skill',
-    version: '1.0',
+    version: '0.x',
     descripcion: 'Evaluador de alineación arquitectónica contra los pilares de Cencosud.',
-    descripcionLarga: 'Evaluador de alineación arquitectónica contra los pilares de Cencosud.',
+    descripcionLarga:
+      'Evaluador de alineación arquitectónica contra los pilares definidos por Enterprise Architecture. Trabaja sobre descripciones de servicios, ADRs, diagramas o propuestas de cambio y entrega un reporte priorizado con score por principio, gaps detectados y remediaciones accionables.',
     categorias: ['Arq. & Backend', 'tool', 'experimental', 'core', 'antigravity'],
     equiposUsando: 0,
     aplicaAlStack: false,
@@ -152,12 +161,12 @@ export const activosSkills: Activo[] = [
     id: 'mmi-analyzer',
     nombre: 'MMI Analyzer',
     tipo: 'skill',
-    version: '1.0',
+    version: '0.1.0',
     descripcion:
       'Evaluación cuantitativa de deuda técnica en arquitectura con el Modularity Maturity Index: score 0–10 con hallazgos y remediaciones priorizadas.',
     descripcionLarga:
-      'Evaluación cuantitativa de deuda técnica en arquitectura con el Modularity Maturity Index: score 0–10 con hallazgos y remediaciones priorizadas.',
-    categorias: ['Arq. & Backend', 'tool', 'experimental', 'architecture', 'maturity', 'engineering', 'claude', 'kiro'],
+      'Evaluación cuantitativa de deuda técnica con el Modularity Maturity Index (MMI). Analiza código fuente en múltiples lenguajes, puntúa en 3 ejes y entrega un score de 0 a 10 con hallazgos y remediaciones priorizadas.',
+    categorias: ['Arq. & Backend', 'tool', 'experimental', 'community', 'architecture', 'maturity', 'engineering', 'claude', 'kiro'],
     equiposUsando: 0,
     aplicaAlStack: false,
     fechaIncorporacion: '2026-09-08',
@@ -176,8 +185,9 @@ export const activosSkills: Activo[] = [
     tipo: 'skill',
     version: '1.0',
     descripcion: 'Guía de implementación del logging corporativo de Cencosud.',
-    descripcionLarga: 'Guía de implementación del logging corporativo de Cencosud.',
-    categorias: ['Observabilidad', 'tool', 'experimental', 'core', 'antigravity'],
+    descripcionLarga:
+      'Experto en la Política de Logging Corporativa de Cencosud: niveles jerárquicos, redacción de mensajes, propagación de request_id y formatos de salida (JSON, CEF+logfmt, CLF).',
+    categorias: ['Observabilidad', 'tool', 'core', 'antigravity'],
     equiposUsando: 0,
     aplicaAlStack: false,
     fechaIncorporacion: '2026-09-08',

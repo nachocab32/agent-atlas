@@ -4,27 +4,191 @@ import { Check, Play } from 'lucide-react'
 import type { AppOutletContext } from '@/app/app-layout'
 import { EncabezadoFicha } from '@/components/ficha/EncabezadoFicha'
 import { PanelResponsable } from '@/components/ficha/PanelResponsable'
+import { PieFeedbackContenido } from '@/components/ficha/PieFeedbackContenido'
+import { TablaSimple } from '@/components/ficha/TablaSimple'
+import { fichaSkillDetallePorId } from '@/data/ficha-skill'
 import { tipoActivoLabel } from '@/data/catalogo'
 import { Button, Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui'
 import type { Activo } from '@/types/catalogo'
+import type { FichaSkillDetalle } from '@/types/ficha-skill'
 
-type Guia = { proposito: string; usar: [string, string][]; evitar: string[]; requisitos: string[]; entregas: string[]; video?: string; relacionada?: string }
-const guias: Record<string, Guia> = {
-  'itds-board-composer': { proposito: 'Construye boards completos en Penpot desde lenguaje natural usando exclusivamente componentes y tokens reales del IT DS de Cencosud.', usar: [['Pantalla + plataforma', 'Diseñame un login desktop'], ['Flujo de pantallas', 'Crea el flujo de checkout mobile'], ['Vista funcional', 'Arma un dashboard con tabla y filtros']], evitar: ['No genera código: entrega boards en Penpot.', 'No inventa componentes fuera de la librería IT DS.', 'Opera vía MCP de Penpot sobre el archivo IT DS Lab.'], requisitos: ['Librería IT DS activa y conectada.', 'Token Studio con los sets del IT DS cargados.', 'MCP de Penpot conectado en Claude Code.'], entregas: ['Board en Penpot mobile 375×812 o desktop 1280×832.', 'Flujos de múltiples pantallas en páginas de Penpot.', 'Tokens reales y textos de contenido, sin placeholders.', 'Reporte de test al finalizar cada build.'], video: '1207890025', relacionada: 'ITDS Code Forge' },
-  'itds-code-forge': { proposito: 'Genera pantallas y flujos en React + CSS variables usando exclusivamente componentes del IT DS, inspeccionando Penpot vía MCP.', usar: [['Pantalla única', 'Construye la pantalla de login'], ['Flujo', 'Construye el happy path de registro'], ['Editar pantalla', 'Agrega un Alert y ajusta el spacing'], ['Exportar', 'Exporta a Next.js o Vite']], evitar: ['No diseña en Penpot: consume el DS desde ahí.', 'No usa HEX hardcodeados, librerías externas ni componentes inventados.'], requisitos: ['Skill instalado en el proyecto.', 'MCP de Penpot con Access Token válido.', 'Archivo IT DS Lab accesible.', 'Node.js si se exporta a Next.js o Vite.'], entregas: ['Componente React funcional con interacciones.', 'Previsualización HTML standalone.', 'tokens.css con variables del IT DS.', 'components.css específico de la pantalla.'], relacionada: 'ITDS Board Composer' },
-  'ux-heuristics-review': { proposito: 'Evalúa una interfaz digital con las 10 heurísticas de Nielsen y entrega un informe profesional exportable.', usar: [['Feedback sobre screenshot', '¿Qué piensas de esta pantalla?'], ['Usabilidad', 'Evalúa este flujo con heurísticas'], ['URL o mockup', 'Revisa https://…'], ['Mejora', '¿Cómo mejoraría este diseño?']], evitar: ['No compensa screenshots de baja calidad: lo indica en el informe.', 'Entrega hallazgos accionables, no el rediseño ni el código.'], requisitos: ['Claude Code y acceso a ~/.claude/skills/.', 'Screenshot, URL, mockup o wireframe.', 'Contexto del flujo completo para una evaluación más precisa.'], entregas: ['Puntuación 0–10 por las 10 heurísticas.', 'Score global, top 3 problemas y fortalezas.', 'Mejoras concretas y accionables.', 'Exportación PDF, PowerPoint o Google Slides con WCAG AA.'], relacionada: 'ITDS Board Composer' },
-  'ea-principles-align-expert': { proposito: 'Evalúa una propuesta o servicio contra los principios de Enterprise Architecture de Cencosud y prioriza sus gaps.', usar: [['Evaluación', 'Evalúa esta propuesta contra los principios del CoE'], ['Auditoría', 'Audita este servicio antes del refactor'], ['Governance', 'Genera el 1-pager para el comité'], ['Arquetipos', 'Chequea si respeta los Arquetipos vigentes']], evitar: ['No inventa pilares: reporta principios no documentados como gap.', 'No mide modularidad de código: eso corresponde a MMI Analyzer.', 'No genera la solución; propone remediaciones.'], requisitos: ['ADR, diagrama C4, descripción de servicio o propuesta de cambio.', 'Acceso a Cencosud-IT y CencoSkills para instalarla.'], entregas: ['Puntaje global 0–10 ponderado por dimensión.', 'Score por principio: cumple, parcial o gap.', 'Top 3 riesgos y fortalezas.', 'Remediaciones desde quick wins a refactors.', 'Resumen ejecutivo cuando aplica.'], relacionada: 'MMI Analyzer' },
-  'mmi-analyzer': { proposito: 'Mide deuda técnica arquitectónica de forma repetible y devuelve un score MMI de 0 a 10 con hallazgos y remediaciones.', usar: [['Arquitectura', 'Evalúa la arquitectura de este proyecto'], ['Deuda técnica', 'Mide la deuda técnica del servicio'], ['Dependencias', '¿Hay ciclos entre módulos?'], ['Decisión', '¿Conviene refactorizar o reemplazar?']], evitar: ['No genera ni refactoriza código.', 'No evalúa principios del CoE: eso corresponde a EA Principles Align.', 'Cubre TypeScript, JavaScript, Python, Java, Go y Kotlin.'], requisitos: ['Python 3.8+ y lizard + networkx.', 'Acceso al código fuente, sin build outputs.', 'Opcional: architecture.json con capas y módulos.'], entregas: ['Score MMI 0–10 y desglose por categoría.', 'Score de 22 criterios.', 'Ciclos, capas violadas y clases oversized.', 'Reporte Markdown y JSON de métricas.', 'Zona de salud con acción recomendada.'], video: '1214081875', relacionada: 'EA Principles Align Expert' },
-  'logging-expert': { proposito: 'Aplica la Política de Logging Corporativa sobre un servicio: niveles, PII, request_id y formato por ambiente.', usar: [['Logging', 'Configura los logs según la política'], ['Framework', 'Usa winston con los niveles corporativos'], ['Auditoría', 'Revisa si este repo cumple la política'], ['Correlación', 'Propaga el request_id desde REST hasta Kafka']], evitar: ['No define la política corporativa: la aplica.', 'Requiere un logger jerárquico como winston o pino.'], requisitos: ['Servicio con logger jerárquico.', 'Acceso a Cencosud-IT y CencoSkills para instalarla.'], entregas: ['Auditoría de console.log, mensajes genéricos y PII.', 'Configuración con seis niveles corporativos.', 'Manejo de uncaughtException y unhandledRejection.', 'Propagación de request_id en APIs y mensajería.', 'Formato recomendado por ambiente.'] },
+function Titulo({ children }: { children: string }) {
+  return <h2 className="font-heading text-xl font-semibold text-foreground">{children}</h2>
 }
 
-function Titulo({ children }: { children: string }) { return <h2 className="font-heading text-xl font-semibold text-foreground">{children}</h2> }
-function Lista({ items }: { items: string[] }) { return <ul className="flex flex-col gap-3">{items.map((item) => <li key={item} className="flex gap-3 text-sm leading-relaxed text-foreground"><Check className="mt-0.5 size-4 shrink-0 text-primary" />{item}</li>)}</ul> }
+function Lista({ items }: { items: string[] }) {
+  return (
+    <ul className="flex flex-col gap-3">
+      {items.map((item) => (
+        <li key={item} className="flex gap-3 text-sm leading-relaxed text-foreground">
+          <Check className="mt-0.5 size-4 shrink-0 text-primary" />
+          {item}
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+function SeccionVideoSkill({ nombreActivo, video }: { nombreActivo: string; video: NonNullable<FichaSkillDetalle['video']> }) {
+  return (
+    <section className="overflow-hidden rounded-xl border border-border bg-card">
+      <div className="flex items-center justify-between gap-2 border-b border-border px-4 py-3">
+        <div className="flex items-center gap-2">
+          <Play className="size-4 text-primary" />
+          <h2 className="text-sm font-medium">Demo</h2>
+        </div>
+        <span className="text-xs text-muted-foreground">{video.duracion}</span>
+      </div>
+      <div className="aspect-video bg-muted">
+        {video.vimeoId ? (
+          <iframe className="size-full" src={`https://player.vimeo.com/video/${video.vimeoId}`} title={`Demo de ${nombreActivo}`} allow="autoplay; fullscreen; picture-in-picture" allowFullScreen />
+        ) : (
+          <div className="flex size-full items-center justify-center text-sm text-muted-foreground">Video sin embed configurado ({video.duracion})</div>
+        )}
+      </div>
+    </section>
+  )
+}
+
+function PestanaResumenSkill({ activo, detalle }: { activo: Activo; detalle: FichaSkillDetalle }) {
+  return (
+    <>
+      <section className="flex flex-col gap-4">
+        <Titulo>Qué hace este skill</Titulo>
+        <p className="leading-relaxed text-muted-foreground">{activo.descripcionLarga}</p>
+      </section>
+
+      {detalle.friccion && (
+        <section className="flex flex-col gap-4">
+          <Titulo>Fricción que resuelve</Titulo>
+          <p className="leading-relaxed text-muted-foreground">{detalle.friccion}</p>
+        </section>
+      )}
+
+      {detalle.video && <SeccionVideoSkill nombreActivo={activo.nombre} video={detalle.video} />}
+
+      {detalle.bloques?.map((bloque) => (
+        <section key={bloque.titulo} className="flex flex-col gap-4">
+          <Titulo>{bloque.titulo}</Titulo>
+          <Lista items={bloque.items} />
+        </section>
+      ))}
+
+      {detalle.tablas?.map((tabla) => (
+        <section key={tabla.titulo} className="flex flex-col gap-4">
+          <Titulo>{tabla.titulo}</Titulo>
+          <TablaSimple columnas={tabla.columnas} filas={tabla.filas} />
+        </section>
+      ))}
+
+      {detalle.relaciones && detalle.relaciones.length > 0 && (
+        <section className="flex flex-col gap-4">
+          <Titulo>Combínala con</Titulo>
+          <div className="flex flex-col gap-3">
+            {detalle.relaciones.map((relacion) => (
+              <div key={relacion.nombre} className="rounded-xl border border-border bg-card p-4">
+                <p className="text-sm font-medium text-foreground">{relacion.nombre}</p>
+                <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{relacion.frase}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {detalle.mantenedor && (
+        <section className="flex flex-col gap-4 rounded-xl border border-border bg-card p-4">
+          <h3 className="text-sm font-medium text-muted-foreground">Mantenedor</h3>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-foreground">
+            <span>{detalle.mantenedor.equipo}</span>
+            <span className="text-muted-foreground">Publicado el {detalle.mantenedor.fechaPublicacion}</span>
+            <span className="rounded-full border border-accent/30 px-2 py-0.5 text-xs font-medium text-accent">{detalle.mantenedor.estado}</span>
+          </div>
+        </section>
+      )}
+
+      {detalle.widgetUtilidad && <PieFeedbackContenido />}
+    </>
+  )
+}
+
+function PestanaUsarSkill({ detalle, onUsar }: { detalle: FichaSkillDetalle; onUsar: (texto: string) => void }) {
+  return (
+    <>
+      <section className="flex flex-col gap-4">
+        <Titulo>Cuándo se activa</Titulo>
+        <div className="flex flex-col gap-3">
+          {detalle.activacion.map((entrada) => (
+            <button
+              key={entrada.senal}
+              type="button"
+              onClick={() => onUsar(entrada.ejemplo)}
+              className="rounded-xl border border-border bg-card p-4 text-left transition-colors hover:border-primary/25 hover:bg-primary/5"
+            >
+              <p className="font-medium text-foreground">{entrada.senal}</p>
+              <p className="mt-1 text-sm text-muted-foreground">{entrada.ejemplo}</p>
+            </button>
+          ))}
+        </div>
+      </section>
+      <section className="rounded-xl border border-border bg-card p-4">
+        <h3 className="font-medium text-foreground">Cuándo no usarla</h3>
+        <div className="mt-4">
+          <Lista items={detalle.evitar} />
+        </div>
+      </section>
+    </>
+  )
+}
 
 export function FichaSkillGuia({ activo }: { activo: Activo }) {
-  const guia = guias[activo.id]
-  const { anclarActivo, enviar } = useOutletContext<AppOutletContext>(); const navigate = useNavigate(); const [tab, setTab] = useState('resumen')
-  if (!guia) return null
-  const usar = (texto?: string) => { anclarActivo({ id: activo.id, nombre: activo.nombre, version: activo.version }); if (texto) void enviar(texto); navigate('/') }
-  return <div className="mx-auto flex max-w-5xl flex-col gap-6"><EncabezadoFicha activo={activo} tipoLabel={tipoActivoLabel[activo.tipo]} accionPrimaria={<Button onClick={() => setTab('requisitos')}>Ver requisitos</Button>} /><div className="grid grid-cols-[minmax(0,1fr)_14rem] gap-8 max-md:grid-cols-1"><Tabs value={tab} onValueChange={setTab}><TabsList><TabsTrigger value="resumen">Resumen</TabsTrigger><TabsTrigger value="usar">Cuándo usar</TabsTrigger><TabsTrigger value="requisitos">Requisitos</TabsTrigger></TabsList><TabsContent value="resumen" className="flex flex-col gap-8"><section className="flex flex-col gap-4"><Titulo>Qué hace este skill</Titulo><p className="leading-relaxed text-muted-foreground">{guia.proposito}</p></section>{guia.video && <section className="overflow-hidden rounded-xl border border-border bg-card"><div className="flex items-center gap-2 border-b border-border px-4 py-3"><Play className="size-4 text-primary" /><h2 className="text-sm font-medium">Demo</h2></div><div className="aspect-video bg-muted"><iframe className="size-full" src={`https://player.vimeo.com/video/${guia.video}`} title={`Demo de ${activo.nombre}`} allow="autoplay; fullscreen; picture-in-picture" allowFullScreen /></div></section>}<section className="flex flex-col gap-4"><Titulo>Qué entrega</Titulo><Lista items={guia.entregas} /></section></TabsContent><TabsContent value="usar" className="flex flex-col gap-8"><section className="flex flex-col gap-4"><Titulo>Cuándo usarla</Titulo><div className="flex flex-col gap-3">{guia.usar.map(([senal, ejemplo]) => <button key={senal} type="button" onClick={() => usar(ejemplo)} className="rounded-xl border border-border bg-card p-4 text-left transition-colors hover:border-primary/25 hover:bg-primary/5"><p className="font-medium text-foreground">{senal}</p><p className="mt-1 text-sm text-muted-foreground">{ejemplo}</p></button>)}</div></section><section className="rounded-xl border border-border bg-card p-4"><h3 className="font-medium text-foreground">Cuándo no usarla</h3><div className="mt-4"><Lista items={guia.evitar} /></div></section></TabsContent><TabsContent value="requisitos" className="flex flex-col gap-6"><Titulo>Requisitos previos</Titulo><Lista items={guia.requisitos} />{guia.relacionada && <div className="rounded-xl border border-border bg-card p-4"><p className="text-xs font-medium text-muted-foreground">Skill relacionada</p><p className="mt-1 text-sm font-medium text-foreground">{guia.relacionada}</p></div>}</TabsContent></Tabs><aside className="max-md:order-first"><PanelResponsable responsable={activo.responsable} /></aside></div></div>
+  const detalle = fichaSkillDetallePorId[activo.id]
+  const { anclarActivo, enviar } = useOutletContext<AppOutletContext>()
+  const navigate = useNavigate()
+  const [tab, setTab] = useState('resumen')
+  if (!detalle) return null
+
+  const usar = (texto: string) => {
+    anclarActivo({ id: activo.id, nombre: activo.nombre, version: activo.version })
+    void enviar(texto)
+    navigate('/')
+  }
+
+  return (
+    <div className="mx-auto flex max-w-5xl flex-col gap-6">
+      <EncabezadoFicha activo={activo} tipoLabel={tipoActivoLabel[activo.tipo]} accionPrimaria={<Button onClick={() => setTab('requisitos')}>Ver requisitos</Button>} />
+      <div className="grid grid-cols-[minmax(0,1fr)_14rem] gap-8 max-md:grid-cols-1">
+        <Tabs value={tab} onValueChange={setTab}>
+          <TabsList className="max-sm:w-full max-sm:overflow-x-auto">
+            <TabsTrigger value="resumen">Resumen</TabsTrigger>
+            <TabsTrigger value="usar">Cuándo usar</TabsTrigger>
+            <TabsTrigger value="requisitos">Requisitos</TabsTrigger>
+            <TabsTrigger value="archivos">Archivos</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="resumen" className="flex flex-col gap-8">
+            <PestanaResumenSkill activo={activo} detalle={detalle} />
+          </TabsContent>
+
+          <TabsContent value="usar" className="flex flex-col gap-8">
+            <PestanaUsarSkill detalle={detalle} onUsar={usar} />
+          </TabsContent>
+
+          <TabsContent value="requisitos" className="flex flex-col gap-6">
+            <Titulo>Requisitos previos</Titulo>
+            <Lista items={detalle.requisitos} />
+          </TabsContent>
+
+          <TabsContent value="archivos" className="flex flex-col gap-6">
+            <Titulo>Archivos del skill</Titulo>
+            <pre className="overflow-x-auto rounded-xl border border-border bg-neutral-950 p-4 font-mono text-xs leading-relaxed text-white">
+              {[`skills/${activo.id}/`, ...detalle.archivos].join('\n')}
+            </pre>
+          </TabsContent>
+        </Tabs>
+        <aside className="max-md:order-first">
+          <PanelResponsable responsable={activo.responsable} />
+        </aside>
+      </div>
+    </div>
+  )
 }
