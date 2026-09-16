@@ -39,25 +39,8 @@ export function CencoflowPropuestaPage() {
           </TabsList>
         </Tabs>
 
-        <div className="grid grid-cols-[16rem_minmax(0,45rem)] items-start gap-10 max-md:grid-cols-1">
-          <aside className="sticky top-6 self-start rounded-xl border border-border bg-card p-4 max-md:static">
-            <div className="flex items-end justify-between gap-3">
-              <div><p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">Etapas del viaje</p><p className="mt-1 text-sm font-medium text-foreground">Paso {indice + 1} de {pasos.length}</p></div>
-              <span className="text-xs font-medium text-primary">{progreso}%</span>
-            </div>
-            <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-muted"><div className="h-full rounded-full bg-primary transition-all" style={{ width: `${progreso}%` }} /></div>
-            <nav className="mt-5 flex flex-col gap-5" aria-label="Pasos de Diseño">
-              {etapasViaje.map((etapa) => {
-                const activa = etapa.id === actual.etapa.id
-                return <section key={etapa.id}>
-                  <div className="flex items-center gap-2"><span className={`flex size-6 items-center justify-center rounded-full text-xs font-semibold ${activa ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'}`}>{etapa.numero}</span><p className={`text-xs font-medium ${activa ? 'text-foreground' : 'text-muted-foreground'}`}>{etapa.nombre}</p></div>
-                  <div className="mt-2 ml-3 border-l border-border pl-4">{etapa.pasos.map((paso) => <button key={paso.id} type="button" onClick={() => irA(paso.id)} className={`block w-full rounded-lg px-2 py-2 text-left text-sm transition-colors ${paso.id === pasoId ? 'bg-primary/5 font-medium text-primary' : 'text-muted-foreground hover:bg-muted hover:text-foreground'}`}>{paso.etiqueta}{paso.id === pasoId && <span className="ml-2 text-[10px] font-semibold tracking-wide uppercase">Actual</span>}</button>)}</div>
-                </section>
-              })}
-            </nav>
-          </aside>
-
-          <main className="flex min-w-0 flex-col gap-6">
+        <div className="grid grid-cols-[minmax(0,45rem)_16rem] items-start gap-10 max-md:grid-cols-1">
+          <main className="flex min-w-0 flex-col gap-6 max-md:order-1">
             <header className="border-b border-border pb-5">
               <p className="text-xs font-medium text-primary">Etapa {actual.etapa.numero} · {actual.etapa.nombre} · Paso {indice + 1} de {pasos.length}</p>
               <h2 className="mt-2 font-heading text-2xl font-semibold tracking-tight text-foreground">{actual.paso.etiqueta}</h2>
@@ -74,6 +57,23 @@ export function CencoflowPropuestaPage() {
               {siguiente ? <Button onClick={() => irA(siguiente.paso.id)}>{textoSiguiente}<ArrowRight className="size-4" /></Button> : <Button><CheckCircle2 className="size-4" />Finalizar Diseño</Button>}
             </footer>
           </main>
+
+          <aside className="sticky top-6 self-start rounded-xl border border-border bg-card p-4 max-md:static max-md:order-2">
+            <div className="flex items-end justify-between gap-3">
+              <div><p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">Etapas del viaje</p><p className="mt-1 text-sm font-medium text-foreground">Paso {indice + 1} de {pasos.length}</p></div>
+              <span className="text-xs font-medium text-primary">{progreso}%</span>
+            </div>
+            <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-muted"><div className="h-full rounded-full bg-primary transition-all" style={{ width: `${progreso}%` }} /></div>
+            <nav className="mt-5 flex flex-col gap-5" aria-label="Pasos de Diseño">
+              {etapasViaje.map((etapa) => {
+                const activa = etapa.id === actual.etapa.id
+                return <section key={etapa.id}>
+                  <div className="flex items-center gap-2"><span className={`flex size-6 items-center justify-center rounded-full text-xs font-semibold ${activa ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'}`}>{etapa.numero}</span><p className={`text-xs font-medium ${activa ? 'text-foreground' : 'text-muted-foreground'}`}>{etapa.nombre}</p></div>
+                  <div className="mt-2 ml-3 border-l border-border pl-4">{etapa.pasos.map((paso) => <button key={paso.id} type="button" onClick={() => irA(paso.id)} className={`block w-full rounded-lg px-2 py-2 text-left text-sm transition-colors ${paso.id === pasoId ? 'bg-primary/5 font-medium text-primary' : 'text-muted-foreground hover:bg-muted hover:text-foreground'}`}>{paso.etiqueta}{paso.id === pasoId && <span className="ml-2 text-[10px] font-semibold tracking-wide uppercase">Actual</span>}</button>)}</div>
+                </section>
+              })}
+            </nav>
+          </aside>
         </div>
       </div>
     </div>

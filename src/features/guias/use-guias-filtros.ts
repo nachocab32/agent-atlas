@@ -9,8 +9,8 @@ type Madurez = (typeof madurezGuiaOpciones)[number]
 // es un string tipo "Junio 2026" y solo 1 de 3 documentos lo tiene): único orden posible.
 export type OrdenGuia = 'nombre'
 
-export function useGuiasFiltros(documentos: DocumentoGuia[]) {
-  const [categoria, setCategoria] = useState<Categoria | 'todos'>('todos')
+export function useGuiasFiltros(documentos: DocumentoGuia[], categoriaInicial: Categoria | 'todos' = 'todos') {
+  const [categoria, setCategoria] = useState<Categoria | 'todos'>(categoriaInicial)
   const [madurez, setMadurez] = useState<Madurez | 'todos'>('todos')
   const [busqueda, setBusqueda] = useState('')
   const [orden, setOrden] = useState<OrdenGuia>('nombre')

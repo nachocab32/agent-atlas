@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router'
+import { useNavigate, useSearchParams } from 'react-router'
 import { GrillaDocumentos } from '@/components/documento/GrillaDocumentos'
 import { categoriaGuiaOpciones, documentosGuia, madurezGuiaLabel, madurezGuiaOpciones } from '@/data/documentos'
 import { useGuiasFiltros, type OrdenGuia } from '@/features/guias/use-guias-filtros'
@@ -36,8 +36,48 @@ function TabsCategoriaGuia({
   )
 }
 
+function VitrinaGuiasPorCategoria({
+  documentos,
+  onSeleccionarDocumento,
+  onVerTodo,
+}: {
+  documentos: DocumentoGuia[]
+  onSeleccionarDocumento: (documento: DocumentoGuia) => void
+  onVerTodo: (categoria: (typeof categoriaGuiaOpciones)[number]) => void
+}) {
+  return (
+    <div className="flex flex-col gap-8">
+      {categoriaGuiaOpciones.map((categoria) => {
+        const documentosCategoria = documentos.filter((documento) => documento.categorias.includes(categoria))
+        if (documentosCategoria.length === 0) return null
+
+        return (
+          <section key={categoria} aria-label={categoria}>
+            <div className="flex items-center justify-between gap-4">
+              <h2 className="text-xs font-medium tracking-wide text-muted-foreground uppercase">{categoria}</h2>
+              {documentosCategoria.length > 4 && (
+                <button type="button" onClick={() => onVerTodo(categoria)} className="text-xs font-medium text-primary underline-offset-4 hover:underline">
+                  Ver todo
+                </button>
+              )}
+            </div>
+            <div className="mt-3">
+              <GrillaDocumentos documentos={documentosCategoria.slice(0, 4)} onSeleccionarDocumento={onSeleccionarDocumento} />
+            </div>
+          </section>
+        )
+      })}
+    </div>
+  )
+}
+
 export function GuiasPage() {
   const navigate = useNavigate()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const categoriaParam = searchParams.get('categoria')
+  const categoriaInicial = categoriaGuiaOpciones.includes(categoriaParam as (typeof categoriaGuiaOpciones)[number])
+    ? (categoriaParam as (typeof categoriaGuiaOpciones)[number])
+    : 'todos'
   const {
     categoria,
     setCategoria,
@@ -50,7 +90,12 @@ export function GuiasPage() {
     documentosFiltrados,
     conteoMadurez,
     hayFiltrosActivos,
-  } = useGuiasFiltros(documentosGuia)
+  } = useGuiasFiltros(documentosGuia, categoriaInicial)
+
+  function seleccionarCategoria(nuevaCategoria: 'todos' | (typeof categoriaGuiaOpciones)[number]) {
+    setCategoria(nuevaCategoria)
+    setSearchParams(nuevaCategoria === 'todos' ? {} : { categoria: nuevaCategoria })
+  }
 
   function irADocumento(documento: DocumentoGuia) {
     const primeraPagina = documento.paginas[0]?.id
@@ -68,7 +113,7 @@ export function GuiasPage() {
         </div>
 
         <ToolbarCatalogo
-          tabs={<TabsCategoriaGuia categoria={categoria} onSeleccionar={setCategoria} />}
+          tabs={<TabsCategoriaGuia categoria={categoria} onSeleccionar={seleccionarCategoria} />}
           busqueda={busqueda}
           onBusquedaChange={setBusqueda}
           busquedaPlaceholder="Buscar por nombre"
@@ -90,6 +135,13 @@ export function GuiasPage() {
           onOrdenChange={setOrden}
         />
 
+        {categoria === 'todos' ? (
+          <VitrinaGuiasPorCategoria
+            documentos={documentosFiltrados}
+            onSeleccionarDocumento={irADocumento}
+            onVerTodo={seleccionarCategoria}
+          />
+        ) : (
         <section>
           <div className="flex items-center gap-2">
             <h2 className="text-xs font-medium tracking-wide text-muted-foreground uppercase">Documentos</h2>
@@ -101,6 +153,7 @@ export function GuiasPage() {
             <GrillaDocumentos documentos={documentosFiltrados} onSeleccionarDocumento={irADocumento} />
           </div>
         </section>
+        )}
       </div>
     </div>
   )

@@ -1,6 +1,5 @@
-import { ChevronDown, ChevronLeft } from 'lucide-react'
+import { ChevronDown } from 'lucide-react'
 import { useState } from 'react'
-import { Link } from 'react-router'
 import { cn } from '@/shared/lib/utils'
 import type { PaginaDocumento } from '@/types/documento'
 
@@ -22,11 +21,6 @@ export function IndiceTomaDeControl({ paginas, paginaActivaId, onSeleccionarPagi
 
   return (
     <div className="flex flex-col gap-5">
-      <Link to="/guias" className="inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground">
-        <ChevronLeft className="size-4" />
-        Volver a Guías
-      </Link>
-
       <h1 className="text-base font-semibold text-foreground">Toma de Control</h1>
 
       <nav aria-label="Índice de Toma de Control" className="border-y border-border py-2">

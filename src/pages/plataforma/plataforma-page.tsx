@@ -18,6 +18,32 @@ const tabs: { valor: 'todos' | TipoRadar; etiqueta: string }[] = [
   { valor: 'todos', etiqueta: 'Todos' }, { valor: 'tech', etiqueta: 'Tech Radars' }, { valor: 'hype', etiqueta: 'Hype Radars' },
 ]
 
+const etiquetaTipoRadar: Record<TipoRadar, string> = { tech: 'Tech Radars', hype: 'Hype Radars' }
+
+function GrillaRadares({ radares }: { radares: RadarItem[] }) {
+  return (
+    <div className="grid grid-cols-2 gap-3">
+      {radares.map((radar) => {
+        const Icono = radar.tipo === 'tech' ? Radar : Sparkles
+        return <button key={radar.id} type="button" className="flex min-h-48 flex-col items-start rounded-xl border border-border bg-card p-5 text-left transition-colors hover:border-primary/25 hover:bg-primary/5"><span className={cn('inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium', radar.tipo === 'tech' ? 'bg-blue-50 text-blue-500' : 'bg-amber-100 text-amber-600')}><Icono className="size-3" />{radar.tipo === 'tech' ? 'Tech Radar' : 'Hype Radar'}</span><h3 className="mt-4 text-lg font-semibold text-foreground">{radar.titulo}</h3><p className="mt-3 text-sm leading-relaxed text-muted-foreground">{radar.descripcion}</p><span className="mt-auto pt-5 text-sm font-medium text-primary">Abrir radar →</span></button>
+      })}
+    </div>
+  )
+}
+
+function VitrinaRadares({ radares, onVerTodo }: { radares: RadarItem[]; onVerTodo: (tipo: TipoRadar) => void }) {
+  return (
+    <div className="flex flex-col gap-8">
+      {(Object.keys(etiquetaTipoRadar) as TipoRadar[]).map((tipo) => {
+        const radaresTipo = radares.filter((radar) => radar.tipo === tipo)
+        if (radaresTipo.length === 0) return null
+
+        return <section key={tipo} aria-label={etiquetaTipoRadar[tipo]}><div className="flex items-center justify-between gap-4"><h2 className="text-xs font-medium tracking-wide text-muted-foreground uppercase">{etiquetaTipoRadar[tipo]}</h2>{radaresTipo.length > 4 && <button type="button" onClick={() => onVerTodo(tipo)} className="text-xs font-medium text-primary underline-offset-4 hover:underline">Ver todo</button>}</div><div className="mt-3"><GrillaRadares radares={radaresTipo.slice(0, 4)} /></div></section>
+      })}
+    </div>
+  )
+}
+
 export function PlataformaPage() {
   const [tipo, setTipo] = useState<'todos' | TipoRadar>('todos')
   const [busqueda, setBusqueda] = useState('')
@@ -29,7 +55,6 @@ export function PlataformaPage() {
       <div className="flex flex-wrap gap-2">{tabs.map((tab) => <button key={tab.valor} type="button" onClick={() => setTipo(tab.valor)} className={cn('rounded-full border border-border bg-card px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:border-foreground/20 hover:bg-muted', tipo === tab.valor && 'border-foreground bg-foreground text-background')}>{tab.etiqueta}</button>)}</div>
       <div className="flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1.5"><Search className="size-4 shrink-0 text-muted-foreground" /><Input value={busqueda} onChange={(event) => setBusqueda(event.target.value)} placeholder="Buscar radar" className="h-6 w-40 border-0 bg-transparent px-0 shadow-none focus-visible:ring-0" /></div>
     </div>
-    <section><div className="flex items-center gap-2"><h2 className="text-xs font-medium tracking-wide text-muted-foreground uppercase">{tipo === 'hype' ? 'Hype Radars' : tipo === 'tech' ? 'Tech Radars' : 'Radares tecnológicos'}</h2><span className="rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">{visibles.length}</span></div>
-      {visibles.length === 0 ? <p className="mt-3 text-sm text-muted-foreground">No encontramos radares que calcen con tu búsqueda.</p> : <div className="mt-3 grid grid-cols-2 gap-3">{visibles.map((radar) => { const Icono = radar.tipo === 'tech' ? Radar : Sparkles; return <button key={radar.id} type="button" className="flex min-h-48 flex-col items-start rounded-xl border border-border bg-card p-5 text-left transition-colors hover:border-primary/25 hover:bg-primary/5"><span className={cn('inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium', radar.tipo === 'tech' ? 'bg-blue-50 text-blue-500' : 'bg-amber-100 text-amber-600')}><Icono className="size-3" />{radar.tipo === 'tech' ? 'Tech Radar' : 'Hype Radar'}</span><h3 className="mt-4 text-lg font-semibold text-foreground">{radar.titulo}</h3><p className="mt-3 text-sm leading-relaxed text-muted-foreground">{radar.descripcion}</p><span className="mt-auto pt-5 text-sm font-medium text-primary">Abrir radar →</span></button> })}</div>}</section>
+    {visibles.length === 0 ? <p className="text-sm text-muted-foreground">No encontramos radares que calcen con tu búsqueda.</p> : tipo === 'todos' ? <VitrinaRadares radares={visibles} onVerTodo={setTipo} /> : <section><div className="flex items-center gap-2"><h2 className="text-xs font-medium tracking-wide text-muted-foreground uppercase">{etiquetaTipoRadar[tipo]}</h2><span className="rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">{visibles.length}</span></div><div className="mt-3"><GrillaRadares radares={visibles} /></div></section>}
   </div></div>
 }

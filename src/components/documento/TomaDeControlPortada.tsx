@@ -27,8 +27,14 @@ export function TomaDeControlPortada() {
   return (
     <div className="flex flex-col gap-12">
       <header className="max-w-3xl">
-        <BreadcrumbDocumento segmentos={['Guías', 'Gobierno', 'Toma de Control']} />
-        <h2 className="mt-6 text-xl font-semibold text-foreground">Toma de Control</h2>
+        <BreadcrumbDocumento
+          segmentos={[
+            { etiqueta: 'Guías', href: '/guias' },
+            { etiqueta: 'Gobierno', href: '/guias?categoria=Gobierno' },
+            { etiqueta: 'Toma de Control' },
+          ]}
+        />
+        <h2 className="mt-6 text-[40px] font-semibold leading-[1.2] tracking-[-2px] text-foreground">Toma de Control</h2>
         <div className="mt-6">
           <FilaDistintivos madurez="production" tags={['documentation', 'governance', 'operations']} />
         </div>

@@ -10,6 +10,7 @@
 // vienen del portal real.
 import type { DocumentoGuia } from '@/types/documento'
 import { tomaDeControlPropuesta } from './toma-de-control-propuesta'
+import { observabilidad } from './observabilidad'
 
 const detalleSecretScanning = {
   version: '2026.1',
@@ -27,6 +28,7 @@ const detalleCyberArk = {
 
 export const documentosGuia: DocumentoGuia[] = [
   tomaDeControlPropuesta,
+  observabilidad,
   {
     id: 'cyberark',
     titulo: 'Gestión de secretos con CyberArk',
@@ -534,7 +536,7 @@ export const documentosGuia: DocumentoGuia[] = [
   }, */
 ]
 
-export const categoriaGuiaOpciones = ['Gobierno', 'Seguridad', 'Operaciones'] as const
+export const categoriaGuiaOpciones = ['Gobierno', 'Seguridad', 'Operaciones', 'Observabilidad'] as const
 export const madurezGuiaOpciones = ['production', 'experimental'] as const
 
 export const madurezGuiaLabel: Record<DocumentoGuia['madurez'], string> = {

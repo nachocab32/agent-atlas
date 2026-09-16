@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router'
 import { EtapaCelda } from '@/components/catalogo/EtapaCelda'
 import { FiltroTipo } from '@/components/catalogo/FiltroTipo'
@@ -5,7 +6,7 @@ import { FiltrosApiExtra } from '@/components/catalogo/FiltrosApiExtra'
 import { GrillaActivos } from '@/components/catalogo/GrillaActivos'
 import { activoEtapaConfirmada, activos, etapasCencoFlow, filtroTipoOpciones, filtrosApiOpciones } from '@/data/catalogo'
 import { useCatalogoFiltros, type OrdenCatalogo } from '@/features/catalogo/use-catalogo-filtros'
-import { SeccionApisFiltros } from '@/features/catalogo/components/seccion-apis-filtros'
+import { SeccionApisFiltros, type VistaApis } from '@/features/catalogo/components/seccion-apis-filtros'
 import { SeccionSkillsPorCategoria } from '@/features/catalogo/components/seccion-skills-por-categoria'
 import { VitrinaPorTipo } from '@/features/catalogo/components/vitrina-por-tipo'
 import { useTranslation } from '@/i18n'
@@ -121,10 +122,16 @@ export function CatalogoPage() {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const filtros = useCatalogoFiltros(activos, activoEtapaConfirmada)
+  const [vistaApis, setVistaApis] = useState<VistaApis>('tarjetas')
   const { filtroTipo, setFiltroTipo, busqueda, setBusqueda, orden, setOrden, hayFiltrosActivos } = filtros
 
   function irAFicha(activo: Activo) {
     navigate(`/aceleradores/${activo.id}`)
+  }
+
+  function seleccionarTipo(tipo: 'todos' | TipoActivo) {
+    setFiltroTipo(tipo)
+    if (tipo === 'api') setVistaApis('tabla')
   }
 
   const mostrarVitrinaPorTipo = filtroTipo === 'todos'
@@ -141,7 +148,7 @@ export function CatalogoPage() {
         </div>
 
         <ToolbarCatalogo
-          tabs={<FiltroTipo opciones={filtroTipoOpciones} valorSeleccionado={filtroTipo} onSeleccionar={setFiltroTipo} />}
+          tabs={<FiltroTipo opciones={filtroTipoOpciones} valorSeleccionado={filtroTipo} onSeleccionar={seleccionarTipo} />}
           busqueda={busqueda}
           onBusquedaChange={setBusqueda}
           busquedaPlaceholder="Buscar por nombre"
@@ -156,7 +163,7 @@ export function CatalogoPage() {
           <VitrinaPorTipo
             activos={filtros.activosFiltrados}
             onSeleccionarActivo={irAFicha}
-            onVerTodo={setFiltroTipo}
+            onVerTodo={seleccionarTipo}
           />
         )}
 
@@ -165,7 +172,12 @@ export function CatalogoPage() {
         )}
 
         {mostrarFiltrosApi && (
-          <SeccionApisFiltros activosFiltrados={filtros.activosFiltrados} onSeleccionarActivo={irAFicha} />
+          <SeccionApisFiltros
+            activosFiltrados={filtros.activosFiltrados}
+            onSeleccionarActivo={irAFicha}
+            vista={vistaApis}
+            onCambiarVista={setVistaApis}
+          />
         )}
 
         {mostrarListaPorTipo && (

@@ -14,6 +14,11 @@ export interface PaginaDocumento {
   id: string
   titulo: string
   bajada?: string
+  // Agrupa páginas extensas en el índice lateral sin alterar la navegación
+  // lineal entre ellas.
+  seccion?: string
+  temaObservabilidad?: TemaObservabilidad
+  bibliotecaObservabilidad?: BibliotecaObservabilidad
   cuerpo: BloqueContenido[]
 }
 
@@ -40,3 +45,4 @@ export interface DocumentoGuia {
   // estructura de páginas extraída (no se inventa una).
   paginas: PaginaDocumento[]
 }
+import type { BibliotecaObservabilidad, TemaObservabilidad } from './observabilidad'
