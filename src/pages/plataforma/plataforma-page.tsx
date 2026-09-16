@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Radar, Search, Sparkles } from 'lucide-react'
-import { Input } from '@/shared/ui'
+import { Input, TarjetaCatalogo } from '@/shared/ui'
 import { cn } from '@/shared/lib/utils'
 
 type TipoRadar = 'tech' | 'hype'
@@ -22,10 +22,19 @@ const etiquetaTipoRadar: Record<TipoRadar, string> = { tech: 'Tech Radars', hype
 
 function GrillaRadares({ radares }: { radares: RadarItem[] }) {
   return (
-    <div className="grid grid-cols-2 gap-3">
+    <div className="grid grid-cols-2 gap-2">
       {radares.map((radar) => {
         const Icono = radar.tipo === 'tech' ? Radar : Sparkles
-        return <button key={radar.id} type="button" className="flex min-h-48 flex-col items-start rounded-xl border border-border bg-card p-5 text-left transition-colors hover:border-primary/25 hover:bg-primary/5"><span className={cn('inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium', radar.tipo === 'tech' ? 'bg-blue-50 text-blue-500' : 'bg-amber-100 text-amber-600')}><Icono className="size-3" />{radar.tipo === 'tech' ? 'Tech Radar' : 'Hype Radar'}</span><h3 className="mt-4 text-lg font-semibold text-foreground">{radar.titulo}</h3><p className="mt-3 text-sm leading-relaxed text-muted-foreground">{radar.descripcion}</p><span className="mt-auto pt-5 text-sm font-medium text-primary">Abrir radar →</span></button>
+        return (
+          <TarjetaCatalogo
+            key={radar.id}
+            icono={Icono}
+            titulo={radar.titulo}
+            descripcion={radar.descripcion}
+            metadata={radar.tipo === 'tech' ? 'Tech Radar' : 'Hype Radar'}
+            onSeleccionar={() => undefined}
+          />
+        )
       })}
     </div>
   )
