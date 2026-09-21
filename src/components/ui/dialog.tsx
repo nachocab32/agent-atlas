@@ -41,11 +41,11 @@ function DialogContent({ className, children, ...props }: DialogPrimitive.Popup.
 }
 
 function DialogTitle({ className, ...props }: DialogPrimitive.Title.Props) {
-  return <DialogPrimitive.Title className={cn('sr-only', className)} {...props} />
+  return <DialogPrimitive.Title className={className ?? 'sr-only'} {...props} />
 }
 
 function DialogDescription({ className, ...props }: DialogPrimitive.Description.Props) {
-  return <DialogPrimitive.Description className={cn('sr-only', className)} {...props} />
+  return <DialogPrimitive.Description className={className ?? 'sr-only'} {...props} />
 }
 
 export { Dialog, DialogContent, DialogDescription, DialogTitle }

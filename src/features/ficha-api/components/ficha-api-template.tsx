@@ -10,17 +10,19 @@ import { SeccionQuickstart } from '@/components/ficha-api/SeccionQuickstart'
 import { fichaApiDetallePorId } from '@/data/ficha-api'
 import type { Activo } from '@/types/catalogo'
 import { SECCIONES_FICHA_API, useIndiceScrollSpy } from '../use-indice-scroll-spy'
+import { useContextoFicha } from '@/features/referencia/contexto-ficha'
 
 interface FichaApiTemplateProps {
   activo: Activo
 }
 
 export function FichaApiTemplate({ activo }: FichaApiTemplateProps) {
+  useContextoFicha()
   const { seccionActiva, registrarSeccion, irASeccion } = useIndiceScrollSpy()
   const detalle = fichaApiDetallePorId[activo.id]
 
   return (
-    <div className="mx-auto flex max-w-5xl flex-col gap-6">
+    <div className="mx-auto flex max-w-5xl flex-col gap-[var(--space-content)]">
       <EncabezadoFichaApi
         dominio={activo.dominio ?? ''}
         activoId={activo.id}
@@ -32,8 +34,8 @@ export function FichaApiTemplate({ activo }: FichaApiTemplateProps) {
         tags={activo.tags ?? []}
       />
 
-      <div className="grid grid-cols-3 gap-8">
-        <div className="col-span-2 flex flex-col gap-8">
+      <div className="grid grid-cols-1 gap-[var(--space-section)] md:grid-cols-3">
+        <div className="flex flex-col gap-[var(--space-section)] md:col-span-2">
           <div ref={registrarSeccion('que-hace')} id="que-hace">
             <SeccionQueHace titulo={SECCIONES_FICHA_API[0].label} texto={detalle?.quePara ?? activo.descripcionLarga} />
           </div>
@@ -64,7 +66,7 @@ export function FichaApiTemplate({ activo }: FichaApiTemplateProps) {
           <PieFeedbackFichaApi />
         </div>
 
-        <div className="sticky top-4 self-start">
+        <div className="self-start md:sticky md:top-4">
           <IndiceFichaApi
             secciones={SECCIONES_FICHA_API}
             seccionActivaId={seccionActiva}

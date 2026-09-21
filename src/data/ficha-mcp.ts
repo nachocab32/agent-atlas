@@ -8,17 +8,17 @@ export const fichaMcpDetallePorId: Record<string, FichaMcpDetalle> = {
     tools: [
       {
         nombre: 'Refinamiento',
-        descripcion: 'Lee work items de Jira, enriquece la descripción, desglosa tareas, propone criterios y estima esfuerzo.',
+        descripcion: 'Lee work items de Jira y usa tu asistente para enriquecer la descripción, desglosar tareas, proponer criterios de aceptación y estimar el esfuerzo antes de comenzar el desarrollo.',
         acceso: 'Read / Write',
       },
       {
         nombre: 'Desarrollo',
-        descripcion: 'Accede al contexto completo del work item para que el asistente genere código, tests y documentación alineados.',
+        descripcion: 'Accede al contexto completo del work item desde tu IDE para que tu asistente genere código, tests y documentación alineados directamente con los requerimientos de la tarea.',
         acceso: 'Read',
       },
       {
         nombre: 'Validación',
-        descripcion: 'Contrasta el código generado contra los criterios de aceptación y actualiza el estado en Jira.',
+        descripcion: 'Contrasta el código o los entregables generados contra los criterios de aceptación del work item y actualiza el estado en Jira automáticamente al aprobar o rechazar la tarea.',
         acceso: 'Read / Write',
       },
     ],

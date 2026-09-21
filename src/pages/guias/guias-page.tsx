@@ -18,7 +18,7 @@ function TabsCategoriaGuia({
   const opciones = [{ valor: 'todos' as const, label: 'Todos' }, ...categoriaGuiaOpciones.map((valor) => ({ valor, label: valor }))]
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-[var(--space-control)]">
       {opciones.map((opcion) => (
         <button
           key={opcion.valor}
@@ -46,14 +46,14 @@ function VitrinaGuiasPorCategoria({
   onVerTodo: (categoria: (typeof categoriaGuiaOpciones)[number]) => void
 }) {
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-[var(--space-section)]">
       {categoriaGuiaOpciones.map((categoria) => {
         const documentosCategoria = documentos.filter((documento) => documento.categorias.includes(categoria))
         if (documentosCategoria.length === 0) return null
 
         return (
           <section key={categoria} aria-label={categoria}>
-            <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center justify-between gap-[var(--space-block)]">
               <h2 className="text-xs font-medium tracking-wide text-muted-foreground uppercase">{categoria}</h2>
               {documentosCategoria.length > 4 && (
                 <button type="button" onClick={() => onVerTodo(categoria)} className="text-xs font-medium text-primary underline-offset-4 hover:underline">
@@ -103,8 +103,8 @@ export function GuiasPage() {
   }
 
   return (
-    <div className="flex-1 overflow-y-auto px-6 py-8">
-      <div className="mx-auto flex max-w-4xl flex-col gap-8">
+    <main id="contenido-principal" className="flex-1 overflow-y-auto px-4 py-6 sm:px-6 sm:py-8">
+      <div className="mx-auto flex max-w-4xl flex-col gap-[var(--space-section)]">
         <div>
           <h1 className="text-2xl font-semibold text-foreground">Documentación</h1>
           <p className="mt-1 text-muted-foreground">
@@ -119,7 +119,7 @@ export function GuiasPage() {
           busquedaPlaceholder="Buscar por nombre"
           filtrosActivos={hayFiltrosActivos}
           filtros={
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-[var(--space-block)]">
               <FilaFacetaPildoras
                 etiqueta="Madurez"
                 opciones={madurezGuiaOpciones.map((m) => ({ valor: m, label: `${madurezGuiaLabel[m]} (${conteoMadurez[m]})` }))}
@@ -155,6 +155,6 @@ export function GuiasPage() {
         </section>
         )}
       </div>
-    </div>
+    </main>
   )
 }

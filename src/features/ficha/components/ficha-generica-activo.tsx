@@ -12,12 +12,14 @@ import { accionPrimariaPorTipo, etapasCencoFlow, tipoActivoLabel } from '@/data/
 import { useTranslation } from '@/i18n'
 import { Button, Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui'
 import type { Activo } from '@/types/catalogo'
+import { useContextoFicha } from '@/features/referencia/contexto-ficha'
 
 interface FichaGenericaActivoProps {
   activo: Activo
 }
 
 export function FichaGenericaActivo({ activo }: FichaGenericaActivoProps) {
+  const contexto = useContextoFicha()
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { anclarActivo, enviar } = useOutletContext<AppOutletContext>()
@@ -31,7 +33,7 @@ export function FichaGenericaActivo({ activo }: FichaGenericaActivoProps) {
   function abrirChat(consulta?: string) {
     anclarActivo({ id: activo.id, nombre: activo.nombre, version: activo.version })
     if (consulta) void enviar(consulta)
-    navigate('/')
+    if (contexto === 'pagina') navigate('/')
   }
 
   const accion = accionPrimariaPorTipo[activo.tipo]
@@ -43,11 +45,11 @@ export function FichaGenericaActivo({ activo }: FichaGenericaActivoProps) {
   )
 
   return (
-    <div className="mx-auto flex max-w-5xl flex-col gap-6">
-      <EncabezadoFicha activo={activo} tipoLabel={tipoActivoLabel[activo.tipo]} accionPrimaria={accionPrimaria} />
+    <div className="mx-auto flex max-w-5xl flex-col gap-[var(--space-content)]">
+      <EncabezadoFicha activo={activo} tipoLabel={tipoActivoLabel[activo.tipo]} accionPrimaria={contexto === 'pagina' ? accionPrimaria : null} />
 
-      <div className="grid grid-cols-3 gap-8">
-        <div className="col-span-2">
+      <div className="grid grid-cols-1 gap-[var(--space-section)] md:grid-cols-3">
+        <div className="md:col-span-2">
           <Tabs value={tabActiva} onValueChange={setTabActiva}>
             <TabsList>
               <TabsTrigger value="resumen">{t('ficha.resumen')}</TabsTrigger>
@@ -80,7 +82,7 @@ export function FichaGenericaActivo({ activo }: FichaGenericaActivoProps) {
           </Tabs>
         </div>
 
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-[var(--space-section)]">
           <PanelDondeAplica etapas={etapasResueltas} />
           <PanelResponsable responsable={activo.responsable} />
         </div>

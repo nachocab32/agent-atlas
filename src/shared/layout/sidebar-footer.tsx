@@ -14,7 +14,7 @@ export function SidebarFooter({ user, colapsado = false }: SidebarFooterProps) {
   return (
     <div className={`border-t border-sidebar-border pt-3 ${colapsado ? 'flex justify-center' : ''}`}>
       <div className={`flex items-center gap-2 px-1 ${colapsado ? '' : 'mt-3'}`}>
-        <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-neutral-950 text-sm font-medium text-white">
+          <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-[var(--primary-dim)] text-sm font-medium text-[var(--primary)]">
           {user.initial}
         </span>
         <span className={colapsado ? 'hidden' : 'min-w-0 flex-1'}>

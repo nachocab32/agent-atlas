@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-21T00:00:00-03:00",
+  "title": "Design System: Atlas",
+  "extensions": {
+    "colorMeta": {
+      "canvas": { "role": "neutral", "displayName": "Canvas cálido", "canonical": "#FDFCFA", "tonalRamp": ["#1C1B1A", "#4A4640", "#6B6863", "#D8D5CE", "#E8E6E1", "#F0EEE9", "#F3F1EC", "#FDFCFA"] },
+      "primary": { "role": "primary", "displayName": "Verde Atlas", "canonical": "#0F6B53", "tonalRamp": ["#0B5340", "#0D5E49", "#0F6B53", "#12805F", "#E3F3EE", "#F0F9F6", "#F7FCFA", "#FFFFFF"] }
+    },
+    "typographyMeta": {
+      "headline": { "displayName": "Titular Atlas", "purpose": "Títulos de página y secciones principales." },
+      "body": { "displayName": "Cuerpo Atlas", "purpose": "Lectura, controles y documentación." }
+    },
+    "shadows": [
+      { "name": "elevation-1", "value": "0 1px 2px rgba(26, 23, 18, 0.05)", "purpose": "Popovers y controles flotantes discretos." },
+      { "name": "elevation-2", "value": "0 1px 2px rgba(26, 23, 18, 0.04), 0 8px 20px -8px rgba(26, 23, 18, 0.08)", "purpose": "Capa flotante excepcional." }
+    ],
+    "motion": [{ "name": "state-standard", "value": "150ms ease-out", "purpose": "Transiciones de estado." }],
+    "breakpoints": [{ "name": "sm", "value": "640px" }, { "name": "md", "value": "768px" }, { "name": "lg", "value": "1024px" }]
+  },
+  "components": [
+    { "name": "Primary Button", "kind": "button", "refersTo": "button-primary", "description": "Acción primaria de una pantalla o flujo.", "html": "<button class=\"ds-btn-primary\">Continuar</button>", "css": ".ds-btn-primary{min-height:40px;padding:0 16px;border:1px solid transparent;border-radius:12px;background:#0F6B53;color:#FFF;font:500 14px Inter,system-ui,sans-serif;transition:background .15s ease-out}.ds-btn-primary:hover{background:#0D5E49}.ds-btn-primary:focus-visible{outline:3px solid rgba(15,107,83,.3);outline-offset:2px}" },
+    { "name": "Catalog Card", "kind": "card", "refersTo": "card", "description": "Unidad reutilizable para activos, guías y radares.", "html": "<article class=\"ds-card\"><strong>Nombre del activo</strong><span>Descripción y metadatos</span></article>", "css": ".ds-card{display:flex;flex-direction:column;gap:12px;padding:12px;border:1px solid rgba(26,23,18,.12);border-radius:12px;background:#FFF;color:#1C1B1A;font:400 14px/1.5 Inter,system-ui,sans-serif}.ds-card strong{font-weight:500}.ds-card span{color:#6B6863}.ds-card:hover{border-color:rgba(15,107,83,.25);background:rgba(15,107,83,.05)}" },
+    { "name": "Filter Chip", "kind": "chip", "description": "Filtro neutral; seleccionado con tinta cálida, no verde.", "html": "<button class=\"ds-chip\" aria-pressed=\"true\">Todos</button>", "css": ".ds-chip{min-height:36px;padding:0 12px;border:1px solid rgba(26,23,18,.12);border-radius:999px;background:#FFF;color:#6B6863;font:500 14px Inter,system-ui,sans-serif}.ds-chip:hover{background:rgba(26,23,18,.055)}.ds-chip:focus-visible{outline:3px solid rgba(15,107,83,.3);outline-offset:2px}.ds-chip[aria-pressed=\"true\"]{background:#1C1B1A;color:#FDFCFA}" },
+    { "name": "Text Input", "kind": "input", "description": "Campo de búsqueda o filtro con foco visible y texto móvil legible.", "html": "<input class=\"ds-input\" placeholder=\"Buscar en Atlas\">", "css": ".ds-input{box-sizing:border-box;width:100%;min-height:44px;padding:0 12px;border:1px solid rgba(26,23,18,.12);border-radius:12px;background:transparent;color:#1C1B1A;font:400 16px Inter,system-ui,sans-serif}.ds-input::placeholder{color:#6B6863}.ds-input:focus-visible{outline:3px solid rgba(15,107,83,.3);outline-offset:0}" },
+    { "name": "Sidebar Navigation", "kind": "nav", "description": "Navegación persistente desktop y drawer accesible móvil.", "html": "<nav class=\"ds-nav\"><a href=\"#\">Aceleradores</a><a class=\"ds-active\" href=\"#\">Guías</a></nav>", "css": ".ds-nav{display:grid;gap:4px;padding:12px;background:#F3F1EC;font:400 14px Inter,system-ui,sans-serif}.ds-nav a{padding:8px;border-radius:8px;color:#1C1B1A;text-decoration:none}.ds-nav a:hover,.ds-nav .ds-active{background:rgba(26,23,18,.06)}.ds-nav a:focus-visible{outline:3px solid rgba(15,107,83,.3);outline-offset:2px}" }
+  ],
+  "narrative": {
+    "northStar": "El instrumento de consulta sobrio",
+    "overview": "Atlas es una interfaz de trabajo, no una vitrina. Combina claridad editorial y densidad tranquila.",
+    "keyCharacteristics": ["Superficies planas y bordes hairline", "Un único acento funcional", "Ritmo espacial semántico", "Sidebar desktop y drawer móvil"],
+    "rules": [{ "name": "The One Accent Rule", "body": "No uses verde para colorear tarjetas, íconos de tipo ni decoración.", "section": "colors" }, { "name": "The Border-First Rule", "body": "Primero usa borde o fondo; la sombra sólo acompaña una capa flotante.", "section": "elevation" }],
+    "dos": ["Do usa los cinco roles espaciales antes de introducir un valor puntual.", "Do conserva foco visible, landmarks y etiquetas accesibles."],
+    "donts": ["Don't uses color categórico o verde como decoración.", "Don't ocultes controles por falta de espacio."]
+  }
+}

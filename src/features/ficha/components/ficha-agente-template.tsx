@@ -9,6 +9,7 @@ import { tipoActivoLabel } from '@/data/catalogo'
 import { Button } from '@/shared/ui'
 import type { Activo } from '@/types/catalogo'
 import type { VideoAgente } from '@/types/ficha-agente'
+import { useContextoFicha } from '@/features/referencia/contexto-ficha'
 
 function SeccionVideoAgente({ nombreActivo, video }: { nombreActivo: string; video: VideoAgente }) {
   const [videoCargado, setVideoCargado] = useState(false)
@@ -40,6 +41,7 @@ function SeccionVideoAgente({ nombreActivo, video }: { nombreActivo: string; vid
 }
 
 export function FichaAgenteTemplate({ activo }: { activo: Activo }) {
+  const contexto = useContextoFicha()
   const detalle = fichaAgenteDetallePorId[activo.id]
   const { anclarActivo, enviar } = useOutletContext<AppOutletContext>()
   const navigate = useNavigate()
@@ -48,12 +50,12 @@ export function FichaAgenteTemplate({ activo }: { activo: Activo }) {
   function usar() {
     anclarActivo({ id: activo.id, nombre: activo.nombre, version: activo.version })
     void enviar(detalle.ejemploUso)
-    navigate('/')
+    if (contexto === 'pagina') navigate('/')
   }
 
   return (
     <div className="mx-auto flex max-w-5xl flex-col gap-6">
-      <EncabezadoFicha activo={activo} tipoLabel={tipoActivoLabel[activo.tipo]} accionPrimaria={<Button onClick={usar}>Usar</Button>} />
+      <EncabezadoFicha activo={activo} tipoLabel={tipoActivoLabel[activo.tipo]} accionPrimaria={contexto === 'pagina' ? <Button onClick={usar}>Usar</Button> : null} />
       <div className="grid grid-cols-[minmax(0,1fr)_14rem] gap-8 max-md:grid-cols-1">
         <div className="flex flex-col gap-8">
           <section className="flex flex-col gap-4">

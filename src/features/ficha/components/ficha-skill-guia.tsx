@@ -11,6 +11,7 @@ import { tipoActivoLabel } from '@/data/catalogo'
 import { Button, Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui'
 import type { Activo } from '@/types/catalogo'
 import type { FichaSkillDetalle } from '@/types/ficha-skill'
+import { useContextoFicha } from '@/features/referencia/contexto-ficha'
 
 function Titulo({ children }: { children: string }) {
   return <h2 className="font-heading text-xl font-semibold text-foreground">{children}</h2>
@@ -141,6 +142,7 @@ function PestanaUsarSkill({ detalle, onUsar }: { detalle: FichaSkillDetalle; onU
 }
 
 export function FichaSkillGuia({ activo }: { activo: Activo }) {
+  const contexto = useContextoFicha()
   const detalle = fichaSkillDetallePorId[activo.id]
   const { anclarActivo, enviar } = useOutletContext<AppOutletContext>()
   const navigate = useNavigate()
@@ -150,12 +152,12 @@ export function FichaSkillGuia({ activo }: { activo: Activo }) {
   const usar = (texto: string) => {
     anclarActivo({ id: activo.id, nombre: activo.nombre, version: activo.version })
     void enviar(texto)
-    navigate('/')
+    if (contexto === 'pagina') navigate('/')
   }
 
   return (
     <div className="mx-auto flex max-w-5xl flex-col gap-6">
-      <EncabezadoFicha activo={activo} tipoLabel={tipoActivoLabel[activo.tipo]} accionPrimaria={<Button onClick={() => setTab('requisitos')}>Ver requisitos</Button>} />
+      <EncabezadoFicha activo={activo} tipoLabel={tipoActivoLabel[activo.tipo]} accionPrimaria={contexto === 'pagina' ? <Button onClick={() => setTab('requisitos')}>Ver requisitos</Button> : null} />
       <div className="grid grid-cols-[minmax(0,1fr)_14rem] gap-8 max-md:grid-cols-1">
         <Tabs value={tab} onValueChange={setTab}>
           <TabsList className="max-sm:w-full max-sm:overflow-x-auto">

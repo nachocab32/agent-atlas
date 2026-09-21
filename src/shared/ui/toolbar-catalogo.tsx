@@ -79,13 +79,13 @@ export function ToolbarCatalogo<T extends string>({
   }
 
   return (
-    <div className={cn('flex items-center gap-3 border-b border-border pb-3', tabs ? 'justify-between' : 'justify-end')}>
-      {tabs && <div className="min-w-0 flex-1 overflow-hidden">{tabs}</div>}
-      {tabs && <Separator orientation="vertical" className="h-6" />}
+    <div className={cn('flex flex-wrap items-center gap-[var(--space-component)] border-b border-border pb-[var(--space-component)] sm:flex-nowrap', tabs ? 'justify-between' : 'justify-end')}>
+      {tabs && <div className="w-full min-w-0 overflow-x-auto sm:flex-1">{tabs}</div>}
+      {tabs && <Separator orientation="vertical" className="hidden h-6 sm:block" />}
 
       <div className="flex shrink-0 items-center gap-1">
         {buscadorAbierto ? (
-          <div className="flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1.5">
+          <div className="flex items-center gap-[var(--space-control)] rounded-full border border-border bg-card px-3 py-1.5">
             <Search className="size-4 shrink-0 text-muted-foreground" />
             <Input
               ref={inputRef}

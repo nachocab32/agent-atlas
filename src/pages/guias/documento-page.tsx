@@ -56,7 +56,7 @@ export function DocumentoPage() {
           />}
         </aside>
 
-        <main className="col-start-1 row-start-1 min-w-0 max-w-[48rem] max-md:col-start-auto max-md:row-start-auto">
+        <main id="contenido-principal" className="col-start-1 row-start-1 min-w-0 max-w-[48rem] max-md:col-start-auto max-md:row-start-auto">
           {esPortadaTdc ? <TomaDeControlPortada /> : <div className="flex flex-col gap-6">
         <BreadcrumbDocumento segmentos={breadcrumb} />
 

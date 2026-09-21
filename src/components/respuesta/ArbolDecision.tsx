@@ -3,6 +3,8 @@ import { useTranslation, type TranslationKey } from '@/i18n'
 import { cn } from '@/shared/lib/utils'
 import type { BloqueRespuesta, Urgencia } from '@/types/respuesta'
 import { PasosSecuencia } from './PasosSecuencia'
+import { useOutletContext } from 'react-router'
+import type { AppOutletContext } from '@/app/app-layout'
 
 type ArbolDecisionProps = Extract<BloqueRespuesta, { componente: 'ArbolDecision' }>['props'] & {
   onSeleccionar?: (texto: string) => void
@@ -16,6 +18,7 @@ const configUrgencia: Record<Urgencia, { clase: string; labelKey: TranslationKey
 
 export function ArbolDecision({ pregunta, ramas, nota, onSeleccionar }: ArbolDecisionProps) {
   const { t } = useTranslation()
+  const { panelAbierto } = useOutletContext<AppOutletContext>()
   const [primera] = ramas
 
   // Una condición con una sola salida no es un árbol: es el paso a seguir.
@@ -31,7 +34,7 @@ export function ArbolDecision({ pregunta, ramas, nota, onSeleccionar }: ArbolDec
   return (
     <div className="rounded-xl border border-border bg-card p-4">
       <p className="font-medium text-foreground">{pregunta}</p>
-      <div className="mt-3 flex flex-col gap-3 sm:flex-row">
+      <div className={cn('mt-3 flex flex-col gap-3', !panelAbierto && 'sm:flex-row')}>
         {ramas.map((rama) => {
           const config = configUrgencia[rama.urgencia]
           const esAccionable = Boolean(rama.accion && onSeleccionar)

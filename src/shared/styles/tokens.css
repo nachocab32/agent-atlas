@@ -1,7 +1,7 @@
 /* Atlas light theme — "Estilo Perplexity": sobrio, casi monocromo, bordes finos
    en vez de sombras, sidebar y contenido en dos tonos de blanco cálido, un
    único acento vivo (verde Atlas). Ver DESIGN.md. */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600&display=swap');
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
@@ -48,10 +48,33 @@
   --chart-1: #0f6b53; --chart-2: #0b7256; --chart-3: #6d4bd8; --chart-4: #7a5410; --chart-5: #c81e47;
   --space-0: 0; --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem; --space-4: 1rem;
   --space-5: 1.25rem; --space-6: 1.5rem; --space-8: 2rem; --space-10: 2.5rem; --space-12: 3rem; --space-16: 4rem;
+  /* Roles espaciales: los componentes se componen por relación, no por valores
+     aislados. Control = elementos hermanos compactos; componente = anatomía
+     interna; bloque = grupos relacionados; contenido/sección = ritmo de lectura. */
+  --space-control: var(--space-2); --space-component: var(--space-3); --space-block: var(--space-4);
+  --space-content: var(--space-6); --space-section: var(--space-8);
   /* Elevación casi imperceptible a propósito: este registro separa superficies
      con bordes de 1px, no con sombra. Ver DESIGN.md. */
   --elevation-1: 0 1px 2px rgba(26, 23, 18, 0.05); --elevation-2: 0 1px 2px rgba(26, 23, 18, 0.04), 0 8px 20px -8px rgba(26, 23, 18, 0.08);
   --focus-ring-width: 0.1875rem; --focus-ring-offset: 0.125rem;
+}
+
+/* Identidad azul de la navegación y la pantalla de bienvenida. */
+.atlas-brand {
+  --bg-base: #F4F6FB; --bg-surface: #FFFFFF; --bg-surface-hover: rgba(15, 23, 42, 0.05);
+  --chip-bg: rgba(15, 23, 42, 0.05); --border: rgba(15, 23, 42, 0.12);
+  --text-main: #0A0F1E; --text-muted: #5A6B7C; --primary: #0F6B53;
+  --primary-dim: rgba(18, 132, 99, 0.12); --secondary: #5DCAA5; --cta-fg: #FFFFFF;
+  --card-hover-shadow: 0 0.5rem 1.5rem rgba(15, 23, 42, 0.08);
+  --background: var(--bg-surface); --foreground: var(--text-main); --card: var(--bg-surface);
+  --card-foreground: var(--text-main); --popover: var(--bg-surface); --popover-foreground: var(--text-main);
+  --primary-foreground: var(--cta-fg); --secondary-foreground: var(--text-main);
+  --muted: var(--bg-surface-hover); --muted-foreground: var(--text-muted);
+  --accent: var(--primary); --accent-foreground: var(--cta-fg); --input: var(--border); --ring: var(--primary);
+  --sidebar: var(--bg-base); --sidebar-foreground: var(--text-main); --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--cta-fg); --sidebar-accent: var(--primary-dim);
+  --sidebar-accent-foreground: var(--primary); --sidebar-border: var(--border); --sidebar-ring: var(--primary);
+  --sidebar-muted: var(--text-muted); --radius: 0.75rem;
 }
 
 @theme inline {

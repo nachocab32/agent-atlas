@@ -7,6 +7,7 @@ import { PanelResponsable } from '@/components/ficha/PanelResponsable'
 import { tipoActivoLabel } from '@/data/catalogo'
 import { Button, Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui'
 import type { Activo } from '@/types/catalogo'
+import { useContextoFicha } from '@/features/referencia/contexto-ficha'
 
 const temas = [
   ['Cencosud', 'Identidad corporativa clara basada en un PowerPoint aprobado. Permite HTML, PowerPoint y PDF.'],
@@ -44,6 +45,7 @@ function ListaChequeo({ items }: { items: string[] }) {
 }
 
 export function DeckGenFicha({ activo }: { activo: Activo }) {
+  const contexto = useContextoFicha()
   const navigate = useNavigate()
   const { anclarActivo, enviar } = useOutletContext<AppOutletContext>()
   const [tab, setTab] = useState('resumen')
@@ -52,12 +54,12 @@ export function DeckGenFicha({ activo }: { activo: Activo }) {
   function abrirChat(texto?: string) {
     anclarActivo({ id: activo.id, nombre: activo.nombre, version: activo.version })
     if (texto) void enviar(texto)
-    navigate('/')
+    if (contexto === 'pagina') navigate('/')
   }
 
   return (
     <div className="mx-auto flex max-w-5xl flex-col gap-6">
-      <EncabezadoFicha activo={activo} tipoLabel={tipoActivoLabel[activo.tipo]} accionPrimaria={<Button onClick={() => setTab('instalar')}>Ver instalación</Button>} />
+      <EncabezadoFicha activo={activo} tipoLabel={tipoActivoLabel[activo.tipo]} accionPrimaria={contexto === 'pagina' ? <Button onClick={() => setTab('instalar')}>Ver instalación</Button> : null} />
       <div className="grid grid-cols-[minmax(0,1fr)_14rem] gap-8 max-md:grid-cols-1">
         <Tabs value={tab} onValueChange={setTab}>
           <TabsList className="max-sm:w-full max-sm:overflow-x-auto">

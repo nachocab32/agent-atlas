@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router'
 import { CatalogoPage } from '@/pages/aceleradores/catalogo-page'
 import { FichaPage } from '@/pages/aceleradores/ficha-page'
+import { FichaMcpAiWorkflowEtapa } from '@/features/ficha-mcp/components/ficha-mcp-ai-workflow-etapa'
 import { CencoflowPropuestaPage } from '@/pages/cencoflow/cencoflow-propuesta-page'
 import { ChatPage } from '@/pages/chat/chat-page'
 import { DocumentoPage } from '@/pages/guias/documento-page'
@@ -15,6 +16,9 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <ChatPage /> },
       { path: 'aceleradores', element: <CatalogoPage /> },
+      { path: 'aceleradores/mcp-ai-workflow/refinamiento', element: <FichaMcpAiWorkflowEtapa etapaId="refinamiento" /> },
+      { path: 'aceleradores/mcp-ai-workflow/desarrollo', element: <FichaMcpAiWorkflowEtapa etapaId="desarrollo" /> },
+      { path: 'aceleradores/mcp-ai-workflow/validacion', element: <FichaMcpAiWorkflowEtapa etapaId="validacion" /> },
       { path: 'aceleradores/:id', element: <FichaPage /> },
       { path: 'cencoflow', element: <CencoflowPropuestaPage /> },
       { path: 'guias', element: <GuiasPage /> },

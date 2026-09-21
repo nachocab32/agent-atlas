@@ -1,11 +1,12 @@
 import { ChevronRight } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
+import type { ReactNode } from 'react'
 
 interface TarjetaCatalogoProps {
   icono: LucideIcon
   titulo: string
   descripcion: string
-  metadata: string
+  metadata: ReactNode
   onSeleccionar: () => void
 }
 
@@ -16,7 +17,7 @@ export function TarjetaCatalogo({ icono: Icono, titulo, descripcion, metadata, o
     <button
       type="button"
       onClick={onSeleccionar}
-      className="flex h-full items-start gap-3 rounded-xl border border-border bg-card p-3 text-left transition-colors hover:border-primary/25 hover:bg-primary/5"
+      className="flex h-full items-start gap-[var(--space-component)] rounded-xl border border-border bg-card p-[var(--space-component)] text-left transition-colors hover:border-primary/25 hover:bg-primary/5"
     >
       <span className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-border bg-card">
         <Icono className="size-4 text-foreground" />

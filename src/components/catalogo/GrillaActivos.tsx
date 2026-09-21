@@ -17,7 +17,7 @@ export function GrillaActivos({ activos, onSeleccionarActivo }: GrillaActivosPro
   }
 
   return (
-    <div className="grid grid-cols-2 gap-2">
+    <div className="grid grid-cols-1 gap-[var(--space-control)] sm:grid-cols-2">
       {activos.map((activo) => (
         <TarjetaCatalogo
           key={activo.id}

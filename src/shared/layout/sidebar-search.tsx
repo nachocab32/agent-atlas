@@ -48,11 +48,11 @@ export function SidebarSearch({ colapsado = false }: { colapsado?: boolean }) {
         aria-label={t('sidebar.search')}
         title={colapsado ? t('sidebar.search') : undefined}
         onClick={() => setAbierto(true)}
-        className={`flex w-full items-center gap-3 rounded-lg px-2 py-2 text-left text-sm text-sidebar-foreground transition-colors hover:bg-sidebar-accent ${colapsado ? 'justify-center' : ''}`}
+        className={`flex w-full items-center gap-3 rounded-[0.75rem] border border-sidebar-border bg-[var(--bg-surface)] px-2 py-2 text-left text-sm text-sidebar-foreground transition-colors hover:bg-sidebar-accent ${colapsado ? 'justify-center' : ''}`}
       >
         <Search className="size-4 shrink-0 text-sidebar-foreground" />
         {!colapsado && <span className="flex-1">{t('sidebar.search')}</span>}
-        {!colapsado && <kbd className="rounded border border-sidebar-border bg-sidebar px-1.5 py-0.5 text-[10px] text-sidebar-muted">⌘K</kbd>}
+        {!colapsado && <kbd className="rounded-full border border-sidebar-border bg-[var(--chip-bg)] px-1.5 py-0.5 font-mono text-[10px] text-sidebar-muted">⌘K</kbd>}
       </button>
 
       <CommandDialog open={abierto} onOpenChange={setAbierto} title="Buscar en Atlas">

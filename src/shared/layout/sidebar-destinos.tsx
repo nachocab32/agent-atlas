@@ -21,9 +21,10 @@ const rutaPorDestino: Partial<Record<SidebarDestino['icono'], string>> = {
 interface SidebarDestinosProps {
   destinos: SidebarDestino[]
   colapsado?: boolean
+  onNavegar?: () => void
 }
 
-export function SidebarDestinos({ destinos, colapsado = false }: SidebarDestinosProps) {
+export function SidebarDestinos({ destinos, colapsado = false, onNavegar }: SidebarDestinosProps) {
   const location = useLocation()
 
   return (
@@ -41,7 +42,7 @@ export function SidebarDestinos({ destinos, colapsado = false }: SidebarDestinos
         return (
           <li key={destino.id}>
             {ruta ? (
-              <Link to={ruta} className={className} aria-label={colapsado ? destino.label : undefined} title={colapsado ? destino.label : undefined}>
+              <Link to={ruta} className={className} aria-label={colapsado ? destino.label : undefined} title={colapsado ? destino.label : undefined} onClick={onNavegar}>
                 <Icono className="size-4 shrink-0 text-accent" />
                 {!colapsado && destino.label}
               </Link>

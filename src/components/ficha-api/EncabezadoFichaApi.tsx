@@ -1,5 +1,6 @@
 import { Link } from 'react-router'
 import { cn } from '@/shared/lib/utils'
+import { useContextoFicha } from '@/features/referencia/contexto-ficha'
 
 interface EncabezadoFichaApiProps {
   dominio: string
@@ -22,15 +23,15 @@ export function EncabezadoFichaApi({
   version,
   tags,
 }: EncabezadoFichaApiProps) {
+  const contexto = useContextoFicha()
   const esProduction = lifecycle === 'production'
 
   return (
     <div>
       <p className="text-xs text-muted-foreground">
-        <Link to="/aceleradores" className="hover:text-foreground hover:underline">
+        {contexto === 'pagina' && <Link to="/aceleradores" className="hover:text-foreground hover:underline">
           APIs
-        </Link>{' '}
-        / {dominio} / {activoId}
+        </Link>}{contexto === 'pagina' && ' / '}{dominio} / {activoId}
       </p>
 
       <h1 className="mt-2 text-xl font-semibold text-foreground">{titulo}</h1>

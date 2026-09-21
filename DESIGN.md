@@ -1,55 +1,159 @@
-# Design
+---
+name: Atlas
+description: Portal interno para descubrir, evaluar y adoptar aceleradores de Cencosud.
+colors:
+  canvas: "#FDFCFA"
+  sidebar: "#F3F1EC"
+  surface: "#FFFFFF"
+  text: "#1C1B1A"
+  text-muted: "#6B6863"
+  border: "rgba(26, 23, 18, 0.12)"
+  primary: "#0F6B53"
+typography:
+  headline:
+    fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif"
+    fontWeight: 600
+  body:
+    fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "1rem"
+    fontWeight: 400
+    lineHeight: 1.5
+  mono:
+    fontFamily: "JetBrains Mono, ui-monospace, monospace"
+rounded:
+  sm: "7.2px"
+  md: "9.6px"
+  lg: "12px"
+spacing:
+  control: "8px"
+  component: "12px"
+  block: "16px"
+  content: "24px"
+  section: "32px"
+components:
+  button-primary:
+    backgroundColor: "{colors.primary}"
+    textColor: "{colors.surface}"
+    rounded: "{rounded.lg}"
+    height: "40px"
+  card:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.text}"
+    rounded: "{rounded.lg}"
+    padding: "{spacing.component}"
+---
 
-<!-- impeccable:design-schema 1 -->
+# Design System: Atlas
 
-## Dirección
+## Overview
 
-**Estilo Perplexity (light mode), con el segundo tono de Codify.** Registro casi monocromo: fondo cálido casi blanco, bordes de 1px en vez de sombras, cero color decorativo en el chrome. El verde corporativo de Atlas (`#0F6B53`) es el único acento vivo del sistema, reservado para: la acción primaria de cada pantalla, el subrayado de la pestaña/filtro activo, y las señales de estado que ya existían antes de este rediseño (cumplido, urgencia). Nunca se usa como color decorativo de un ícono o de una tarjeta completa.
+**Creative North Star: "El instrumento de consulta sobrio"**
 
-Se descartaron 4 direcciones más ambiciosas y temáticas (cuaderno de campo de naturalista, atlas de expedición cartográfico, instrumento de espectrograma, lexicón de diccionario del siglo XIX — ver `.impeccable/mocks/decision/`) antes de pinnear esta referencia. No revivir esas direcciones sin que el usuario lo pida explícitamente.
+Atlas es una interfaz de trabajo, no una vitrina. Combina la claridad editorial de Perplexity en modo claro con la densidad tranquila de Codify: fondo cálido, texto oscuro, bordes finos y una jerarquía que hace encontrable el conocimiento técnico.
 
-## Paleta
+El sistema es casi monocromo. El verde corporativo Atlas aparece sólo cuando expresa una acción primaria, una pestaña textual activa o un estado funcional confirmado. La densidad es predecible: los componentes compactan relaciones cercanas y las secciones conservan aire para orientar la lectura.
 
-Fondo en dos tonos — la costura entre ambos es la firma del sistema:
+**Key Characteristics:**
 
-| Token | Valor | Uso |
-|---|---|---|
-| `--canvas` / `--background` | `#FDFCFA` | Contenido, página |
-| `--sidebar` | `#F3F1EC` | Sidebar únicamente — siempre más apagado que el canvas |
-| `--bg-surface` / `--card` | `#FFFFFF` | Tarjetas, popovers |
-| `--atlas-border` / `--border` | `rgba(26, 23, 18, 0.12)` | Hairline — reemplaza la sombra como separador de superficies |
-| `--text-main` / `--foreground` | `#1C1B1A` | Texto principal (negro cálido, no azulado) |
-| `--text-muted` | `#6B6863` | Texto secundario |
-| `--atlas-primary` / `--accent` | `#0F6B53` | Único acento vivo |
+- Superficies planas y bordes hairline en lugar de tarjetas elevadas.
+- Un único acento funcional, nunca decorativo.
+- Ritmo espacial por relaciones semánticas, no valores aislados.
+- Desktop con sidebar persistente; móvil con drawer y contenido a ancho completo.
 
-Categóricos existentes (`teal`/`violet`/`amber`/`rose` en `--color-*`) se conservan **solo** para señales funcionales ya confirmadas antes de este rediseño (urgencia en `ArbolDecision`/`PasosSecuencia`, estado `pendiente` en `ListaEstado`) — nunca para colorear un ícono de tipo o una tarjeta completa a modo decorativo.
+## Colors
 
-## Elevación
+La paleta usa blanco cálido y negro cálido para lectura prolongada; el verde Atlas es escaso y significativo.
 
-`--elevation-1` y `--elevation-2` quedaron casi imperceptibles a propósito (`0 1px 2px rgba(26,23,18,.05)` y similar). Este sistema separa superficies con **borde de 1px**, no con sombra. Si algo necesita destacarse, sube el peso del borde o el contraste de fondo, no la sombra.
+- **Verde Atlas** (`#0F6B53`): acción primaria, pestaña de texto activa y señales funcionales existentes.
+- **Canvas cálido** (`#FDFCFA`): fondo del contenido.
+- **Sidebar apagado** (`#F3F1EC`): navegación lateral; debe diferenciarse del canvas.
+- **Superficie blanca** (`#FFFFFF`): tarjetas, popovers y campos.
+- **Tinta cálida** (`#1C1B1A`): texto, íconos monocromos y estado seleccionado.
+- **Texto secundario** (`#6B6863`): metadatos y soporte.
+- **Borde hairline** (`rgba(26, 23, 18, 0.12)`): separación de superficies.
 
-## Tipografía
+**The One Accent Rule.** No uses verde para colorear tarjetas, íconos de tipo ni decoración. Violet, teal, amber y rose sólo pueden comunicar los estados funcionales ya definidos.
 
-Un solo tipo de letra para todo: **Inter**. Se retiró Space Grotesk de los encabezados (`--font-heading` ahora apunta a `--font-sans`) — este registro no usa un display font distinto para títulos, los títulos son el mismo grotesco en negrita, como en la referencia. JetBrains Mono se conserva solo para bloques de código real (`CuerpoDocumento`), no como adorno.
+## Typography
 
-## Iconografía
+**Display Font:** Inter, ui-sans-serif, system-ui, sans-serif.
+**Body Font:** Inter, ui-sans-serif, system-ui, sans-serif.
+**Label/Mono Font:** JetBrains Mono sólo en código y datos técnicos.
 
-Íconos de tipo de activo (arquetipo/skill/agente/mcp-server/api) son **monocromos**: contenedor con borde fino + fondo `bg-card`, ícono en `text-foreground`. Nunca un chip de color por tipo — ese era el patrón anterior (`bg-muted text-accent` o chips categóricos) y quedó retirado en `TarjetaCatalogo` y `EncabezadoFicha`.
+**Character:** Títulos y cuerpo pertenecen a una única familia grotesca; la jerarquía nace de peso, tamaño y espaciado, no de una display font decorativa.
 
-## Estados activos / seleccionados
+- **Headline** (600, 24 px): título de página y secciones principales.
+- **Title** (500–600, 16–20 px): títulos de tarjetas y bloques.
+- **Body** (400, 16 px móvil / 14–16 px desktop): lectura y campos; el mínimo móvil evita zoom automático en iOS.
+- **Label** (500, 12 px, tracking amplio, mayúsculas): clasificación y navegación secundaria.
 
-Patrón único en todo el sistema: **píldora o tarjeta con relleno sólido `bg-foreground text-background`** (negro cálido, no verde) para "seleccionado". Aplica a: `FiltroTipo`, `EtapaCelda`, filtros de Guías y Plataforma, `FilaFacetaPildoras`. El verde se reserva para el subrayado de pestañas de texto (`data-[state=active]` en `Tabs`) y para botones de acción primaria reales (`Button` variant default).
+## Layout
 
-## Componentes tocados en este rediseño
+El recorrido principal es: navegación → título/contexto → controles → contenido → detalle secundario. Los grupos estrechos usan `gap`; los márgenes sólo separan bloques o anclan un elemento a su encabezado.
 
-- `src/shared/styles/tokens.css` — fuente de la mayoría del cambio (cascada automática).
-- `src/shared/ui/tarjeta-catalogo.tsx` — ícono monocromo.
-- `src/components/ficha/EncabezadoFicha.tsx` — ícono monocromo.
-- `src/components/catalogo/FiltroTipo.tsx`, `EtapaCelda.tsx` — estado activo a negro sólido.
-- `src/shared/ui/fila-faceta-pildoras.tsx`, `src/pages/guias/guias-page.tsx`, `src/pages/plataforma/plataforma-page.tsx` — mismo patrón de filtro.
+| Rol | Token | Valor | Uso |
+|---|---|---:|---|
+| Control | `--space-control` | 8 px | botones hermanos, grillas compactas |
+| Componente | `--space-component` | 12 px | anatomía de tarjetas, toolbar, etiqueta→contenido |
+| Bloque | `--space-block` | 16 px | grupos relacionados y encabezados con acción |
+| Contenido | `--space-content` | 24 px | encabezado de ficha→cuerpo |
+| Sección | `--space-section` | 32 px | secciones principales y columnas de detalle |
 
-No se tocó la estructura de ningún componente, solo color/borde/ícono. Los bloques de respuesta del chat (`src/components/respuesta/*`) heredan el cambio vía tokens sin modificación propia, salvo que ya usaban colores funcionales (urgencia, estado) que se mantienen intactos a propósito.
+En desktop el sidebar es persistente y el contenido usa contenedores de 4–6xl según complejidad. En móvil (`<768px`) el sidebar se convierte en drawer, las grillas pasan a una columna y los paneles secundarios se reordenan después del contenido principal. Las tabs pueden desplazarse horizontalmente, pero nunca se recortan de forma silenciosa.
 
-## Comps de referencia
+## Elevation & Depth
 
-`.impeccable/mocks/decision/` guarda los 6 comps HTML explorados (standalone, con contenido real del catálogo) — incluye las 4 direcciones descartadas y las 2 que sí anclaron la decisión final (`estandar-sobrio.html`, `perplexity-style.html`). Sirven de referencia histórica, no se cargan en la app.
+La profundidad se construye con contraste de superficie y borde de 1 px. `--elevation-1` y `--elevation-2` son casi imperceptibles y se reservan para popovers o controles flotantes.
+
+**The Border-First Rule.** Si una superficie necesita distinguirse, primero usa borde o fondo; la sombra sólo acompaña una capa flotante.
+
+## Shapes
+
+Las superficies usan radios de 12 px; los radios menores se reservan para controles compactos. Píldoras sólo para filtros, tags y controles breves. Los íconos de tipo viven en un contenedor cuadrado de borde fino y fondo de superficie, siempre monocromos.
+
+## Components
+
+### Buttons
+
+- **Primary:** verde Atlas, texto blanco y altura de 40 px en desktop; el área táctil llega a 44 px en móvil cuando el control es iconográfico.
+- **Outline / ghost:** fondo plano, borde o hover suave `bg-muted`; foco visible mediante ring de 3 px.
+- **Selected filters:** fondo `foreground` y texto `background`, no verde.
+
+### Cards / Collections
+
+- **TarjetaCatalogo:** borde hairline, radio de 12 px, padding y anatomía interna de `--space-component`.
+- **Grillas:** `--space-control` entre tarjetas; una columna en móvil y dos desde `sm`.
+- **Secciones:** `--space-section` entre colecciones, `--space-component` entre encabezado y grilla.
+
+### Inputs / Fields
+
+- Fondo transparente o de superficie, borde de 1 px y radio de 12 px.
+- Ring visible de 3 px al enfocar.
+- Texto de 16 px en móvil; `sm:text-sm` sólo desde desktop compacto.
+
+### Navigation
+
+- Sidebar apagado en desktop; el estado activo usa una superficie tenue, no una tarjeta coloreada.
+- En móvil, el drawer cerrado debe estar fuera del árbol de foco (`inert` + `aria-hidden`).
+- Toda ruta principal expone un landmark `main` y el shell ofrece “Saltar al contenido principal”.
+
+### Dialogs
+
+- Modal con backdrop tenue, foco contenido y título/descripción semánticos.
+- Los controles de cierre y descarte usan objetivos táctiles de al menos 44 px en móvil.
+
+## Do's and Don'ts
+
+### Do:
+
+- **Do** usa los cinco roles espaciales antes de introducir un valor de gap puntual.
+- **Do** conserva el contraste canvas/sidebar y separa superficies con bordes finos.
+- **Do** reordena contenido secundario bajo el principal en móvil.
+- **Do** conserva foco visible, landmarks y etiquetas accesibles en cada flujo nuevo.
+
+### Don't:
+
+- **Don't** uses color categórico o verde como decoración.
+- **Don't** uses sombras fuertes ni tarjetas dentro de tarjetas sin una relación funcional clara.
+- **Don't** ocultes tabs, filtros o navegación por falta de espacio; refluye, desplaza explícitamente o usa drawer.
+- **Don't** añadas inputs con texto menor a 16 px en móvil.

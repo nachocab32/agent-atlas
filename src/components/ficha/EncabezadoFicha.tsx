@@ -4,6 +4,7 @@ import { Link } from 'react-router'
 import { useTranslation } from '@/i18n'
 import type { Activo } from '@/types/catalogo'
 import { iconoPorTipo } from '@/components/catalogo/iconos'
+import { useContextoFicha } from '@/features/referencia/contexto-ficha'
 
 interface EncabezadoFichaProps {
   activo: Activo
@@ -13,17 +14,18 @@ interface EncabezadoFichaProps {
 
 export function EncabezadoFicha({ activo, tipoLabel, accionPrimaria }: EncabezadoFichaProps) {
   const { t } = useTranslation()
+  const contexto = useContextoFicha()
   const Icono = iconoPorTipo[activo.tipo]
 
   return (
     <div>
-      <Link
+      {contexto === 'pagina' && <Link
         to="/aceleradores"
         className="inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
       >
         <ChevronLeft className="size-4" />
         {t('ficha.volver')}
-      </Link>
+      </Link>}
 
       <div className="mt-3 flex items-start justify-between gap-4">
         <div className="flex items-start gap-3">

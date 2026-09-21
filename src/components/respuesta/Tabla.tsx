@@ -2,6 +2,8 @@ import { ChevronDown, ChevronUp } from 'lucide-react'
 import { useState } from 'react'
 import { Button } from '@/shared/ui'
 import type { BloqueRespuesta } from '@/types/respuesta'
+import { useOutletContext } from 'react-router'
+import type { AppOutletContext } from '@/app/app-layout'
 
 type TablaProps = Extract<BloqueRespuesta, { componente: 'Tabla' }>['props']
 
@@ -9,12 +11,21 @@ const FILAS_INICIALES = 4
 
 export function Tabla({ columnas, filas, nota, etiquetaFilas = 'filas' }: TablaProps) {
   const [expandida, setExpandida] = useState(false)
+  const { panelAbierto } = useOutletContext<AppOutletContext>()
   // Regla dura: una celda vacía comunica "el dato existe y no se encontró", que
   // es distinto de "no aplica". Ante esa duda, la tabla completa no se renderiza.
   const incompleta = filas.some((fila) => fila.length !== columnas.length || fila.some((celda) => !celda))
   if (incompleta || filas.length < 3) return null
   const esExtensa = filas.length > FILAS_INICIALES
   const filasVisibles = esExtensa && !expandida ? filas.slice(0, FILAS_INICIALES) : filas
+
+  if (panelAbierto) return (
+    <div className="flex flex-col gap-3">
+      {filasVisibles.map((fila, indice) => <dl key={indice} className="rounded-xl border border-border bg-card p-3 text-sm">{fila.map((celda, celdaIndice) => <div key={columnas[celdaIndice]} className="grid grid-cols-[8rem_minmax(0,1fr)] gap-3 py-1"><dt className="font-medium text-muted-foreground">{columnas[celdaIndice]}</dt><dd className="text-foreground">{celda}</dd></div>)}</dl>)}
+      {esExtensa && <Button variant="ghost" className="w-fit px-1 text-xs text-accent" onClick={() => setExpandida((valor) => !valor)}>{expandida ? `Ocultar ${etiquetaFilas}` : `Ver las ${filas.length} ${etiquetaFilas}`}</Button>}
+      {nota && <p className="text-xs text-muted-foreground">{nota}</p>}
+    </div>
+  )
 
   return (
     <div className="overflow-hidden rounded-xl border border-border bg-card">

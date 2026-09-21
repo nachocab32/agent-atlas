@@ -1,8 +1,18 @@
-import { Play } from 'lucide-react'
+import { Code2, ListChecks, Play, ShieldCheck } from 'lucide-react'
+import { useNavigate } from 'react-router'
+import { TarjetaCatalogo } from '@/shared/ui'
 import type { FichaMcpDetalle } from '@/types/ficha-mcp'
 import { Lista, Titulo } from './comunes'
 
+const herramientasAiWorkflow = {
+  Refinamiento: { href: '/aceleradores/mcp-ai-workflow/refinamiento', icono: ListChecks },
+  Desarrollo: { href: '/aceleradores/mcp-ai-workflow/desarrollo', icono: Code2 },
+  Validación: { href: '/aceleradores/mcp-ai-workflow/validacion', icono: ShieldCheck },
+}
+
 export function SeccionResumenMcp({ descripcionLarga, detalle }: { descripcionLarga: string; detalle: FichaMcpDetalle }) {
+  const navigate = useNavigate()
+
   return (
     <>
       <section className="flex flex-col gap-4">
@@ -27,27 +37,21 @@ export function SeccionResumenMcp({ descripcionLarga, detalle }: { descripcionLa
       {detalle.tools && (
         <section className="flex flex-col gap-4">
           <Titulo>Tools</Titulo>
-          <div className="overflow-hidden rounded-xl border border-border bg-card">
-            <table className="w-full text-left text-sm">
-              <thead className="bg-muted text-xs text-muted-foreground">
-                <tr>
-                  <th className="px-4 py-3 font-medium">Tool</th>
-                  <th className="px-4 py-3 font-medium">Descripción</th>
-                  <th className="px-4 py-3 font-medium">Acceso</th>
-                </tr>
-              </thead>
-              <tbody>
-                {detalle.tools.map((tool) => (
-                  <tr key={tool.nombre} className="border-t border-border align-top">
-                    <td className="px-4 py-3 font-medium text-foreground">{tool.nombre}</td>
-                    <td className="px-4 py-3 text-muted-foreground">{tool.descripcion}</td>
-                    <td className="px-4 py-3">
-                      <span className="rounded-full border border-border px-2 py-0.5 text-xs text-muted-foreground">{tool.acceso}</span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="grid gap-3 md:grid-cols-3">
+            {detalle.tools.map((tool) => {
+              const herramienta = herramientasAiWorkflow[tool.nombre as keyof typeof herramientasAiWorkflow]
+              if (!herramienta) return null
+              return (
+                <TarjetaCatalogo
+                  key={tool.nombre}
+                  icono={herramienta.icono}
+                  titulo={tool.nombre}
+                  descripcion={tool.descripcion}
+                  metadata={<span className="inline-flex rounded-full border border-border px-2 py-0.5 text-xs text-muted-foreground">{tool.acceso}</span>}
+                  onSeleccionar={() => navigate(herramienta.href)}
+                />
+              )
+            })}
           </div>
         </section>
       )}

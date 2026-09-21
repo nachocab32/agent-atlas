@@ -11,8 +11,10 @@ import { fichaMcpDetallePorId } from '@/data/ficha-mcp'
 import { tipoActivoLabel } from '@/data/catalogo'
 import { Button, Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui'
 import type { Activo } from '@/types/catalogo'
+import { useContextoFicha } from '@/features/referencia/contexto-ficha'
 
 export function FichaMcpTemplate({ activo }: { activo: Activo }) {
+  const contexto = useContextoFicha()
   const detalle = fichaMcpDetallePorId[activo.id]
   const { anclarActivo, enviar } = useOutletContext<AppOutletContext>()
   const navigate = useNavigate()
@@ -22,12 +24,12 @@ export function FichaMcpTemplate({ activo }: { activo: Activo }) {
   function abrirChat(consulta: string) {
     anclarActivo({ id: activo.id, nombre: activo.nombre, version: activo.version })
     void enviar(consulta)
-    navigate('/')
+    if (contexto === 'pagina') navigate('/')
   }
 
   return (
     <div className="mx-auto flex max-w-5xl flex-col gap-6">
-      <EncabezadoFicha activo={activo} tipoLabel={tipoActivoLabel[activo.tipo]} accionPrimaria={<Button onClick={() => setTab('conexion')}>Ver cómo conectarlo</Button>} />
+      <EncabezadoFicha activo={activo} tipoLabel={tipoActivoLabel[activo.tipo]} accionPrimaria={contexto === 'pagina' ? <Button onClick={() => setTab('conexion')}>Ver cómo conectarlo</Button> : null} />
       <div className="grid grid-cols-[minmax(0,1fr)_14rem] gap-8 max-md:grid-cols-1">
         <Tabs value={tab} onValueChange={setTab}>
           <TabsList className="max-sm:w-full max-sm:overflow-x-auto">

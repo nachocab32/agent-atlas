@@ -98,7 +98,7 @@ function SeccionEtapas({ conteoPorEtapa, etapaSeleccionada, alternarEtapa }: Sec
       <h2 className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
         {t('catalogo.explorarEtapa')}
       </h2>
-      <div className="mt-3 grid grid-cols-5 gap-3">
+      <div className="mt-[var(--space-component)] grid grid-cols-2 gap-[var(--space-component)] sm:grid-cols-3 lg:grid-cols-5">
         {etapasCencoFlow.map((etapa) => (
           <EtapaCelda
             key={etapa.id}
@@ -140,8 +140,8 @@ export function CatalogoPage() {
   const mostrarListaPorTipo = filtroTipo === 'arquetipo' || filtroTipo === 'agente' || filtroTipo === 'mcp-server'
 
   return (
-    <div className="flex-1 overflow-y-auto px-6 py-8">
-      <div className="mx-auto flex max-w-4xl flex-col gap-8">
+    <main id="contenido-principal" className="flex-1 overflow-y-auto px-4 py-6 sm:px-6 sm:py-8">
+      <div className="mx-auto flex max-w-4xl flex-col gap-[var(--space-section)]">
         <div>
           <h1 className="text-2xl font-semibold text-foreground">{t('catalogo.titulo')}</h1>
           <p className="mt-1 text-muted-foreground">{t('catalogo.bajada')}</p>
@@ -190,6 +190,6 @@ export function CatalogoPage() {
           alternarEtapa={filtros.alternarEtapa}
         />
       </div>
-    </div>
+    </main>
   )
 }

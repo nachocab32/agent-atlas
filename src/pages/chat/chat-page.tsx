@@ -1,21 +1,29 @@
-import { useState } from 'react'
-import { Link, useOutletContext } from 'react-router'
+import { useEffect, useState } from 'react'
+import { Link, useOutletContext, useSearchParams } from 'react-router'
 import type { AppOutletContext } from '@/app/app-layout'
 import { ChatThread } from '@/features/chat/components/chat-thread'
 import { HomeOrientacion } from '@/features/home/components/home-orientacion'
+import { currentUser } from '@/data/sidebar'
 import { HomeRecurrente } from '@/features/home/components/home-recurrente'
 import { useHomeVariant } from '@/features/home/use-home-variant'
 import { useTranslation } from '@/i18n'
 import { ChipContexto } from '@/shared/ui'
 import { ChatInput } from './chat-input'
 import { ChatTabs } from './chat-tabs'
+import { PanelReferencia } from '@/features/referencia/panel-referencia'
 
 export function ChatPage() {
   const { t } = useTranslation()
-  const { turnos, cargando, enviar, reintentar, activoAnclado, quitarAnclaje } = useOutletContext<AppOutletContext>()
+  const { turnos, cargando, enviar, reintentar, activoAnclado, quitarAnclaje, panelAbierto, setSidebarColapsado } = useOutletContext<AppOutletContext>()
+  const [params] = useSearchParams()
   const [valorComposer, setValorComposer] = useState('')
   const variante = useHomeVariant()
   const conversacionActiva = turnos.length > 0
+  const modoPanel = params.get('modo') === 'completo' ? 'completo' : 'rapido'
+
+  useEffect(() => {
+    if (panelAbierto && modoPanel === 'completo') setSidebarColapsado(true)
+  }, [modoPanel, panelAbierto, setSidebarColapsado])
 
   function handleEnviar(texto: string) {
     setValorComposer('')
@@ -23,7 +31,7 @@ export function ChatPage() {
   }
 
   const composer = (
-    <div className="flex flex-col items-center gap-2 px-6 pb-8">
+    <div className="flex w-full flex-col items-center gap-2 px-6 pb-8">
       {activoAnclado && (
         <div className="flex w-full max-w-3xl items-center justify-between">
           <ChipContexto
@@ -41,13 +49,14 @@ export function ChatPage() {
       <ChatInput
         value={valorComposer}
         onChange={setValorComposer}
-        onSend={() => handleEnviar(valorComposer)}
+        onSend={() => handleEnviar(valorComposer)} variant={conversacionActiva ? 'default' : 'home'}
       />
     </div>
   )
 
   return (
-    <div className="flex h-screen flex-1 flex-col">
+    <div className="flex h-screen min-w-0 flex-1">
+      <main id="contenido-principal" className="flex min-w-0 flex-1 flex-col">
       {conversacionActiva ? (
         <>
           <ChatTabs />
@@ -55,10 +64,12 @@ export function ChatPage() {
           {composer}
         </>
       ) : variante === 'orientacion' ? (
-        <HomeOrientacion composer={composer} onSeleccionarPregunta={handleEnviar} />
+        <HomeOrientacion composer={composer} onSeleccionarPregunta={handleEnviar} nombre={currentUser.firstName} />
       ) : (
         <HomeRecurrente composer={composer} />
       )}
+      </main>
+      {panelAbierto && <PanelReferencia />}
     </div>
   )
 }

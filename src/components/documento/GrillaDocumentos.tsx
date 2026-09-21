@@ -16,7 +16,7 @@ export function GrillaDocumentos({ documentos, onSeleccionarDocumento }: GrillaD
   }
 
   return (
-    <div className="grid grid-cols-2 gap-2">
+    <div className="grid grid-cols-1 gap-[var(--space-control)] sm:grid-cols-2">
       {documentos.map((documento) => (
         <TarjetaCatalogo
           key={documento.id}

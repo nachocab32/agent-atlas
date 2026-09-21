@@ -11,6 +11,7 @@ export type Paso = {
   tipo: TipoPaso
   descripcionMenu: string
   descripcion: string
+  resultadoEsperado?: string
   entrega:
     | { modo: 'automatiza'; input: string; output: string }
     | { modo: 'manual'; tuHaces: string }
@@ -23,6 +24,7 @@ export type EtapaViaje = {
   numero: number
   nombre: string
   intencion: string
+  estado?: 'confirmado' | 'propuesta'
   pasos: Paso[]
 }
 

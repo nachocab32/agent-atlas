@@ -13,14 +13,14 @@ export function FichaPage() {
 
   if (!activo) {
     return (
-      <div className="flex-1 px-6 py-8">
+      <main id="contenido-principal" className="flex-1 px-6 py-8">
         <p className="text-sm text-muted-foreground">No encontramos este activo en el catálogo.</p>
-      </div>
+      </main>
     )
   }
 
   return (
-    <div className="flex-1 overflow-y-auto px-6 py-8">
+    <main id="contenido-principal" className="flex-1 overflow-y-auto px-6 py-8">
       {activo.tipo === 'api' ? (
         <FichaApiTemplate activo={activo} />
       ) : activo.id === 'deck-gen' ? (
@@ -34,6 +34,6 @@ export function FichaPage() {
       ) : (
         <FichaGenericaActivo activo={activo} />
       )}
-    </div>
+    </main>
   )
 }
