@@ -19,10 +19,10 @@ export function ChatPage() {
   const [valorComposer, setValorComposer] = useState('')
   const variante = useHomeVariant()
   const conversacionActiva = turnos.length > 0
-  const modoPanel = params.get('modo') === 'completo' ? 'completo' : 'rapido'
+  const modoPanel = params.get('modo') === 'ampliado' ? 'ampliado' : params.get('modo') === 'completo' ? 'completo' : 'rapido'
 
   useEffect(() => {
-    if (panelAbierto && modoPanel === 'completo') setSidebarColapsado(true)
+    if (panelAbierto && modoPanel !== 'rapido') setSidebarColapsado(true)
   }, [modoPanel, panelAbierto, setSidebarColapsado])
 
   function handleEnviar(texto: string) {
@@ -56,7 +56,7 @@ export function ChatPage() {
 
   return (
     <div className="flex h-screen min-w-0 flex-1">
-      <main id="contenido-principal" className="flex min-w-0 flex-1 flex-col">
+      <main id="contenido-principal" className={`${modoPanel === 'ampliado' ? 'hidden' : 'flex'} min-w-0 flex-1 flex-col`}>
       {conversacionActiva ? (
         <>
           <ChatTabs />

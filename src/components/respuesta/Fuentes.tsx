@@ -14,7 +14,7 @@ export function Fuentes({ fuentes }: FuentesProps) {
         <span key={fuente.id}>
           {referenciasPorId[fuente.id] ? (
             <Link
-              to={{ pathname: location.pathname, search: `?panel=${encodeURIComponent(fuente.id)}&modo=rapido` }}
+              to={{ pathname: location.pathname, search: `?panel=${encodeURIComponent(fuente.id)}&modo=completo` }}
               className="inline-flex items-center gap-1 font-medium text-accent underline decoration-accent/30 underline-offset-2 hover:decoration-accent focus-visible:rounded-sm"
             >
               {fuente.titulo}
