@@ -26,7 +26,7 @@ export function SeccionApisFiltros({ activosFiltrados, onSeleccionarActivo, vist
             aria-pressed={vista === 'tarjetas'}
             className={cn(
               'inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-              vista === 'tarjetas' ? 'bg-foreground text-background' : 'text-muted-foreground hover:bg-muted hover:text-foreground',
+              vista === 'tarjetas' ? 'bg-primary text-primary-foreground hover:bg-green-900' : 'text-muted-foreground hover:bg-muted hover:text-foreground',
             )}
           >
             <LayoutGrid className="size-4" />
@@ -38,7 +38,7 @@ export function SeccionApisFiltros({ activosFiltrados, onSeleccionarActivo, vist
             aria-pressed={vista === 'tabla'}
             className={cn(
               'inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-              vista === 'tabla' ? 'bg-foreground text-background' : 'text-muted-foreground hover:bg-muted hover:text-foreground',
+              vista === 'tabla' ? 'bg-primary text-primary-foreground hover:bg-green-900' : 'text-muted-foreground hover:bg-muted hover:text-foreground',
             )}
           >
             <TableProperties className="size-4" />

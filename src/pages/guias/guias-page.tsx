@@ -2,8 +2,7 @@ import { useNavigate, useSearchParams } from 'react-router'
 import { GrillaDocumentos } from '@/components/documento/GrillaDocumentos'
 import { categoriaGuiaOpciones, documentosGuia, madurezGuiaLabel, madurezGuiaOpciones } from '@/data/documentos'
 import { useGuiasFiltros, type OrdenGuia } from '@/features/guias/use-guias-filtros'
-import { FilaFacetaPildoras, ToolbarCatalogo } from '@/shared/ui'
-import { cn } from '@/shared/lib/utils'
+import { FilaFacetaPildoras, Tabs, TabsList, TabsTrigger, ToolbarCatalogo } from '@/shared/ui'
 import type { DocumentoGuia } from '@/types/documento'
 
 const ordenOpciones: { valor: OrdenGuia; label: string }[] = [{ valor: 'nombre', label: 'Por nombre' }]
@@ -18,21 +17,11 @@ function TabsCategoriaGuia({
   const opciones = [{ valor: 'todos' as const, label: 'Todos' }, ...categoriaGuiaOpciones.map((valor) => ({ valor, label: valor }))]
 
   return (
-    <div className="flex flex-wrap gap-[var(--space-control)]">
-      {opciones.map((opcion) => (
-        <button
-          key={opcion.valor}
-          type="button"
-          onClick={() => onSeleccionar(opcion.valor)}
-          className={cn(
-            'rounded-full border border-border bg-card px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:border-foreground/20 hover:bg-muted',
-            opcion.valor === categoria && 'border-foreground bg-foreground text-background',
-          )}
-        >
-          {opcion.label}
-        </button>
-      ))}
-    </div>
+    <Tabs value={categoria} onValueChange={(valor) => onSeleccionar(valor as 'todos' | (typeof categoriaGuiaOpciones)[number])}>
+      <TabsList>
+        {opciones.map((opcion) => <TabsTrigger key={opcion.valor} value={opcion.valor}>{opcion.label}</TabsTrigger>)}
+      </TabsList>
+    </Tabs>
   )
 }
 

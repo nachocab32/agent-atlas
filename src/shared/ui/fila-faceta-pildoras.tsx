@@ -40,7 +40,7 @@ export function FilaFacetaPildoras({
                 'inline-flex items-center gap-1 rounded-full border bg-card px-2.5 py-1 text-xs font-medium transition-colors',
                 esResaltada
                   ? cn('border-accent/30', activa ? 'bg-accent text-accent-foreground' : 'bg-accent/5 text-accent')
-                  : cn('border-border text-muted-foreground hover:border-foreground/20 hover:bg-muted', activa && 'border-foreground bg-foreground text-background'),
+                  : cn('border-border text-muted-foreground hover:border-foreground/20 hover:bg-muted', activa && 'border-primary bg-primary text-primary-foreground hover:bg-green-900'),
               )}
             >
               <span>{opcion.label}</span>

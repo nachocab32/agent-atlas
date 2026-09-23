@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Radar, Search, Sparkles } from 'lucide-react'
-import { Input, TarjetaCatalogo } from '@/shared/ui'
-import { cn } from '@/shared/lib/utils'
+import { Input, Tabs, TabsList, TabsTrigger, TarjetaCatalogo } from '@/shared/ui'
 
 type TipoRadar = 'tech' | 'hype'
 type RadarItem = { id: string; titulo: string; descripcion: string; tipo: TipoRadar }
@@ -61,7 +60,7 @@ export function PlataformaPage() {
   return <main id="contenido-principal" className="flex-1 overflow-y-auto px-4 py-6 sm:px-6 sm:py-8"><div className="mx-auto flex max-w-4xl flex-col gap-[var(--space-section)]">
     <header><h1 className="text-2xl font-semibold text-foreground">Plataforma</h1><p className="mt-1 text-muted-foreground">Radares tecnológicos corporativos para orientar decisiones de adopción e innovación.</p></header>
     <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border pb-3">
-      <div className="flex flex-wrap gap-2">{tabs.map((tab) => <button key={tab.valor} type="button" onClick={() => setTipo(tab.valor)} className={cn('rounded-full border border-border bg-card px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:border-foreground/20 hover:bg-muted', tipo === tab.valor && 'border-foreground bg-foreground text-background')}>{tab.etiqueta}</button>)}</div>
+      <Tabs value={tipo} onValueChange={(valor) => setTipo(valor as 'todos' | TipoRadar)}><TabsList>{tabs.map((tab) => <TabsTrigger key={tab.valor} value={tab.valor}>{tab.etiqueta}</TabsTrigger>)}</TabsList></Tabs>
       <div className="flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1.5"><Search className="size-4 shrink-0 text-muted-foreground" /><Input value={busqueda} onChange={(event) => setBusqueda(event.target.value)} placeholder="Buscar radar" className="h-6 w-40 border-0 bg-transparent px-0 shadow-none focus-visible:ring-0" /></div>
     </div>
     {visibles.length === 0 ? <p className="text-sm text-muted-foreground">No encontramos radares que calcen con tu búsqueda.</p> : tipo === 'todos' ? <VitrinaRadares radares={visibles} onVerTodo={setTipo} /> : <section><div className="flex items-center gap-2"><h2 className="text-xs font-medium tracking-wide text-muted-foreground uppercase">{etiquetaTipoRadar[tipo]}</h2><span className="rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">{visibles.length}</span></div><div className="mt-3"><GrillaRadares radares={visibles} /></div></section>}

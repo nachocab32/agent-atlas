@@ -43,12 +43,12 @@ export function SidebarDestinos({ destinos, colapsado = false, onNavegar }: Side
           <li key={destino.id}>
             {ruta ? (
               <Link to={ruta} className={className} aria-label={colapsado ? destino.label : undefined} title={colapsado ? destino.label : undefined} onClick={onNavegar}>
-                <Icono className="size-4 shrink-0 text-accent" />
+                <Icono className={cn('size-4 shrink-0 transition-colors', activo ? 'text-primary' : 'text-sidebar-muted')} />
                 {!colapsado && destino.label}
               </Link>
             ) : (
               <button type="button" className={className} aria-label={colapsado ? destino.label : undefined} title={colapsado ? destino.label : undefined}>
-                <Icono className="size-4 shrink-0 text-accent" />
+                <Icono className={cn('size-4 shrink-0 transition-colors', activo ? 'text-primary' : 'text-sidebar-muted')} />
                 {!colapsado && destino.label}
               </button>
             )}

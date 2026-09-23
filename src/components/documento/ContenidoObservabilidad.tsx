@@ -28,7 +28,7 @@ function Pasos({ pasos, completo }: { pasos: { titulo: string; contenido: Bloque
   const [pasoActivo, setPasoActivo] = useState(0)
   if (completo) return <div className="flex flex-col gap-7">{pasos.map((paso, indice) => <section key={paso.titulo}><h3 className="text-base font-semibold text-foreground">{indice + 1}. {paso.titulo}</h3><div className="mt-3"><BloquesObservabilidad bloques={paso.contenido} completo /></div></section>)}</div>
   const paso = pasos[pasoActivo]
-  return <div className="rounded-xl border border-border bg-card p-4"><div className="flex flex-wrap gap-2">{pasos.map((item, indice) => <button key={item.titulo} type="button" onClick={() => setPasoActivo(indice)} className={cn('rounded-full border border-border px-3 py-1.5 text-sm transition-colors', indice === pasoActivo ? 'border-foreground bg-foreground text-background' : 'text-muted-foreground hover:bg-muted')}>{indice + 1}. {item.titulo}</button>)}</div><div className="mt-5"><BloquesObservabilidad bloques={paso.contenido} completo={false} /></div></div>
+  return <div className="rounded-xl border border-border bg-card p-4"><div className="flex flex-wrap gap-2">{pasos.map((item, indice) => <button key={item.titulo} type="button" onClick={() => setPasoActivo(indice)} className={cn('rounded-full border border-border px-3 py-1.5 text-sm transition-colors', indice === pasoActivo ? 'border-primary bg-primary text-primary-foreground hover:bg-green-900' : 'text-muted-foreground hover:bg-muted')}>{indice + 1}. {item.titulo}</button>)}</div><div className="mt-5"><BloquesObservabilidad bloques={paso.contenido} completo={false} /></div></div>
 }
 
 export function BloquesObservabilidad({ bloques, completo = true }: { bloques: BloqueObservabilidad[]; completo?: boolean }) {
@@ -50,7 +50,7 @@ export function ContenidoObservabilidad({ tema }: { tema: TemaObservabilidad }) 
   const [modo, setModo] = useState<'resumen' | 'completa'>(tema.modoLectura === 'resumen-completa' ? 'resumen' : 'completa')
   const esCompleta = modo === 'completa'
   const bloques = esCompleta ? tema.completa : tema.resumen
-  return <div className="flex flex-col gap-6">{tema.modoLectura === 'resumen-completa' && <div role="group" aria-label="Modo de lectura" className="inline-flex w-fit rounded-lg border border-border bg-card p-1"><button type="button" onClick={() => setModo('resumen')} className={cn('rounded-md px-3 py-1.5 text-sm font-medium', !esCompleta && 'bg-foreground text-background')}>Resumen</button><button type="button" onClick={() => setModo('completa')} className={cn('rounded-md px-3 py-1.5 text-sm font-medium', esCompleta && 'bg-foreground text-background')}>Completa</button></div>}<BloquesObservabilidad bloques={bloques} completo={esCompleta} /></div>
+  return <div className="flex flex-col gap-6">{tema.modoLectura === 'resumen-completa' && <div role="group" aria-label="Modo de lectura" className="inline-flex w-fit rounded-lg border border-border bg-card p-1"><button type="button" onClick={() => setModo('resumen')} className={cn('rounded-md px-3 py-1.5 text-sm font-medium', !esCompleta && 'bg-primary text-primary-foreground hover:bg-green-900')}>Resumen</button><button type="button" onClick={() => setModo('completa')} className={cn('rounded-md px-3 py-1.5 text-sm font-medium', esCompleta && 'bg-primary text-primary-foreground hover:bg-green-900')}>Completa</button></div>}<BloquesObservabilidad bloques={bloques} completo={esCompleta} /></div>
 }
 
 export function BibliotecaObservabilidad({ biblioteca }: { biblioteca: BibliotecaObservabilidad }) {

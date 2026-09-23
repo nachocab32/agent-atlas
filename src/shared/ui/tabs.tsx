@@ -21,7 +21,7 @@ export function TabsTrigger({ className, ...props }: TabsPrimitive.TabsTriggerPr
       className={cn(
         'inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-neutral-700 transition-colors',
         'data-[state=active]:border data-[state=active]:border-accent/30 data-[state=active]:bg-accent/5 data-[state=active]:text-accent',
-        'data-[state=inactive]:hover:bg-muted',
+        'data-[state=inactive]:hover:bg-primary/10 data-[state=inactive]:hover:text-primary',
         className,
       )}
       {...props}
