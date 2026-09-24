@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router'
+import { useNavigate, useSearchParams } from 'react-router'
 import { EtapaCelda } from '@/components/catalogo/EtapaCelda'
 import { FiltroTipo } from '@/components/catalogo/FiltroTipo'
 import { FiltrosApiExtra } from '@/components/catalogo/FiltrosApiExtra'
@@ -121,7 +121,10 @@ function SeccionTipoActivos({ activos, tipo, onSeleccionarActivo }: { activos: A
 export function CatalogoPage() {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const filtros = useCatalogoFiltros(activos, activoEtapaConfirmada)
+  const [params] = useSearchParams()
+  const tipoEnUrl = params.get('tipo')
+  const filtroTipoInicial = filtroTipoOpciones.some((opcion) => opcion.valor === tipoEnUrl) ? tipoEnUrl as 'todos' | TipoActivo : 'todos'
+  const filtros = useCatalogoFiltros(activos, activoEtapaConfirmada, filtroTipoInicial)
   const [vistaApis, setVistaApis] = useState<VistaApis>('tarjetas')
   const { filtroTipo, setFiltroTipo, busqueda, setBusqueda, orden, setOrden, hayFiltrosActivos } = filtros
 

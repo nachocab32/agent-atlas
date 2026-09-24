@@ -10,6 +10,12 @@ export interface VideoMcp {
   vimeoId?: string
 }
 
+export interface ConfiguracionClienteMcp {
+  titulo: string
+  pasos: string[]
+  codigo?: string
+}
+
 export interface PreguntaPorAudiencia {
   audiencia: string
   preguntas: string[]
@@ -35,4 +41,5 @@ export interface FichaMcpDetalle {
   seguridad?: string[]
   troubleshooting?: string[]
   videos: VideoMcp[]
+  configuraciones?: ConfiguracionClienteMcp[]
 }

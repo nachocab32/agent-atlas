@@ -1,7 +1,8 @@
 // Configuración estructural del catálogo (etapas, labels, filtros, acción por tipo).
 // No es contenido de ejemplo — no lleva marca [PROVISORIO] ni de contenido extraído.
-// El arreglo de activos se compone de los 5 archivos por tipo (uno de ellos, Arquetipos,
-// sigue en [PROVISORIO] porque el portal real no tiene esa ruta disponible).
+// El arreglo de activos se compone de los 5 archivos por tipo. El contenido técnico de
+// Arquetipos fue contrastado con sus fichas oficiales; Middleware conserva sólo el resumen
+// porque su fuente publica un README genérico, no una guía operativa validada.
 import type { Activo, EtapaCencoFlow, TipoActivo } from '@/types/catalogo'
 import { activosAgentes } from './catalogo-agentes'
 import { activosApis, filtrosApiOpciones } from './catalogo-apis'

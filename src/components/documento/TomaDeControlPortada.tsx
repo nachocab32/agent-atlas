@@ -1,26 +1,26 @@
 import { ArrowRight } from 'lucide-react'
 import { Link } from 'react-router'
+import { Badge } from '@/shared/ui'
 import { BreadcrumbDocumento } from './BreadcrumbDocumento'
-import { FilaDistintivos } from './FilaDistintivos'
 
 const caminos = [
   {
     titulo: 'Producto nuevo, aún no en producción',
     descripcion: 'Sigue la Guía de Toma de Control Anticipada para llegar con el Manual prácticamente armado.',
-    href: '/guias/toma-de-control-propuesta/guia-anticipada',
+    href: '/guias/toma-de-control-propuesta/guia-tdc-anticipada',
   },
   {
     titulo: 'Producto ya en producción',
     descripcion: 'Sigue la Guía de Auditoría de Equipos Existentes para consolidar tu documentación.',
-    href: '/guias/toma-de-control-propuesta/auditoria-producto-existente',
+    href: '/guias/toma-de-control-propuesta/guia-auditoria-equipos-existentes',
   },
 ]
 
 const pilares = [
-  { titulo: 'Entender la TDC', descripcion: 'El qué y el por qué del procedimiento.', detalle: '2 páginas', href: '/guias/toma-de-control-propuesta/manual-a-g' },
-  { titulo: 'Guías — cuándo y por qué', descripcion: 'Cuándo prepararte y qué camino seguir.', detalle: '5 páginas', href: '/guias/toma-de-control-propuesta/elegir-situacion' },
-  { titulo: 'Biblioteca de templates', descripcion: 'El qué y el cómo de cada artefacto.', detalle: '15 páginas', href: '/guias/toma-de-control-propuesta/artefactos-gobierno' },
-  { titulo: 'Manual de referencia', descripcion: 'Consulta el detalle sección por sección.', detalle: '3 páginas', href: '/guias/toma-de-control-propuesta/referencia-y-cierre' },
+  { titulo: 'Entender la TDC', descripcion: 'El qué y el por qué del procedimiento.', detalle: '5 páginas', href: '/guias/toma-de-control-propuesta/que-es-la-tdc' },
+  { titulo: 'Guías — cuándo y por qué', descripcion: 'Cuándo prepararte y qué camino seguir.', detalle: '1 router + 4 guías', href: '/guias/toma-de-control-propuesta/cual-es-tu-situacion' },
+  { titulo: 'Biblioteca de templates', descripcion: 'El qué y el cómo de cada artefacto.', detalle: '15 en 3 grupos', href: '/guias/toma-de-control-propuesta/biblioteca-templates' },
+  { titulo: 'Manual de referencia', descripcion: 'Consulta el detalle sección por sección.', detalle: '5 páginas', href: '/guias/toma-de-control-propuesta/manual-seccion-por-seccion' },
 ]
 
 export function TomaDeControlPortada() {
@@ -35,12 +35,14 @@ export function TomaDeControlPortada() {
           ]}
         />
         <h2 className="mt-6 text-[40px] font-semibold leading-[1.2] tracking-[-2px] text-foreground">Toma de Control</h2>
-        <div className="mt-6">
-          <FilaDistintivos madurez="production" tags={['documentation', 'governance', 'operations']} />
-        </div>
         <p className="mt-5 max-w-2xl leading-relaxed text-muted-foreground">
           El procedimiento para entregar tu producto a Operaciones sin fricción: guías que responden el cuándo y el por qué, templates que responden el qué y el cómo.
         </p>
+        <div className="mt-4 flex flex-wrap gap-2">
+          <Badge variant="accent">● Etapa 10 · Cencoflow</Badge>
+          <Badge variant="outline">Manual A–G</Badge>
+          <Badge variant="outline">15 artefactos</Badge>
+        </div>
       </header>
 
       <section aria-labelledby="situacion-titulo" className="border-t border-border pt-10">
@@ -54,7 +56,7 @@ export function TomaDeControlPortada() {
             </Link>
           ))}
         </div>
-        <Link to="/guias/toma-de-control-propuesta/elegir-situacion" className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-accent hover:underline">¿No estás seguro cuál aplica? Te ayudamos a elegir <ArrowRight className="size-4" /></Link>
+        <Link to="/guias/toma-de-control-propuesta/cual-es-tu-situacion" className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-accent hover:underline">¿No estás seguro cuál aplica? Te ayudamos a elegir <ArrowRight className="size-4" /></Link>
       </section>
 
       <section aria-labelledby="pilares-titulo">

@@ -25,41 +25,6 @@ function TabsCategoriaGuia({
   )
 }
 
-function VitrinaGuiasPorCategoria({
-  documentos,
-  onSeleccionarDocumento,
-  onVerTodo,
-}: {
-  documentos: DocumentoGuia[]
-  onSeleccionarDocumento: (documento: DocumentoGuia) => void
-  onVerTodo: (categoria: (typeof categoriaGuiaOpciones)[number]) => void
-}) {
-  return (
-    <div className="flex flex-col gap-[var(--space-section)]">
-      {categoriaGuiaOpciones.map((categoria) => {
-        const documentosCategoria = documentos.filter((documento) => documento.categorias.includes(categoria))
-        if (documentosCategoria.length === 0) return null
-
-        return (
-          <section key={categoria} aria-label={categoria}>
-            <div className="flex items-center justify-between gap-[var(--space-block)]">
-              <h2 className="text-xs font-medium tracking-wide text-muted-foreground uppercase">{categoria}</h2>
-              {documentosCategoria.length > 4 && (
-                <button type="button" onClick={() => onVerTodo(categoria)} className="text-xs font-medium text-primary underline-offset-4 hover:underline">
-                  Ver todo
-                </button>
-              )}
-            </div>
-            <div className="mt-3">
-              <GrillaDocumentos documentos={documentosCategoria.slice(0, 4)} onSeleccionarDocumento={onSeleccionarDocumento} />
-            </div>
-          </section>
-        )
-      })}
-    </div>
-  )
-}
-
 export function GuiasPage() {
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
@@ -124,13 +89,6 @@ export function GuiasPage() {
           onOrdenChange={setOrden}
         />
 
-        {categoria === 'todos' ? (
-          <VitrinaGuiasPorCategoria
-            documentos={documentosFiltrados}
-            onSeleccionarDocumento={irADocumento}
-            onVerTodo={seleccionarCategoria}
-          />
-        ) : (
         <section>
           <div className="flex items-center gap-2">
             <h2 className="text-xs font-medium tracking-wide text-muted-foreground uppercase">Documentos</h2>
@@ -142,7 +100,6 @@ export function GuiasPage() {
             <GrillaDocumentos documentos={documentosFiltrados} onSeleccionarDocumento={irADocumento} />
           </div>
         </section>
-        )}
       </div>
     </main>
   )

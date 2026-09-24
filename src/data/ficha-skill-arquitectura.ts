@@ -32,7 +32,7 @@ export const fichaSkillDetalleArquitectura: Record<string, FichaSkillDetalle> = 
     evitar: ['No inventa pilares: reporta principios no documentados como gap.', 'No mide modularidad de código: eso corresponde a MMI Analyzer.', 'No genera la solución; propone remediaciones.'],
     requisitos: ['ADR, diagrama C4, descripción de servicio o propuesta de cambio.', 'Acceso a Cencosud-IT y CencoSkills para instalarla.'],
     archivos: ['SKILL.md', 'INSTALL.md', 'references/', '  ├── principles.md  (fuente de verdad)', '  ├── scoring-rubric.md', '  └── archetypes-link.md'],
-    video: { duracion: '02:30' },
+    video: { duracion: '02:30', vimeoId: '1209924018' },
     relaciones: [
       {
         nombre: 'Archetype Governance',
@@ -94,7 +94,7 @@ export const fichaSkillDetalleArquitectura: Record<string, FichaSkillDetalle> = 
     evitar: ['No genera ni refactoriza código.', 'No evalúa principios del CoE: eso corresponde a EA Principles Align.'],
     requisitos: ['Python 3.8+, pip install lizard networkx.', 'Un coding agent (Kiro, Claude Code, Cline).'],
     archivos: ['SKILL.md', 'metadata.json', 'scripts/  (3 scripts Python)', 'references/  (3 archivos)', 'assets/  (2 archivos de ejemplo)'],
-    video: { duracion: '11:44' },
+    video: { duracion: '11:44', vimeoId: '1214081875' },
     relaciones: [
       {
         nombre: 'EA Principles Align Expert',
@@ -132,6 +132,5 @@ export const fichaSkillDetalleArquitectura: Record<string, FichaSkillDetalle> = 
     evitar: ['No define la política corporativa: la aplica.', 'Requiere un logger jerárquico como winston o pino.'],
     requisitos: ['Servicio con logger jerárquico.', 'Acceso a Cencosud-IT y CencoSkills para instalarla.'],
     archivos: ['SKILL.md', 'INSTALL.md', 'references/', '  ├── levels.md  (fuente de verdad)', '  ├── formats.md', '  └── request-id.md'],
-    video: { duracion: '02:45' },
   },
 }

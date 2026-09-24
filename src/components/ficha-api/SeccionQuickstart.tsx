@@ -13,7 +13,7 @@ export function SeccionQuickstart({ titulo, pasos }: SeccionQuickstartProps) {
 
       {pasos.length === 0 ? (
         <div className="mt-2">
-          <EstadoVacioSeccion mensaje="Todavía no hay un quickstart documentado para esta API en el prototipo." />
+          <EstadoVacioSeccion mensaje="La fuente de Atlas no publica un quickstart para esta API." />
         </div>
       ) : (
         <ol className="mt-2 flex flex-col gap-3">

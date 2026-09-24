@@ -20,7 +20,7 @@ export function EncabezadoFicha({ activo, tipoLabel, accionPrimaria }: Encabezad
   return (
     <div>
       {contexto === 'pagina' && <Link
-        to="/aceleradores"
+        to={activo.tipo === 'skill' ? '/aceleradores?tipo=skill' : '/aceleradores'}
         className="inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
       >
         <ChevronLeft className="size-4" />
@@ -35,7 +35,7 @@ export function EncabezadoFicha({ activo, tipoLabel, accionPrimaria }: Encabezad
           <div>
             <h1 className="text-xl font-semibold text-foreground">{activo.nombre}</h1>
             <p className="mt-0.5 text-sm text-muted-foreground">
-              {activo.responsable.nombre} · v{activo.version} · {activo.fechaActualizacion} · {tipoLabel}
+              {[activo.responsable.nombre, activo.version !== 'No publicada' && activo.version !== '—' ? `v${activo.version}` : null, activo.fechaActualizacion !== 'No publicada' ? activo.fechaActualizacion : null, tipoLabel].filter(Boolean).join(' · ')}
             </p>
           </div>
         </div>

@@ -6,6 +6,7 @@ export interface PasoActivacion {
 export interface RecursoExterno {
   titulo: string
   descripcion: string
+  href: string
 }
 
 export interface VideoAgente {
@@ -19,4 +20,5 @@ export interface FichaAgenteDetalle {
   ejemploUso: string
   recurso: RecursoExterno
   video?: VideoAgente
+  hrefUso: string
 }

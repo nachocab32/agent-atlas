@@ -36,6 +36,16 @@ export function SeccionConexionMcp({ detalle, onProbarPregunta }: { detalle: Fic
         <BloqueCodigo codigo={detalle.configCodigo} />
       </section>
 
+      {detalle.configuraciones?.map((configuracion) => (
+        <section key={configuracion.titulo} className="flex flex-col gap-4 rounded-xl border border-border bg-card p-4">
+          <h3 className="font-medium text-foreground">{configuracion.titulo}</h3>
+          <ol className="flex flex-col gap-2 text-sm leading-relaxed text-muted-foreground">
+            {configuracion.pasos.map((paso, index) => <li key={paso}>{index + 1}. {paso}</li>)}
+          </ol>
+          {configuracion.codigo && <BloqueCodigo codigo={configuracion.codigo} />}
+        </section>
+      ))}
+
       {detalle.clientesSoportados && (
         <section className="flex flex-col gap-4">
           <Titulo>Clientes soportados</Titulo>

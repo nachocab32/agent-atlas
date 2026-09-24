@@ -17,12 +17,15 @@ export function crearApi(
   lifecycle: 'production' | 'experimental',
   tags: string[],
 ): Activo {
-  const descripcion = `API del dominio ${dominio}, a cargo de ${owner}. Lifecycle: ${lifecycle}.`
+  const detallePublicado = id === 'stock-online-easy-api'
+  const descripcion = detallePublicado
+    ? 'API para consultar stock de productos por centro (WERKS) y material (MATNR) utilizando un servicio OData SAP XSODATA.'
+    : 'El portal publica su dominio, owner, lifecycle y tags; el contrato técnico no está publicado.'
   return {
     id,
     nombre,
     tipo: 'api',
-    version: '1.0',
+    version: detallePublicado ? '1.0.0' : 'No publicada',
     descripcion,
     descripcionLarga: descripcion,
     categorias: [],

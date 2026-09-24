@@ -4,6 +4,7 @@ import { FichaApiTemplate } from '@/features/ficha-api/components/ficha-api-temp
 import { FichaMcpTemplate } from '@/features/ficha-mcp/components/ficha-mcp-template'
 import { FichaAgenteTemplate } from '@/features/ficha/components/ficha-agente-template'
 import { FichaGenericaActivo } from '@/features/ficha/components/ficha-generica-activo'
+import { FichaArquetipoTemplate } from '@/features/ficha/components/ficha-arquetipo-template'
 import { DeckGenFicha } from '@/features/ficha/components/deck-gen-ficha'
 import { FichaSkillGuia } from '@/features/ficha/components/ficha-skill-guia'
 
@@ -31,6 +32,8 @@ export function FichaPage() {
         <FichaAgenteTemplate activo={activo} />
       ) : activo.tipo === 'mcp-server' ? (
         <FichaMcpTemplate activo={activo} />
+      ) : activo.tipo === 'arquetipo' ? (
+        <FichaArquetipoTemplate activo={activo} />
       ) : (
         <FichaGenericaActivo activo={activo} />
       )}

@@ -1,6 +1,6 @@
-import { Code2, ListChecks, Play, ShieldCheck } from 'lucide-react'
+import { Code2, ListChecks, ShieldCheck } from 'lucide-react'
 import { useNavigate } from 'react-router'
-import { TarjetaCatalogo } from '@/shared/ui'
+import { ReproductorVideo, TarjetaCatalogo } from '@/shared/ui'
 import type { FichaMcpDetalle } from '@/types/ficha-mcp'
 import { Lista, Titulo } from './comunes'
 
@@ -57,22 +57,7 @@ export function SeccionResumenMcp({ descripcionLarga, detalle }: { descripcionLa
       )}
 
       {detalle.videos.map((video) => (
-        <section key={video.titulo} className="overflow-hidden rounded-xl border border-border bg-card">
-          <div className="flex items-center justify-between gap-2 border-b border-border px-4 py-3">
-            <div className="flex items-center gap-2">
-              <Play className="size-4 text-primary" />
-              <h2 className="text-sm font-medium">{video.titulo}</h2>
-            </div>
-            <span className="text-xs text-muted-foreground">{video.duracion}</span>
-          </div>
-          <div className="flex aspect-video items-center justify-center bg-muted text-sm text-muted-foreground">
-            {video.vimeoId ? (
-              <iframe className="size-full" src={`https://player.vimeo.com/video/${video.vimeoId}`} title={video.titulo} allow="autoplay; fullscreen; picture-in-picture" allowFullScreen />
-            ) : (
-              `Video sin embed configurado (${video.duracion})`
-            )}
-          </div>
-        </section>
+        <ReproductorVideo key={video.titulo} titulo={video.titulo} duracion={video.duracion} vimeoId={video.vimeoId} />
       ))}
     </>
   )

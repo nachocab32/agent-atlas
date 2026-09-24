@@ -1,13 +1,10 @@
 import { useState } from 'react'
-import { useNavigate, useOutletContext } from 'react-router'
 import { Check, LoaderCircle, Play } from 'lucide-react'
-import type { AppOutletContext } from '@/app/app-layout'
 import { EncabezadoFicha } from '@/components/ficha/EncabezadoFicha'
 import { PanelResponsable } from '@/components/ficha/PanelResponsable'
 import { tipoActivoLabel } from '@/data/catalogo'
-import { Button, Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui'
+import { BloqueCodigoCopiable, BotonDescargaSkill, Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui'
 import type { Activo } from '@/types/catalogo'
-import { useContextoFicha } from '@/features/referencia/contexto-ficha'
 
 const temas = [
   ['Cencosud', 'Identidad corporativa clara basada en un PowerPoint aprobado. Permite HTML, PowerPoint y PDF.'],
@@ -45,27 +42,19 @@ function ListaChequeo({ items }: { items: string[] }) {
 }
 
 export function DeckGenFicha({ activo }: { activo: Activo }) {
-  const contexto = useContextoFicha()
-  const navigate = useNavigate()
-  const { anclarActivo, enviar } = useOutletContext<AppOutletContext>()
   const [tab, setTab] = useState('resumen')
   const [videoCargado, setVideoCargado] = useState(false)
 
-  function abrirChat(texto?: string) {
-    anclarActivo({ id: activo.id, nombre: activo.nombre, version: activo.version })
-    if (texto) void enviar(texto)
-    if (contexto === 'pagina') navigate('/')
-  }
-
   return (
     <div className="mx-auto flex max-w-5xl flex-col gap-6">
-      <EncabezadoFicha activo={activo} tipoLabel={tipoActivoLabel[activo.tipo]} accionPrimaria={contexto === 'pagina' ? <Button onClick={() => setTab('instalar')}>Ver instalación</Button> : null} />
+      <EncabezadoFicha activo={activo} tipoLabel={tipoActivoLabel[activo.tipo]} accionPrimaria={null} />
       <div className="grid grid-cols-[minmax(0,1fr)_14rem] gap-8 max-md:grid-cols-1">
         <Tabs value={tab} onValueChange={setTab}>
           <TabsList className="max-sm:w-full max-sm:overflow-x-auto">
             <TabsTrigger value="resumen">Resumen</TabsTrigger>
-            <TabsTrigger value="instalar">Instalar</TabsTrigger>
             <TabsTrigger value="uso">Uso</TabsTrigger>
+            <TabsTrigger value="requisitos">Requisitos</TabsTrigger>
+            <TabsTrigger value="instalar">Instalar</TabsTrigger>
             <TabsTrigger value="archivos">Archivos</TabsTrigger>
           </TabsList>
 
@@ -123,18 +112,19 @@ export function DeckGenFicha({ activo }: { activo: Activo }) {
             <TituloSeccion>Instálala en tu repo</TituloSeccion>
             <p className="leading-relaxed text-muted-foreground">Hay dos caminos según tu perfil. Desarrollo instala desde CencoSkills; diseño, producto y otros roles pueden usar la descarga directa del paquete.</p>
             <div className="grid gap-4 sm:grid-cols-2">
-              <section className="rounded-xl border border-border bg-card p-4"><h3 className="font-medium text-foreground">Perfil desarrollador</h3><p className="mt-1 text-sm text-muted-foreground">Requiere terminal, npm y accesos corporativos.</p><code className="mt-4 block rounded-lg bg-neutral-950 p-3 font-mono text-xs text-white">npx cenco-skills add --skill deck-gen</code></section>
-              <section className="rounded-xl border border-border bg-card p-4"><h3 className="font-medium text-foreground">Diseño, producto y otros roles</h3><p className="mt-1 text-sm text-muted-foreground">Descarga el .zip, descomprime la carpeta y sincronízala donde uses tus skills.</p><p className="mt-4 text-xs text-muted-foreground">La descarga directa se conectará cuando migremos el endpoint de assets.</p></section>
+              <section className="rounded-xl border border-border bg-card p-4"><h3 className="font-medium text-foreground">Perfil desarrollador</h3><p className="mt-1 text-sm text-muted-foreground">Requiere terminal, npm y accesos corporativos.</p><code className="mt-4 block rounded-lg bg-neutral-950 p-3 font-mono text-xs text-white">npm install -g @cencosud-it/it-skills-cli{'\n'}npx cenco-skills add --skill deck-gen</code></section>
+              <section className="rounded-xl border border-border bg-card p-4"><h3 className="font-medium text-foreground">Diseño, producto y otros roles</h3><p className="mt-1 text-sm text-muted-foreground">Descarga el .zip, descomprime la carpeta y sincronízala donde uses tus skills.</p><BotonDescargaSkill className="mt-4" href="https://atlas-platform.cencosud.net/api/skills/deck-gen/download?slug=deck-gen" nombreArchivo="deck-gen.zip" /></section>
             </div>
-            <div className="rounded-xl border border-border bg-card p-4"><h3 className="font-medium text-foreground">Requisitos previos</h3><div className="mt-4"><ListaChequeo items={['Claude Code instalado.', 'Acceso a la carpeta de skills de Claude Code (~/.claude/skills/).']} /></div></div>
           </TabsContent>
 
           <TabsContent value="uso" className="flex flex-col gap-8">
-            <div className="flex flex-col gap-4"><TituloSeccion>Ejemplos de uso</TituloSeccion>{ejemplos.map((ejemplo) => <button key={ejemplo} type="button" onClick={() => abrirChat(ejemplo)} className="rounded-xl border border-border bg-card p-4 text-left text-sm leading-relaxed text-foreground transition-colors hover:border-primary/25 hover:bg-primary/5">{ejemplo}</button>)}</div>
+            <div className="flex flex-col gap-4"><TituloSeccion>Ejemplos de uso</TituloSeccion>{ejemplos.map((ejemplo) => <div key={ejemplo} className="rounded-xl border border-border bg-card p-4 text-sm leading-relaxed text-foreground">{ejemplo}</div>)}</div>
             <div className="flex flex-col gap-4"><TituloSeccion>Cómo construye por dentro</TituloSeccion><ol className="flex flex-col gap-3">{proceso.map((paso, index) => <li key={paso} className="flex gap-3 rounded-xl border border-border bg-card p-4 text-sm text-foreground"><span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-accent text-xs font-semibold text-accent-foreground">{index + 1}</span>{paso}</li>)}</ol></div>
           </TabsContent>
 
-          <TabsContent value="archivos" className="flex flex-col gap-6"><TituloSeccion>Archivos del skill</TituloSeccion><pre className="overflow-x-auto rounded-xl border border-border bg-neutral-950 p-4 font-mono text-xs leading-relaxed text-white">skills/deck-gen/{'\n'}├── SKILL.md{'\n'}├── references/{'\n'}├── scripts/{'\n'}└── themes/</pre><p className="leading-relaxed text-muted-foreground">Claude Code detecta los skills por la presencia de <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-foreground">SKILL.md</code> en la carpeta del skill.</p><div className="rounded-xl border border-border bg-card p-4"><TituloSeccion>Notas para mejores resultados</TituloSeccion><div className="mt-4"><ListaChequeo items={['Aprueba el blueprint antes de construir para evitar rehacer slides.', 'Pega el contenido completo —ideas, texto y datos— en una sola entrega.', 'Indica audiencia y necesidad de edición en PowerPoint para calibrar el resultado.']} /></div></div></TabsContent>
+          <TabsContent value="requisitos" className="flex flex-col gap-6"><TituloSeccion>Requisitos previos</TituloSeccion><ListaChequeo items={['Claude Code instalado.', 'Acceso a la carpeta de skills de Claude Code (~/.claude/skills/).', 'Para la instalación con CencoSkills: terminal, npm y accesos corporativos.']} /></TabsContent>
+
+          <TabsContent value="archivos" className="flex flex-col gap-6"><TituloSeccion>Archivos del skill</TituloSeccion><BloqueCodigoCopiable codigo={'skills/deck-gen/\n├── SKILL.md\n├── references/\n├── scripts/\n└── themes/'} /><p className="leading-relaxed text-muted-foreground">Claude Code detecta los skills por la presencia de <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-foreground">SKILL.md</code> en la carpeta del skill.</p><div className="rounded-xl border border-border bg-card p-4"><TituloSeccion>Notas para mejores resultados</TituloSeccion><div className="mt-4"><ListaChequeo items={['Aprueba el blueprint antes de construir para evitar rehacer slides.', 'Pega el contenido completo —ideas, texto y datos— en una sola entrega.', 'Indica audiencia y necesidad de edición en PowerPoint para calibrar el resultado.']} /></div></div></TabsContent>
         </Tabs>
         <aside className="flex flex-col gap-6 max-md:order-first"><PanelResponsable responsable={activo.responsable} /><div className="rounded-xl border border-border bg-card p-4"><p className="text-xs font-medium text-muted-foreground">Formato de salida</p><p className="mt-2 text-sm text-foreground">HTML · PPTX · PDF</p></div></aside>
       </div>

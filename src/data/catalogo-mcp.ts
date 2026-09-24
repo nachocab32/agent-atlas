@@ -12,6 +12,24 @@ import type { Activo } from '@/types/catalogo'
 
 export const activosMcp: Activo[] = [
   {
+    id: 'mcp-coralogix',
+    nombre: 'MCP Coralogix',
+    tipo: 'mcp-server',
+    version: 'No publicada',
+    descripcion: 'Conecta tu asistente a la telemetría de Coralogix para consultar evidencia y apoyar el diagnóstico desde tu entorno de trabajo.',
+    descripcionLarga: 'Conecta tu asistente a la telemetría de Coralogix para consultar logs, métricas y trazas desde un cliente compatible con MCP remoto. La conexión documenta evidencia de diagnóstico; no acredita acceso activo ni habilita operaciones de escritura por sí sola.',
+    categorias: ['MCP Server', 'Observabilidad', 'Configuración documentada'],
+    equiposUsando: 0,
+    aplicaAlStack: false,
+    fechaIncorporacion: 'No publicada',
+    fechaActualizacion: 'No publicada',
+    responsable: { nombre: 'Coralogix', area: 'Proveedor', iniciales: 'CX' },
+    pruebalo: [],
+    contenido: [],
+    enCencoFlow: [],
+    requisitos: [],
+  },
+  {
     id: 'mcp-ai-workflow',
     nombre: 'MCP AI-Workflow',
     tipo: 'mcp-server',

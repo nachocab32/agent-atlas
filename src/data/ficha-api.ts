@@ -36,5 +36,6 @@ export const fichaApiDetallePorId: Record<string, FichaApiDetalle> = {
       { codigo: '401', descripcion: 'No autorizado.' },
       { codigo: '500', descripcion: 'Error interno del servidor.' },
     ],
+    soporte: 'Luis Gyllen · luis.gyllen@cencosud.cl',
   },
 }

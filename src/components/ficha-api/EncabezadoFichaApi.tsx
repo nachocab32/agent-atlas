@@ -54,9 +54,9 @@ export function EncabezadoFichaApi({
             {protocolo}
           </span>
         )}
-        <span className="rounded-full border border-border bg-card px-2.5 py-1 text-xs text-muted-foreground">
+        {version !== 'No publicada' && <span className="rounded-full border border-border bg-card px-2.5 py-1 text-xs text-muted-foreground">
           v{version}
-        </span>
+        </span>}
       </div>
 
       {tags.length > 0 && (

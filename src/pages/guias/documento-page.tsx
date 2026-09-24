@@ -1,9 +1,9 @@
+import { Info } from 'lucide-react'
 import { useEffect } from 'react'
 import { BreadcrumbDocumento } from '@/components/documento/BreadcrumbDocumento'
 import { CuerpoDocumento } from '@/components/documento/CuerpoDocumento'
 import { BibliotecaObservabilidad, ContenidoObservabilidad } from '@/components/documento/ContenidoObservabilidad'
 import { EstadoVacioDocumento } from '@/components/documento/EstadoVacioDocumento'
-import { FilaDistintivos } from '@/components/documento/FilaDistintivos'
 import { IndiceDocumento } from '@/components/documento/IndiceDocumento'
 import { IndiceTomaDeControl } from '@/components/documento/IndiceTomaDeControl'
 import { PiePaginaDocumento } from '@/components/documento/PiePaginaDocumento'
@@ -41,7 +41,7 @@ export function DocumentoPage() {
   const esPortadaTdc = esTomaDeControl && pagina?.id === 'inicio'
 
   return (
-    <div className="flex flex-1 overflow-y-auto px-6 py-10 max-md:px-4 max-md:py-6 lg:px-10 2xl:px-14">
+    <div className="flex flex-1 items-start overflow-y-auto px-6 py-10 max-md:px-4 max-md:py-6 lg:px-10 2xl:px-14">
       <div className="mx-auto grid w-full max-w-[76rem] grid-cols-[minmax(0,48rem)_15rem] justify-between gap-x-16 max-md:grid-cols-1 max-md:gap-6">
         <aside className="sticky top-4 col-start-2 self-start border-l border-border pl-6 max-md:static max-md:col-start-auto max-md:border-l-0 max-md:border-b max-md:pb-6 max-md:pl-0">
           {esTomaDeControl ? <IndiceTomaDeControl
@@ -64,13 +64,18 @@ export function DocumentoPage() {
           <h2 className="text-[40px] font-semibold leading-[1.2] tracking-[-2px] text-foreground">{pagina?.titulo ?? documento.titulo}</h2>
         </div>
 
-        <FilaDistintivos madurez={documento.madurez} tags={detalle?.tags ?? documento.tags} />
-
         <p className="text-sm text-muted-foreground">
           {detalle
             ? `Versión ${detalle.version} · Actualizado ${detalle.actualizado} · Owner: ${detalle.owner}`
             : `Owner: ${documento.owner}`}
         </p>
+
+        {documento.notaOrigen && (
+          <div className="flex gap-2 rounded-xl border border-[#B8C7D9] bg-[#F5F8FC] px-4 py-3 text-sm text-foreground">
+            <Info className="mt-0.5 size-4 shrink-0 text-[#46627F]" aria-hidden="true" />
+            <p>{documento.notaOrigen}</p>
+          </div>
+        )}
 
         {pagina?.bajada && <p className="max-w-3xl text-muted-foreground">{pagina.bajada}</p>}
 

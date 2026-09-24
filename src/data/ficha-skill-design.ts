@@ -36,7 +36,7 @@ export const fichaSkillDetalleDesign: Record<string, FichaSkillDetalle> = {
       'MCP de Penpot conectado en la sesión de Claude Code.',
     ],
     archivos: ['SKILL.md', 'INSTALL.md', 'references/', '  ├── ds-snapshot.md', '  ├── component-decisions.md', '  ├── component-descriptions.md', '  └── penpot-tokens.md'],
-    video: { duracion: '01:33' },
+    video: { duracion: '02:35', vimeoId: '1207890025' },
     relaciones: [
       {
         nombre: 'ITDS Code Forge',
@@ -89,7 +89,7 @@ export const fichaSkillDetalleDesign: Record<string, FichaSkillDetalle> = {
       'Node.js solo si se exporta a Next.js/Vite.',
     ],
     archivos: ['SKILL.md', 'INSTALL.md', 'references/  (7 archivos, incluido ds-snapshot.md como fuente de verdad)', 'tests/  (3 archivos de test)'],
-    video: { duracion: '01:58' },
+    video: { duracion: '01:58', vimeoId: '1207889740' },
     mantenedor: { equipo: 'Equipo Design UX (dato provisional según el portal)', fechaPublicacion: '23 jul 2026', estado: 'Vigente' },
     widgetUtilidad: true,
     relaciones: [{ nombre: 'ITDS Board Composer', frase: 'Diseña primero el board en Penpot con ITDS Board Composer, luego lleva ese mismo flujo a código con este skill.' }],
@@ -153,6 +153,6 @@ export const fichaSkillDetalleDesign: Record<string, FichaSkillDetalle> = {
       '  ├── spacing-standards.md',
       '  └── (más sus 6 equivalentes en inglés)',
     ],
-    video: { duracion: '00:51' },
+    video: { duracion: '00:51', vimeoId: '1208819107' },
   },
 }

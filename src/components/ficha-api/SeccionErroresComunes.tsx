@@ -13,7 +13,7 @@ export function SeccionErroresComunes({ titulo, errores }: SeccionErroresComunes
 
       {errores.length === 0 ? (
         <div className="mt-2">
-          <EstadoVacioSeccion mensaje="Todavía no hay errores comunes documentados para esta API en el prototipo." />
+          <EstadoVacioSeccion mensaje="La fuente de Atlas no publica errores comunes para esta API." />
         </div>
       ) : (
         <ul className="mt-2 flex flex-col divide-y divide-border overflow-hidden rounded-xl border border-border bg-card">

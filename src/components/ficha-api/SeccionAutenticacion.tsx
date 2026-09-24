@@ -1,4 +1,3 @@
-import { Button } from '@/shared/ui'
 import type { EsquemaAutenticacion } from '@/types/ficha-api'
 import { EstadoVacioSeccion } from './EstadoVacioSeccion'
 
@@ -15,7 +14,7 @@ export function SeccionAutenticacion({ titulo, esquemas, credencialesTexto }: Se
 
       {esquemas.length === 0 ? (
         <div className="mt-2">
-          <EstadoVacioSeccion mensaje="Todavía no hay esquemas de autenticación documentados para esta API en el prototipo." />
+          <EstadoVacioSeccion mensaje="La fuente de Atlas no publica esquemas de autenticación para esta API." />
         </div>
       ) : (
         <>
@@ -34,9 +33,6 @@ export function SeccionAutenticacion({ titulo, esquemas, credencialesTexto }: Se
             <div className="mt-3 rounded-xl border border-accent/30 bg-card p-4">
               <p className="text-sm font-medium text-accent">¿Necesitas credenciales para un ambiente real?</p>
               <p className="mt-1 text-sm text-foreground">{credencialesTexto}</p>
-              <Button variant="outline" className="mt-3">
-                Solicitar acceso
-              </Button>
             </div>
           )}
         </>

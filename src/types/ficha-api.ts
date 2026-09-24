@@ -28,4 +28,5 @@ export interface FichaApiDetalle {
   credencialesTexto?: string
   quickstart: PasoQuickstart[]
   errores: ErrorComunApi[]
+  soporte?: string
 }

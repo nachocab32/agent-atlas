@@ -7,7 +7,7 @@ const documentoFuente = observabilidadExtraida.documento
 const paginas: PaginaDocumento[] = [
   {
     id: 'inicio',
-    titulo: documentoFuente.titulo,
+    titulo: 'Observabilidad Corporativa',
     bajada: 'El recorrido para adoptar, gobernar e implementar observabilidad corporativa.',
     seccion: 'Introducción',
     cuerpo: [
@@ -42,17 +42,18 @@ const paginas: PaginaDocumento[] = [
 
 export const observabilidad: DocumentoGuia = {
   id: documentoFuente.id,
-  titulo: documentoFuente.titulo,
-  descripcion: 'Marco completo para adoptar, gobernar e implementar observabilidad corporativa con OpenTelemetry, Ægis, OES y Coralogix.',
-  categorias: ['Observabilidad', 'Gobierno', 'Operaciones'],
-  owner: 'Plataforma / Observabilidad',
-  madurez: 'production',
-  tags: ['observabilidad', 'opentelemetry', 'aegis', 'oes', 'coralogix', 'rum', 'gobierno'],
+  titulo: 'Observabilidad corporativa',
+  descripcion: 'Marco para adoptar, gobernar e implementar observabilidad corporativa con OpenTelemetry, Ægis, OES y Coralogix.',
+  categorias: ['Observabilidad'],
+  owner: 'Applications-Observabilidad',
+  madurez: 'beta',
+  tags: ['observability', 'monitoring', 'opentelemetry', 'aegis', 'oes', 'coralogix'],
+  notaOrigen: 'Contenido migrado desde el portal anterior y reorganizado en capítulos y temas para facilitar su lectura en Atlas.',
   detalle: {
     version: 'Portal de Observabilidad',
     actualizado: '8 septiembre 2026',
-    owner: 'Plataforma / Observabilidad',
-    tags: ['observabilidad', 'opentelemetry', 'aegis', 'oes', 'coralogix', 'rum', 'gobierno'],
+    owner: 'Applications-Observabilidad',
+    tags: ['observability', 'monitoring', 'opentelemetry', 'aegis', 'oes', 'coralogix'],
   },
   paginas,
 }

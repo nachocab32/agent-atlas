@@ -4,6 +4,48 @@
 import type { FichaMcpDetalle } from '@/types/ficha-mcp'
 
 export const fichaMcpDetallePorId: Record<string, FichaMcpDetalle> = {
+  'mcp-coralogix': {
+    queResuelve: [
+      'Consultar logs, métricas y trazas para reunir evidencia de diagnóstico.',
+      'Ejecutar consultas DataPrime y revisar alertas y reglas de parsing según los permisos de la identidad.',
+      'Mantener el análisis en el entorno de trabajo, sin copiar credenciales al repositorio ni a conversaciones.',
+    ],
+    antesDeEmpezar: [
+      'Usa un cliente compatible con MCP remoto y una identidad autorizada en la cuenta de Coralogix.',
+      'Confirma región, permisos y conectividad antes de conectar. El endpoint documentado corresponde a US2.',
+      'API key y OAuth son alternativas: una conexión con bearer token no requiere login OAuth.',
+    ],
+    urlConexion: 'https://api.us2.coralogix.com/mgmt/api/v1/mcp',
+    configCodigo: 'export CORALOGIX_API_KEY="<TU_API_KEY_PERSONAL>"\ncodex mcp add coralogix-server --url "https://api.us2.coralogix.com/mgmt/api/v1/mcp" --bearer-token-env-var CORALOGIX_API_KEY\ncodex mcp list\ncodex mcp get coralogix-server',
+    clientesSoportados: ['Codex', 'Cursor', 'OpenCode', 'Claude Code', 'Claude Desktop / web'],
+    configuraciones: [
+      {
+        titulo: 'Codex · API key',
+        pasos: ['Define CORALOGIX_API_KEY mediante el mecanismo autorizado de secretos.', 'Registra el servidor, recarga el cliente y verifica que aparezca conectado.'],
+        codigo: 'export CORALOGIX_API_KEY="<TU_API_KEY_PERSONAL>"\ncodex mcp add coralogix-server --url "https://api.us2.coralogix.com/mgmt/api/v1/mcp" --bearer-token-env-var CORALOGIX_API_KEY',
+      },
+      {
+        titulo: 'OAuth en otros clientes',
+        pasos: ['Elige OAuth en la configuración MCP de Cursor, OpenCode, Claude Code o Claude Desktop/web.', 'Completa la autorización en el navegador y confirma los permisos efectivos de tu identidad.'],
+      },
+    ],
+    pruebaVerificacion: {
+      pregunta: 'Consulta los errores del servicio <SERVICIO> en el ambiente <AMBIENTE> durante los últimos 30 minutos. Resume patrones y evidencia, indicando el intervalo consultado. No ejecutes modificaciones.',
+      exito: 'El servidor aparece conectado, publica herramientas y devuelve evidencia del servicio e intervalo solicitado.',
+      falla: 'Si no hay datos, revisa región, servicio, intervalo y permisos antes de asumir una falla del servidor.',
+    },
+    seguridad: [
+      'Mantén las credenciales fuera del repositorio y de las conversaciones.',
+      'No pegues resultados sensibles en tickets ni en prompts compartidos.',
+      'Revisa el alcance de cada herramienta antes de ejecutar cambios; las operaciones de escritura requieren permisos específicos.',
+    ],
+    troubleshooting: [
+      'Error de autenticación: revisa vigencia de la credencial o repite OAuth.',
+      'Acceso denegado: valida permisos con el administrador de la cuenta.',
+      'Problemas de conectividad: revisa la red autorizada y escala con hora, cliente, región y mensaje sanitizado.',
+    ],
+    videos: [],
+  },
   'mcp-ai-workflow': {
     tools: [
       {
@@ -30,8 +72,16 @@ export const fichaMcpDetallePorId: Record<string, FichaMcpDetalle> = {
 }`,
     idesRecomendados: ['Cursor', 'Windsurf', 'Kiro', 'otros IDEs MCP-ready'],
     videos: [
-      { titulo: 'Introducción', duracion: '01:30' },
-      { titulo: 'Recomendaciones', duracion: '02:10' },
+      { titulo: 'Introducción', duracion: '01:30', vimeoId: '1209904488' },
+      { titulo: 'Recomendaciones', duracion: '02:10', vimeoId: '1209904487' },
+    ],
+    configuraciones: [
+      { titulo: 'Cursor', pasos: ['Abre la configuración de servidores MCP.', 'Pega el snippet de AI-Workflow.', 'Guarda y reinicia el IDE para cargar el servidor.'], codigo: `{
+  "mcpServers": {
+    "W-AI": { "command": "npx", "args": ["mcp-remote", "https://ai-workflow-coe-utils.coe-utils.ecomm.cencosud.com/mcp"] }
+  }
+}` },
+      { titulo: 'Windsurf, Kiro y otros IDEs MCP-ready', pasos: ['Abre la configuración MCP del IDE.', 'Usa el mismo snippet de conexión.', 'Reinicia la sesión y comprueba que las tres tools estén disponibles.'] },
     ],
   },
   'mcp-atlas-knowledge': {
@@ -107,5 +157,16 @@ export const fichaMcpDetallePorId: Record<string, FichaMcpDetalle> = {
       'Claude Code configurado pero las tools no aparecen.',
     ],
     videos: [],
+    configuraciones: [
+      { titulo: 'Claude Desktop', pasos: ['Ve a Configuración → Conectores.', 'Elige Agregar conector personalizado.', 'Pega la URL, nómbrala Atlas y guarda.'], codigo: 'https://atlas-platform.cencosud.net/api/mcp' },
+      { titulo: 'Claude Code, Cursor y VS Code + Copilot', pasos: ['Si tu cliente no acepta una URL directa, instala Node.js.', 'Agrega el puente mcp-remote con el snippet.', 'Reinicia el cliente y realiza la prueba de verificación.'], codigo: `{
+  "mcpServers": {
+    "atlas-knowledge": {
+      "command": "npx",
+      "args": ["mcp-remote", "https://atlas-platform.cencosud.net/api/mcp"]
+    }
+  }
+}` },
+    ],
   },
 }

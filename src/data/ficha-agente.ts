@@ -16,7 +16,9 @@ export const fichaAgenteDetallePorId: Record<string, FichaAgenteDetalle> = {
     recurso: {
       titulo: 'Guía rápida Cenco Writer',
       descripcion: 'Documento compartido en SharePoint, no un .zip descargable como las skills.',
+      href: 'https://cnco.sharepoint.com/:b:/s/CoEEngineering/IQCcJB-sO8NxSpSFgSnl6W2eAUTs4ndNvVYc6S9_yLy6nlM?e=a5kGN9',
     },
-    video: { duracion: '07:53' },
+    video: { duracion: '07:53', vimeoId: '1208846861' },
+    hrefUso: 'https://home.atlassian.com/o/5988a12j-da4d-16d9-7a66-92jd69j82663/chat?rovoChatPathway=chat&rovoChatCloudId=e98853f7-4b51-4e56-972c-6060aab3fa3d&rovoChatAgentId=d9592c98-0cdd-4d7c-b495-1f8df1bf3cdf&cloudId=e98853f7-4b51-4e56-972c-6060aab3fa3d',
   },
 }

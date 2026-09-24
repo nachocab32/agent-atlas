@@ -13,7 +13,7 @@ export function SeccionEndpoints({ titulo, endpoints }: SeccionEndpointsProps) {
 
       {endpoints.length === 0 ? (
         <div className="mt-2">
-          <EstadoVacioSeccion mensaje="Todavía no hay endpoints documentados para esta API en el prototipo." />
+          <EstadoVacioSeccion mensaje="El contrato técnico no está publicado en la fuente de Atlas para esta API." />
         </div>
       ) : (
         <>

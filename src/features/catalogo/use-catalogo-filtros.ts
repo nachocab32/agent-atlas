@@ -3,8 +3,8 @@ import type { Activo, TipoActivo } from '@/types/catalogo'
 
 export type OrdenCatalogo = 'nombre' | 'reciente'
 
-export function useCatalogoFiltros(activos: Activo[], activoEtapaConfirmada: Record<string, string>) {
-  const [filtroTipo, setFiltroTipo] = useState<'todos' | TipoActivo>('todos')
+export function useCatalogoFiltros(activos: Activo[], activoEtapaConfirmada: Record<string, string>, filtroTipoInicial: 'todos' | TipoActivo = 'todos') {
+  const [filtroTipo, setFiltroTipo] = useState<'todos' | TipoActivo>(filtroTipoInicial)
   const [etapaSeleccionada, setEtapaSeleccionada] = useState<string | null>(null)
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<string | null>(null)
   const [busqueda, setBusqueda] = useState('')

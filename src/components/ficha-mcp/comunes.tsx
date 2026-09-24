@@ -1,4 +1,5 @@
 import { Check } from 'lucide-react'
+import { BloqueCodigoCopiable } from '@/shared/ui'
 
 export function Titulo({ children }: { children: string }) {
   return <h2 className="font-heading text-xl font-semibold text-foreground">{children}</h2>
@@ -18,5 +19,5 @@ export function Lista({ items, icono }: { items: string[]; icono?: 'check' | 'ni
 }
 
 export function BloqueCodigo({ codigo }: { codigo: string }) {
-  return <pre className="overflow-x-auto rounded-xl border border-border bg-neutral-950 p-4 font-mono text-xs leading-relaxed text-white">{codigo}</pre>
+  return <BloqueCodigoCopiable codigo={codigo} />
 }

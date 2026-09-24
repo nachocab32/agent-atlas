@@ -1,63 +1,37 @@
 import { useState } from 'react'
-import { useNavigate, useOutletContext } from 'react-router'
-import { ExternalLink, Play } from 'lucide-react'
-import type { AppOutletContext } from '@/app/app-layout'
+import { ExternalLink } from 'lucide-react'
 import { EncabezadoFicha } from '@/components/ficha/EncabezadoFicha'
 import { PanelResponsable } from '@/components/ficha/PanelResponsable'
 import { fichaAgenteDetallePorId } from '@/data/ficha-agente'
 import { tipoActivoLabel } from '@/data/catalogo'
-import { Button } from '@/shared/ui'
+import { buttonVariants } from '@/components/ui/button'
+import { cn } from '@/shared/lib/utils'
+import { ReproductorVideo, Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui'
 import type { Activo } from '@/types/catalogo'
 import type { VideoAgente } from '@/types/ficha-agente'
-import { useContextoFicha } from '@/features/referencia/contexto-ficha'
 
 function SeccionVideoAgente({ nombreActivo, video }: { nombreActivo: string; video: VideoAgente }) {
-  const [videoCargado, setVideoCargado] = useState(false)
-  return (
-    <section className="overflow-hidden rounded-xl border border-border bg-card">
-      <div className="flex items-center justify-between gap-2 border-b border-border px-4 py-3">
-        <div className="flex items-center gap-2">
-          <Play className="size-4 text-primary" />
-          <h2 className="text-sm font-medium">Demo</h2>
-        </div>
-        <span className="text-xs text-muted-foreground">{video.duracion}</span>
-      </div>
-      <div className="relative aspect-video overflow-hidden bg-neutral-950">
-        {video.vimeoId ? (
-          <iframe
-            className={`size-full transition-opacity duration-300 ${videoCargado ? 'opacity-100' : 'opacity-0'}`}
-            src={`https://player.vimeo.com/video/${video.vimeoId}`}
-            title={`Demo de ${nombreActivo}`}
-            onLoad={() => setVideoCargado(true)}
-            allow="autoplay; fullscreen; picture-in-picture"
-            allowFullScreen
-          />
-        ) : (
-          <div className="flex size-full items-center justify-center text-sm text-white">Video sin embed configurado ({video.duracion})</div>
-        )}
-      </div>
-    </section>
-  )
+  return <ReproductorVideo titulo={`Demo de ${nombreActivo}`} duracion={video.duracion} vimeoId={video.vimeoId} />
 }
 
 export function FichaAgenteTemplate({ activo }: { activo: Activo }) {
-  const contexto = useContextoFicha()
   const detalle = fichaAgenteDetallePorId[activo.id]
-  const { anclarActivo, enviar } = useOutletContext<AppOutletContext>()
-  const navigate = useNavigate()
+  const [tab, setTab] = useState('resumen')
   if (!detalle) return null
-
-  function usar() {
-    anclarActivo({ id: activo.id, nombre: activo.nombre, version: activo.version })
-    void enviar(detalle.ejemploUso)
-    if (contexto === 'pagina') navigate('/')
-  }
 
   return (
     <div className="mx-auto flex max-w-5xl flex-col gap-6">
-      <EncabezadoFicha activo={activo} tipoLabel={tipoActivoLabel[activo.tipo]} accionPrimaria={contexto === 'pagina' ? <Button onClick={usar}>Usar</Button> : null} />
+      <EncabezadoFicha activo={activo} tipoLabel={tipoActivoLabel[activo.tipo]} accionPrimaria={<a href={detalle.hrefUso} target="_blank" rel="noreferrer" className={cn(buttonVariants({ size: 'lg' }), 'shrink-0')}>Abrir Cenco Writer <ExternalLink className="size-4" /></a>} />
       <div className="grid grid-cols-[minmax(0,1fr)_14rem] gap-8 max-md:grid-cols-1">
-        <div className="flex flex-col gap-8">
+        <Tabs value={tab} onValueChange={setTab}>
+          <TabsList className="max-sm:w-full max-sm:overflow-x-auto">
+            <TabsTrigger value="resumen">Resumen</TabsTrigger>
+            <TabsTrigger value="activacion">Activación</TabsTrigger>
+            <TabsTrigger value="ejemplo">Ejemplo</TabsTrigger>
+            <TabsTrigger value="recursos">Recursos</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="resumen" className="flex flex-col gap-8">
           <section className="flex flex-col gap-4">
             <h2 className="font-heading text-xl font-semibold text-foreground">Qué hace este agente</h2>
             <p className="leading-relaxed text-muted-foreground">{activo.descripcionLarga}</p>
@@ -69,7 +43,9 @@ export function FichaAgenteTemplate({ activo }: { activo: Activo }) {
           </section>
 
           {detalle.video && <SeccionVideoAgente nombreActivo={activo.nombre} video={detalle.video} />}
+          </TabsContent>
 
+          <TabsContent value="activacion" className="flex flex-col gap-8">
           <section className="flex flex-col gap-4">
             <h2 className="font-heading text-xl font-semibold text-foreground">Cómo activarlo</h2>
             <ol className="flex flex-col gap-3">
@@ -81,27 +57,28 @@ export function FichaAgenteTemplate({ activo }: { activo: Activo }) {
               ))}
             </ol>
           </section>
+          </TabsContent>
 
+          <TabsContent value="ejemplo" className="flex flex-col gap-8">
           <section className="flex flex-col gap-4">
             <h2 className="font-heading text-xl font-semibold text-foreground">Ejemplo de uso real</h2>
-            <button
-              type="button"
-              onClick={usar}
-              className="rounded-xl border border-border bg-card p-4 text-left text-sm leading-relaxed text-foreground transition-colors hover:border-primary/25 hover:bg-primary/5"
-            >
+            <div className="rounded-xl border border-border bg-card p-4 text-sm leading-relaxed text-foreground">
               {detalle.ejemploUso}
-            </button>
+            </div>
           </section>
+          </TabsContent>
 
+          <TabsContent value="recursos" className="flex flex-col gap-8">
           <section className="flex flex-col gap-2 rounded-xl border border-border bg-card p-4">
             <h3 className="font-medium text-foreground">{detalle.recurso.titulo}</h3>
             <p className="text-sm text-muted-foreground">{detalle.recurso.descripcion}</p>
-            <span className="mt-2 inline-flex w-fit items-center gap-1.5 text-xs font-medium text-primary">
+            <a href={detalle.recurso.href} target="_blank" rel="noreferrer" className="mt-2 inline-flex w-fit items-center gap-1.5 text-xs font-medium text-primary hover:underline">
               <ExternalLink className="size-3.5" />
               Abrir en SharePoint
-            </span>
+            </a>
           </section>
-        </div>
+          </TabsContent>
+        </Tabs>
         <aside className="max-md:order-first">
           <PanelResponsable responsable={activo.responsable} />
         </aside>
