@@ -1,5 +1,6 @@
 import { ExternalLink, LogOut, Settings, UsersRound } from 'lucide-react'
-import { Button, Popover, PopoverContent, PopoverTrigger } from '@/shared/ui'
+import { Link } from 'react-router'
+import { Popover, PopoverContent, PopoverTrigger } from '@/shared/ui'
 import type { CurrentUser } from '@/data/types'
 
 const comunidadAtlasTeamsUrl =
@@ -63,10 +64,13 @@ export function SidebarFooter({ user, colapsado = false }: SidebarFooterProps) {
               </a>
             </div>
 
-            <Button variant="ghost" className="mt-2 w-full justify-start">
+            <Link
+              to="/login"
+              className="mt-2 flex h-10 w-full items-center justify-start gap-2 rounded-lg px-3 text-sm font-medium text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
               <LogOut className="size-4" />
               Cerrar sesión
-            </Button>
+            </Link>
           </PopoverContent>
         </Popover>
       </div>

@@ -7,9 +7,11 @@ import { ChatPage } from '@/pages/chat/chat-page'
 import { DocumentoPage } from '@/pages/guias/documento-page'
 import { GuiasPage } from '@/pages/guias/guias-page'
 import { PlataformaPage } from '@/pages/plataforma/plataforma-page'
+import { LoginPage } from '@/pages/login/login-page'
 import { AppLayout } from './app-layout'
 
 export const router = createBrowserRouter([
+  { path: '/login', element: <LoginPage /> },
   {
     path: '/',
     element: <AppLayout />,
