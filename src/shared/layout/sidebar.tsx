@@ -29,7 +29,7 @@ export function Sidebar({ conversacionActiva, onNuevaConsulta, colapsado, onAlte
         <img src="/atlas-symbol-rounded.svg" alt="" className="h-8 w-auto" />
         <div className={colapsado ? 'hidden' : undefined}>
           <h1 className="text-lg font-medium tracking-tight text-foreground" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{t('app.name')}</h1>
-          <p className="text-[9px] font-semibold tracking-wide uppercase" style={{ color: 'var(--primary)' }}>BY PULSR</p>
+          <p className="text-[9px] font-semibold tracking-wide uppercase" style={{ color: 'var(--primary)' }}>DIGITAL PRODUCT ACCELERATOR</p>
         </div>
         </Link>
         <Button

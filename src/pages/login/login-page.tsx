@@ -35,7 +35,7 @@ export function LoginPage() {
       </header>
 
       <section className="login-page__hero" aria-labelledby="login-hero-title">
-        <p className="login-page__overline">Digital Product Accelerator · Cencosud Tech</p>
+        <p className="login-page__overline">Digital Product Accelerator · Engineering Office</p>
         <h1 id="login-hero-title">
           Diseña, construye y opera productos digitales con <em>CencoFlow.</em>
         </h1>
